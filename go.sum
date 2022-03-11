@@ -1,3 +1,5 @@
+github.com/clod-moon/goconf v0.0.0-20191014062510-03cddbcd7da9 h1:2lhgHwr9UghBCm/ynLVJjHgh9Irzd10e9qLYrm1RvKs=
+github.com/clod-moon/goconf v0.0.0-20191014062510-03cddbcd7da9/go.mod h1:ZrenXbcdFgLwck5G3Ynm6UGfTPgrg21yNxpJKXHZO9c=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
