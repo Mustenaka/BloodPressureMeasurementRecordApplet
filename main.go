@@ -9,7 +9,7 @@ func TestHello() {
 	fmt.Println("Hello World")
 }
 
-func main() {
+func tmain() {
 	fmt.Println("Beginning the Program!")
 
 	TestHello()
