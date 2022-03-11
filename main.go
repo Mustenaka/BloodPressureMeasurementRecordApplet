@@ -2,11 +2,20 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/widuu/goini"
 )
 
 // Test hello
 func TestHello() {
-	fmt.Println("Hello World")
+	var fileName = "./config/config.ini"
+
+	conf := goini.SetConfig(fileName)
+
+	version := conf.GetValue("basicinfo", "version")
+
+	fmt.Println(version)
+
 }
 
 func main() {

@@ -1,8 +1,8 @@
 module BloodPressure
 
 require (
-	github.com/clod-moon/goconf v0.0.0-20191014062510-03cddbcd7da9 // indirect
 	github.com/gin-gonic/gin v1.7.7
+	github.com/widuu/goini v0.0.0-20180603013956-56a38bd2e09b // indirect
 )
 
 go 1.16
