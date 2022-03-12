@@ -13,7 +13,10 @@ var singletonData *SingletonData
 var mutx sync.Mutex
 
 // 获取单例模式
-func GetInstance(iniFileName string) *SingletonData {
+func GetInstance() *SingletonData {
+	// ini 文件地址
+	iniFileName := "./config/config.ini"
+	// 双重锁，延迟获取
 	if singletonData == nil {
 		mutx.Lock()
 		if singletonData == nil {
