@@ -5,5 +5,5 @@ import (
 )
 
 type SingletonData struct {
-	Config goini.Config // Config - ini的配置文件数据读取
+	config goini.Config // Config - ini的配置文件数据读取
 }

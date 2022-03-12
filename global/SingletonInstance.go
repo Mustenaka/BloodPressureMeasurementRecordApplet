@@ -18,7 +18,7 @@ func GetInstance(iniFileName string) *SingletonData {
 		mutx.Lock()
 		if singletonData == nil {
 			singletonData = &SingletonData{
-				Config: *goini.SetConfig(iniFileName),
+				config: *goini.SetConfig(iniFileName),
 			}
 			mutx.Unlock()
 			return singletonData
@@ -26,4 +26,24 @@ func GetInstance(iniFileName string) *SingletonData {
 	}
 	mutx.Unlock()
 	return singletonData
+}
+
+// 获取config的值
+func (*SingletonData) GetConfigValue(selection string, key string) string {
+	return singletonData.config.GetValue(selection, key)
+}
+
+// 设置config的值
+func (*SingletonData) SetConfigValue(selection string, key string, value string) bool {
+	return singletonData.config.SetValue(selection, key, value)
+}
+
+// 删除config的值
+func (*SingletonData) DeleteConfigValue(selection string, key string) {
+	singletonData.config.DeleteValue(selection, key)
+}
+
+// 查看全部的config的值
+func (*SingletonData) ReadConfigList() []map[string]map[string]string {
+	return singletonData.config.ReadList()
 }

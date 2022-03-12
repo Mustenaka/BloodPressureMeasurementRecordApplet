@@ -26,9 +26,9 @@ func RunProgram() {
 	// fmt.Println(version, author, appName, appCompany, copyright)
 	// fmt.Println(username, password, hostname)
 
-	global := global.GetInstance(fileName)
-
-	fmt.Println(global.Config.GetValue("basicinfo", "version"))
+	conf := global.GetInstance(fileName)
+	fmt.Println(conf.GetConfigValue("basicinfo", "version"))
+	conf.ReadConfigList()
 }
 
 func main() {
