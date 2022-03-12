@@ -43,7 +43,7 @@ func (*SingletonData) DeleteConfigValue(selection string, key string) {
 	singletonData.config.DeleteValue(selection, key)
 }
 
-// 查看全部的config的值
+// 获取全部的config的值
 func (*SingletonData) ReadConfigList() []map[string]map[string]string {
 	return singletonData.config.ReadList()
 }
