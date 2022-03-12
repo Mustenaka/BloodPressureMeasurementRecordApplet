@@ -1,6 +1,7 @@
 package main
 
 import (
+	"BloodPressure/global"
 	"fmt"
 )
 
@@ -25,10 +26,9 @@ func RunProgram() {
 	// fmt.Println(version, author, appName, appCompany, copyright)
 	// fmt.Println(username, password, hostname)
 
-	s := GetInstance(fileName)
-	s.config.GetValue("basicinfo", "version")
+	yt := global.GetInstance(fileName)
 
-	fmt.Println()
+	fmt.Println(yt.Config.GetValue("basicinfo", "version"))
 }
 
 func main() {

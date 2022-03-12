@@ -1,4 +1,4 @@
-package main
+package global
 
 import (
 	"sync"
@@ -6,22 +6,19 @@ import (
 	"github.com/widuu/goini"
 )
 
-type SingletonData struct {
-	config goini.Config
-}
-
 // 单例对象
 var singletonData *SingletonData
 
 // 动态锁
 var mutx sync.Mutex
 
+// 获取单例模式
 func GetInstance(iniFileName string) *SingletonData {
 	if singletonData == nil {
 		mutx.Lock()
 		if singletonData == nil {
 			singletonData = &SingletonData{
-				config: *goini.SetConfig(iniFileName),
+				Config: *goini.SetConfig(iniFileName),
 			}
 			mutx.Unlock()
 			return singletonData
