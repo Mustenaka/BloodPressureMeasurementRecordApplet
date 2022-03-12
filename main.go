@@ -9,15 +9,6 @@ import (
 func RunProgram() {
 	var fileName = "./config/config.ini"
 
-	// conf := goini.SetConfig(fileName)
-
-	// var basicinfo = "basicinfo"
-	// version := conf.GetValue(basicinfo, "version")
-	// author := conf.GetValue(basicinfo, "author")
-	// appName := conf.GetValue(basicinfo, "appName")
-	// appCompany := conf.GetValue(basicinfo, "appCompany")
-	// copyright := conf.GetValue(basicinfo, "copyright")
-
 	// var dadtabase = "database"
 	// username := conf.GetValue(dadtabase, "username")
 	// password := conf.GetValue(dadtabase, "password")
@@ -28,7 +19,8 @@ func RunProgram() {
 
 	conf := global.GetInstance(fileName)
 	fmt.Println(conf.GetConfigValue("basicinfo", "version"))
-	conf.ReadConfigList()
+
+	ExampleRun()
 }
 
 func main() {
