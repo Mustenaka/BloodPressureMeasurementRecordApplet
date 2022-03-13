@@ -7,11 +7,15 @@ import (
 
 // Test hello
 func RunProgram() {
-	model.Connect()
+	for i := 0; i <= 1000; i++ {
+		model.Create()
+	}
 }
 
 func main() {
 	fmt.Println("Beginning the Program!")
 
 	RunProgram()
+
+	fmt.Println("Done.")
 }

@@ -2,8 +2,10 @@ package model
 
 import (
 	"BloodPressure/global"
+	"BloodPressure/tools"
 	"fmt"
 	"strings"
+	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -12,6 +14,7 @@ import (
 var db *gorm.DB
 var err error
 
+// 初始化，建立链接
 func init() {
 	conf := global.GetInstance()
 
@@ -36,4 +39,18 @@ func init() {
 		panic("failed to connect database")
 	}
 	fmt.Println("Connect successful!")
+}
+
+// 插入数据，测试
+func Create() {
+	user := BaseUser{
+		// UserId:     11,
+		OpenId:     tools.RandomString(16),
+		UserName:   "张四",
+		Tel:        "18278362206",
+		Email:      "asdqw123@outlook.com",
+		Permission: 3,
+		LastTime:   time.Now().Format("2006-01-02 15:04:05"),
+	}
+	db.Create(&user)
 }
