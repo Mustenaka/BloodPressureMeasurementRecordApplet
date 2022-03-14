@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-// func startServer() {
-// 	ExampleRun()
-// }
-
 // Test hello
 func RunProgram() {
 	user := model.BaseUser{
