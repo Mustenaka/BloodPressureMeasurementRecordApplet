@@ -55,23 +55,3 @@ func init() {
 	}
 	fmt.Println("Connection pool init successful!")
 }
-
-// // 插入一个记录
-// func Create(value interface{}) (tx *gorm.DB) {
-// 	return DB.Create(value)
-// }
-
-// // 查询第一个记录(主键升序)
-// func First(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
-// 	return DB.First(dest, conds)
-// }
-
-// // 查询一条记录(无指定排序字段)
-// func Take(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
-// 	return DB.Take(dest, conds)
-// }
-
-// // 查询最后一条记录(逐渐降序)
-// func Last(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
-// 	return DB.Last(dest, conds)
-// }
