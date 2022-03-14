@@ -1,5 +1,6 @@
 package model
 
-type modeler interface {
-	Sayer()
+type IModeler interface {
+	Create()
+	Query()
 }

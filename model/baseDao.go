@@ -34,15 +34,37 @@ func init() {
 
 	fmt.Println(dsn.String())
 
+	// 链接数据库
 	db, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
 	fmt.Println("Connect successful!")
+
+	// 创建数据库连接池
+	sqlDB, err := db.DB()
+
+	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
+	sqlDB.SetMaxIdleConns(10)
+	// SetMaxOpenConns 设置打开数据库连接的最大数量。
+	sqlDB.SetMaxOpenConns(100)
+
+	// SetConnMaxLifetime 设置了连接可复用的最大时间。
+	sqlDB.SetConnMaxLifetime(time.Hour)
+
+	if err != nil {
+		panic("Connection pool init failed.")
+	}
+	fmt.Println("Connection pool init successful!")
 }
 
 // 插入数据，测试
-func Create() {
+func Create(args interface{}) {
+	db.Create(args)
+}
+
+// 插入数据，测试
+func Query() {
 	user := BaseUser{
 		// UserId:     11,
 		OpenId:     tools.RandomString(16),
