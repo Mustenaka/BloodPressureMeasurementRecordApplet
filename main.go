@@ -2,7 +2,9 @@ package main
 
 import (
 	"BloodPressure/model"
+	"BloodPressure/tools"
 	"fmt"
+	"time"
 )
 
 // func startServer() {
@@ -11,17 +13,21 @@ import (
 
 // Test hello
 func RunProgram() {
-	// user := model.BaseUser{
-	// 	// UserId:     11,
-	// 	OpenId:     tools.RandomString(16),
-	// 	UserName:   "李翠莲",
-	// 	Tel:        "18778262136",
-	// 	Email:      "leecuilian@outlook.com",
-	// 	Permission: 3,
-	// 	LastTime:   time.Now().Format("2006-01-02 15:04:05"),
-	// 	Sex:        "女",
-	// 	Status:     "关闭",
-	// }
+	user := model.BaseUser{
+		// UserId:     11,
+		OpenId:     tools.RandomUpperString(16),
+		UserName:   "王五",
+		Tel:        "18278266123",
+		Email:      "wangwu@outlook.com",
+		Permission: 3,
+		LastTime:   time.Now().Format("2006-01-02 15:04:05"),
+		Sex:        "男",
+		Status:     "开启",
+	}
+	if err := model.DB.Create(&user); err.Error != nil {
+		// 错误处理
+		fmt.Println("无法插入数据")
+	}
 
 	var users []model.BaseUser
 	if err := model.DB.Where(&model.BaseUser{UserName: "李翠花"}).Find(&users); err.Error != nil {
