@@ -26,18 +26,27 @@ func RunProgram() {
 	// }
 
 	var users []model.BaseUser
-	model.DB.Where(&model.BaseUser{UserName: "李翠莲"}).Find(&users)
-
-	fmt.Println(users[0])
-
-	bpRecord := model.PatientBpRecord{
-		UserId:       users[0].UserId,
-		RecordDate:   time.Now().Format("2006-01-02"),
-		RecordTime:   time.Now().Format("15:04:05"),
-		LowPressure:  int16(tools.RandomInt(60, 90)),
-		HighPressure: int16(tools.RandomInt(90, 150)),
+	if err := model.DB.Where(&model.BaseUser{UserName: "李翠花"}).Find(&users); err.Error != nil {
+		// 错误处理
+		fmt.Println("没有找到该数据333")
 	}
-	model.DB.Create(&bpRecord)
+
+	for _, user := range users {
+		fmt.Println(user)
+
+		bpRecord := model.PatientBpRecord{
+			UserId:       user.UserId,
+			RecordDate:   time.Now().Format("2006-01-02"),
+			RecordTime:   time.Now().Format("15:04:05"),
+			LowPressure:  int16(tools.RandomInt(60, 90)),
+			HighPressure: int16(tools.RandomInt(90, 150)),
+		}
+		if err := model.DB.Create(&bpRecord); err.Error != nil {
+			// 错误处理
+			fmt.Println("无法插入数据")
+		}
+	}
+
 }
 
 func main() {

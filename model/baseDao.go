@@ -42,7 +42,6 @@ func init() {
 
 	// 创建数据库连接池
 	sqlDB, err := DB.DB()
-
 	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
 	sqlDB.SetMaxIdleConns(10)
 	// SetMaxOpenConns 设置打开数据库连接的最大数量。
