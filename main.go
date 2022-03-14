@@ -7,9 +7,9 @@ import (
 	"time"
 )
 
-func startServer() {
-	ExampleRun()
-}
+// func startServer() {
+// 	ExampleRun()
+// }
 
 // Test hello
 func RunProgram() {
