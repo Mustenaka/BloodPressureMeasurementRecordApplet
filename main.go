@@ -29,11 +29,13 @@ func RunProgram() {
 		fmt.Println("没有找到该数据333")
 	}
 
+	// 删除
+	// model.DB.Where(&model.BaseUser{UserName: "翠花"}).Delete(&model.BaseUser{})
+	// 修改
+	// model.DB.Model(&model.BaseUser{}).Where(&model.BaseUser{UserName: "李翠花"}).Updates(model.BaseUser{Sex: "其他"})
+
 	for _, user := range users {
 		fmt.Println(user)
-
-		// 修改
-		// model.DB.Model(&model.BaseUser{}).Where(&model.BaseUser{UserName: "李翠花"}).Updates(model.BaseUser{Sex: "其他"})
 
 		// bpRecord := model.PatientBpRecord{
 		// 	UserId:       user.UserId,
@@ -53,6 +55,7 @@ func RunProgram() {
 func main() {
 	fmt.Println("Beginning the Program!")
 
+	// 先加载package 因此数据库初始化先于这里的代码执行
 	RunProgram()
 
 	fmt.Println("Done.")

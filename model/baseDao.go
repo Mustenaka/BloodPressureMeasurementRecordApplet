@@ -38,7 +38,7 @@ func init() {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	fmt.Println("Connect successful!")
+	fmt.Println("Connect mysql successful!")
 
 	// 创建数据库连接池
 	sqlDB, err := DB.DB()
