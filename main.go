@@ -2,9 +2,7 @@ package main
 
 import (
 	"BloodPressure/model"
-	"BloodPressure/tools"
 	"fmt"
-	"time"
 )
 
 // func startServer() {
@@ -34,17 +32,20 @@ func RunProgram() {
 	for _, user := range users {
 		fmt.Println(user)
 
-		bpRecord := model.PatientBpRecord{
-			UserId:       user.UserId,
-			RecordDate:   time.Now().Format("2006-01-02"),
-			RecordTime:   time.Now().Format("15:04:05"),
-			LowPressure:  int16(tools.RandomInt(60, 90)),
-			HighPressure: int16(tools.RandomInt(90, 150)),
-		}
-		if err := model.DB.Create(&bpRecord); err.Error != nil {
-			// 错误处理
-			fmt.Println("无法插入数据")
-		}
+		// 修改
+		// model.DB.Model(&model.BaseUser{}).Where(&model.BaseUser{UserName: "李翠花"}).Updates(model.BaseUser{Sex: "其他"})
+
+		// bpRecord := model.PatientBpRecord{
+		// 	UserId:       user.UserId,
+		// 	RecordDate:   time.Now().Format("2006-01-02"),
+		// 	RecordTime:   time.Now().Format("15:04:05"),
+		// 	LowPressure:  int16(tools.RandomInt(60, 90)),
+		// 	HighPressure: int16(tools.RandomInt(90, 150)),
+		// }
+		// if err := model.DB.Create(&bpRecord); err.Error != nil {
+		// 	// 错误处理
+		// 	fmt.Println("无法插入数据")
+		// }
 	}
 
 }
