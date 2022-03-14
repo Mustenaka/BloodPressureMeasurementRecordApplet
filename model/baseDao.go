@@ -2,7 +2,6 @@ package model
 
 import (
 	"BloodPressure/global"
-	"BloodPressure/tools"
 	"fmt"
 	"strings"
 	"time"
@@ -11,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
+var DB *gorm.DB
 var err error
 
 // 初始化，建立链接
@@ -35,14 +34,14 @@ func init() {
 	fmt.Println(dsn.String())
 
 	// 链接数据库
-	db, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
 	fmt.Println("Connect successful!")
 
 	// 创建数据库连接池
-	sqlDB, err := db.DB()
+	sqlDB, err := DB.DB()
 
 	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
 	sqlDB.SetMaxIdleConns(10)
@@ -58,21 +57,22 @@ func init() {
 	fmt.Println("Connection pool init successful!")
 }
 
-// 插入数据，测试
-func Create(args interface{}) {
-	db.Create(args)
-}
+// // 插入一个记录
+// func Create(value interface{}) (tx *gorm.DB) {
+// 	return DB.Create(value)
+// }
 
-// 插入数据，测试
-func Query() {
-	user := BaseUser{
-		// UserId:     11,
-		OpenId:     tools.RandomString(16),
-		UserName:   "张四",
-		Tel:        "18278362206",
-		Email:      "asdqw123@outlook.com",
-		Permission: 3,
-		LastTime:   time.Now().Format("2006-01-02 15:04:05"),
-	}
-	db.Create(&user)
-}
+// // 查询第一个记录(主键升序)
+// func First(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
+// 	return DB.First(dest, conds)
+// }
+
+// // 查询一条记录(无指定排序字段)
+// func Take(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
+// 	return DB.Take(dest, conds)
+// }
+
+// // 查询最后一条记录(逐渐降序)
+// func Last(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
+// 	return DB.Last(dest, conds)
+// }
