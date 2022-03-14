@@ -8,4 +8,6 @@ type BaseUser struct {
 	Email      string
 	Permission int
 	LastTime   string
+	Sex        string
+	Status     string
 }
