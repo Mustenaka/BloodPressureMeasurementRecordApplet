@@ -2,7 +2,7 @@ package main
 
 import (
 	"BloodPressure/model"
-	"BloodPressure/tools"
+	"BloodPressure/tools/random"
 	"fmt"
 	"time"
 )
@@ -11,7 +11,7 @@ import (
 func RunProgram() {
 	user := model.BaseUser{
 		// UserId:     11,
-		OpenId:     tools.RandomUpperString(16),
+		OpenId:     random.RandomUpperString(16),
 		UserName:   "刘头",
 		Tel:        "18278262188",
 		Email:      "liutou@outlook.com",
