@@ -1,15 +1,12 @@
 package main
 
 import (
-	"BloodPressure/pkg/log"
 	"fmt"
-	"os"
 )
 
 // Test hello
 func RunProgram() {
-	fmt.Println(os.Getwd())
-	log.Infof("Test info", log.WithPair("age", 20), log.WithPair("name", "小明"))
+
 	// user := model.BaseUser{
 	// 	// UserId:     11,
 	// 	OpenId:     random.RandomUpperString(16),
