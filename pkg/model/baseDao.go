@@ -1,7 +1,7 @@
 package model
 
 import (
-	"BloodPressure/global"
+	"BloodPressure/pkg/global"
 	"fmt"
 	"strings"
 	"time"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"BloodPressure/model"
+	"BloodPressure/pkg/model"
 	"BloodPressure/tools/random"
 	"fmt"
 	"time"
