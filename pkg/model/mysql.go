@@ -32,7 +32,9 @@ func init() {
 	dsn.WriteString("loc=" + conf.GetConfigValue(selection, "loc"))
 
 	// 链接数据库
-	DB, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{
+		PrepareStmt: true, // 缓存每一条sql,提高执行速度
+	})
 	if err != nil {
 		log.Panic("Database connect", log.WithPair("message", "falied"))
 	}
