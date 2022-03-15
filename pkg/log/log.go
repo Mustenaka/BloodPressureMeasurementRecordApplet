@@ -1,6 +1,7 @@
 package log
 
 import (
+	"BloodPressure/pkg/global"
 	"BloodPressure/pkg/log/constant"
 	"context"
 	"os"
@@ -21,6 +22,23 @@ type logger struct {
 	cfg    *LogConfig
 	sugar  *zap.SugaredLogger
 	_level zapcore.Level
+}
+
+func init() {
+	defer Sync()
+	conf := global.GetInstance()
+	logConfig := LogConfig{
+		Level:      conf.GetConfigValue("logconfig", "level"),
+		FileName:   conf.GetConfigValue("logconfig", "file-name"),
+		TimeFormat: constant.TimeLayout,
+		MaxSize:    1,
+		MaxBackups: 5,
+		MaxAge:     2,
+		Compress:   false,
+		LocalTime:  true,
+		Console:    true,
+	}
+	InitLogger(&(logConfig), conf.GetConfigValue("basicinfo", "appName"))
 }
 
 // InitLogger 初始化日志配置
@@ -235,6 +253,7 @@ func (tl *tempLogger) getPrefix(template string, args []interface{}) ([]interfac
 	return args, template
 }
 
+// 获取参数值
 func (tl *tempLogger) getArgs(kvs []Pair) []interface{} {
 	var args []interface{}
 	if len(tl.extra) > 0 {

@@ -1,29 +1,30 @@
 package main
 
 import (
-	"BloodPressure/pkg/model"
-	"BloodPressure/tools/random"
+	"BloodPressure/pkg/log"
 	"fmt"
-	"time"
+	"os"
 )
 
 // Test hello
 func RunProgram() {
-	user := model.BaseUser{
-		// UserId:     11,
-		OpenId:     random.RandomUpperString(16),
-		UserName:   "刘头",
-		Tel:        "18278262188",
-		Email:      "liutou@outlook.com",
-		Permission: 3,
-		LastTime:   time.Now().Format("2006-01-02 15:04:05"),
-		Sex:        "男",
-		Status:     "开启",
-	}
-	if err := model.DB.Create(&user); err.Error != nil {
-		// 错误处理
-		fmt.Println("无法插入数据")
-	}
+	fmt.Println(os.Getwd())
+	log.Infof("Test info", log.WithPair("age", 20), log.WithPair("name", "小明"))
+	// user := model.BaseUser{
+	// 	// UserId:     11,
+	// 	OpenId:     random.RandomUpperString(16),
+	// 	UserName:   "刘头",
+	// 	Tel:        "18278262188",
+	// 	Email:      "liutou@outlook.com",
+	// 	Permission: 3,
+	// 	LastTime:   time.Now().Format("2006-01-02 15:04:05"),
+	// 	Sex:        "男",
+	// 	Status:     "开启",
+	// }
+	// if err := model.DB.Create(&user); err.Error != nil {
+	// 	// 错误处理
+	// 	fmt.Println("无法插入数据")
+	// }
 
 	// 查询
 	// var users []model.BaseUser
