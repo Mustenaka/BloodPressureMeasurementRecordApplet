@@ -2,7 +2,7 @@ package model
 
 import (
 	"BloodPressure/pkg/global"
-	"fmt"
+	"BloodPressure/pkg/log"
 	"strings"
 	"time"
 
@@ -31,14 +31,12 @@ func init() {
 	dsn.WriteString("parseTime=" + conf.GetConfigValue(selection, "parseTime") + "&")
 	dsn.WriteString("loc=" + conf.GetConfigValue(selection, "loc"))
 
-	fmt.Println(dsn.String())
-
 	// 链接数据库
 	DB, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		log.Panic("Database connect", log.WithPair("message", "falied"))
 	}
-	fmt.Println("Connect mysql successful!")
+	log.Info("Database connect", log.WithPair("message", "successful!"))
 
 	// 创建数据库连接池
 	sqlDB, err := DB.DB()
@@ -51,7 +49,7 @@ func init() {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	if err != nil {
-		panic("Connection pool init failed.")
+		log.Panic("Connection pool init", log.WithPair("message", "falied"))
 	}
-	fmt.Println("Connection pool init successful!")
+	log.Info("Connection pool init", log.WithPair("message", "successful!"))
 }
