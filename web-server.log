@@ -1,0 +1,1 @@
+2022-03-15 16:51:56	INFO	BloodPressureMeasurementRecordApplet/main.go:12	Test info%!(EXTRA log.Pair={age 20}, log.Pair={name 小明})	{"appName": "高血压测量记录小程序后端"}

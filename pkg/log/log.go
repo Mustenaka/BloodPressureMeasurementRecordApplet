@@ -31,12 +31,12 @@ func init() {
 		Level:      conf.GetConfigValue("logconfig", "level"),
 		FileName:   conf.GetConfigValue("logconfig", "file-name"),
 		TimeFormat: constant.TimeLayout,
-		MaxSize:    1,
-		MaxBackups: 5,
-		MaxAge:     2,
-		Compress:   false,
-		LocalTime:  true,
-		Console:    true,
+		MaxSize:    conf.GetConfigValueInt("logconfig", "max-size"),
+		MaxBackups: conf.GetConfigValueInt("logconfig", "max-backups"),
+		MaxAge:     conf.GetConfigValueInt("logconfig", "max-age"),
+		Compress:   conf.GetConfigValueBool("logconfig", "compress"),
+		LocalTime:  conf.GetConfigValueBool("logconfig", "local-time"),
+		Console:    conf.GetConfigValueBool("logconfig", "console"),
 	}
 	InitLogger(&(logConfig), conf.GetConfigValue("basicinfo", "appName"))
 }
