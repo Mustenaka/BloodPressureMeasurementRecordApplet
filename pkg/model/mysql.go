@@ -14,7 +14,7 @@ var DB *gorm.DB
 var err error
 
 // 初始化，建立链接
-func init() {
+func Connect() {
 	conf := global.GetInstance()
 
 	// 读取ini配置文件获取mysql链接配置
@@ -42,10 +42,9 @@ func init() {
 
 	// 创建数据库连接池
 	sqlDB, err := DB.DB()
-	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
-	sqlDB.SetMaxIdleConns(10)
-	// SetMaxOpenConns 设置打开数据库连接的最大数量。
-	sqlDB.SetMaxOpenConns(100)
+	// SetMaxIdleConns 设置空闲连接池中连接的最大数量, SetMaxOpenConns 设置打开数据库连接的最大数量。
+	sqlDB.SetMaxIdleConns(conf.GetConfigValueInt("dbpool", "maxIdleConns"))
+	sqlDB.SetMaxOpenConns(conf.GetConfigValueInt("dbpool", "maxOpenCoons"))
 
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(time.Hour)
