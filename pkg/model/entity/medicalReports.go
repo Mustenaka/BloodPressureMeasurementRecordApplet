@@ -1,4 +1,4 @@
-package model
+package entity
 
 // 体检报告表
 type MedicalReports struct {

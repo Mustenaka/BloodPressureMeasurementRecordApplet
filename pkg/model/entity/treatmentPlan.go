@@ -1,4 +1,4 @@
-package model
+package entity
 
 // 治疗计划表
 type TreatmentPlan struct {

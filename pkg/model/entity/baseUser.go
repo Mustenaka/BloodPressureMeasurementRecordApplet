@@ -1,4 +1,4 @@
-package model
+package entity
 
 // 基础用户信息表
 type BaseUser struct {
