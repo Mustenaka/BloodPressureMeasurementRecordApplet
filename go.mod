@@ -13,6 +13,8 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
+	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
+	github.com/shirou/gopsutil/v3 v3.22.2 // indirect
 	github.com/spf13/viper v1.10.1 // indirect
 	github.com/ugorji/go v1.2.7 // indirect
 	github.com/widuu/goini v0.0.0-20180603013956-56a38bd2e09b
