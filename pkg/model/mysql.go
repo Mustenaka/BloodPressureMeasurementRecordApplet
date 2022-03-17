@@ -1,8 +1,8 @@
 package model
 
 import (
-	"BloodPressure/global"
-	"fmt"
+	"BloodPressure/pkg/global"
+	"BloodPressure/pkg/log"
 	"strings"
 	"time"
 
@@ -14,7 +14,7 @@ var DB *gorm.DB
 var err error
 
 // 初始化，建立链接
-func init() {
+func Connect() {
 	conf := global.GetInstance()
 
 	// 读取ini配置文件获取mysql链接配置
@@ -31,27 +31,26 @@ func init() {
 	dsn.WriteString("parseTime=" + conf.GetConfigValue(selection, "parseTime") + "&")
 	dsn.WriteString("loc=" + conf.GetConfigValue(selection, "loc"))
 
-	fmt.Println(dsn.String())
-
 	// 链接数据库
-	DB, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{
+		PrepareStmt: true, // 缓存每一条sql,提高执行速度
+	})
 	if err != nil {
-		panic("failed to connect database")
+		log.Panic("Database connect", log.WithPair("message", "falied"))
 	}
-	fmt.Println("Connect mysql successful!")
+	log.Info("Database connect", log.WithPair("message", "successful!"))
 
 	// 创建数据库连接池
 	sqlDB, err := DB.DB()
-	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
-	sqlDB.SetMaxIdleConns(10)
-	// SetMaxOpenConns 设置打开数据库连接的最大数量。
-	sqlDB.SetMaxOpenConns(100)
+	// SetMaxIdleConns 设置空闲连接池中连接的最大数量, SetMaxOpenConns 设置打开数据库连接的最大数量。
+	sqlDB.SetMaxIdleConns(conf.GetConfigValueInt("dbpool", "maxIdleConns"))
+	sqlDB.SetMaxOpenConns(conf.GetConfigValueInt("dbpool", "maxOpenCoons"))
 
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	if err != nil {
-		panic("Connection pool init failed.")
+		log.Panic("Connection pool init", log.WithPair("message", "falied"))
 	}
-	fmt.Println("Connection pool init successful!")
+	log.Info("Connection pool init", log.WithPair("message", "successful!"))
 }

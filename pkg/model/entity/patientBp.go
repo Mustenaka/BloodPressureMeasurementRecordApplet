@@ -1,5 +1,6 @@
-package model
+package entity
 
+// 血压记录表
 type PatientBpRecord struct {
 	RecordId     uint   // 血压记录id
 	UserId       uint   // 用户id

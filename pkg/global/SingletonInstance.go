@@ -1,6 +1,7 @@
 package global
 
 import (
+	"strconv"
 	"sync"
 
 	"github.com/widuu/goini"
@@ -34,6 +35,18 @@ func GetInstance() *SingletonData {
 // 获取config的值
 func (*SingletonData) GetConfigValue(selection string, key string) string {
 	return singletonData.config.GetValue(selection, key)
+}
+
+// 获取config的值 并转换为int
+func (*SingletonData) GetConfigValueInt(selection string, key string) int {
+	result, _ := strconv.Atoi(singletonData.config.GetValue(selection, key))
+	return result
+}
+
+// 获取config的值 并转换为bool
+func (*SingletonData) GetConfigValueBool(selection string, key string) bool {
+	result, _ := strconv.ParseBool(singletonData.config.GetValue(selection, key))
+	return result
 }
 
 // 设置config的值

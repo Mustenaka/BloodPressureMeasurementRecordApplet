@@ -1,4 +1,4 @@
-package test
+package example
 
 import (
 	"net/http"
@@ -67,8 +67,20 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
+// 直接运行测试文件
 func Testmain() {
 	r := setupRouter()
 	// Listen and Server in 0.0.0.0:8080
 	r.Run(":80")
+}
+
+// 最简单的，最小化测试运行
+func ExampleRun() {
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "ExampleTest Successful!",
+		})
+	})
+	r.Run(":80") // 监听并在 0.0.0.0:8080 上启动服务
 }
