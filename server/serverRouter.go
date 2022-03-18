@@ -64,10 +64,13 @@ func (s HttpServer) Run(rs ...Router) {
 		log.Infof("server started success! port: %s", s.port)
 	}()
 
+	// 创建http服务
 	srv := http.Server{
 		Addr:    s.port,
 		Handler: g,
 	}
+
+	// 发生错误，shutdown服务
 	if s.f != nil {
 		srv.RegisterOnShutdown(s.f)
 	}
@@ -78,6 +81,7 @@ func (s HttpServer) Run(rs ...Router) {
 		syscall.SIGHUP,
 		syscall.SIGQUIT)
 
+	// shutdown server
 	go func() {
 		<-sgn
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -88,6 +92,7 @@ func (s HttpServer) Run(rs ...Router) {
 		wg.Done()
 	}()
 
+	// 监听服务
 	err := srv.ListenAndServe()
 	if err != nil {
 		if err != http.ErrServerClosed {

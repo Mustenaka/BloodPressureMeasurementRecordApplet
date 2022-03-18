@@ -24,8 +24,7 @@ type logger struct {
 	_level zapcore.Level
 }
 
-func init() {
-	defer Sync()
+func InitLoggerWithConfig() (_cfg *LogConfig) {
 	conf := global.GetInstance()
 	logConfig := LogConfig{
 		Level:      conf.GetConfigValue("logconfig", "level"),
@@ -38,7 +37,7 @@ func init() {
 		LocalTime:  conf.GetConfigValueBool("logconfig", "local-time"),
 		Console:    conf.GetConfigValueBool("logconfig", "console"),
 	}
-	InitLogger(&(logConfig), conf.GetConfigValue("basicinfo", "appName"))
+	return &logConfig
 }
 
 // InitLogger 初始化日志配置
