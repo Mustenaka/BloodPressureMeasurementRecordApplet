@@ -2,7 +2,7 @@ package main
 
 import (
 	"BloodPressure/pkg/global"
-	"BloodPressure/pkg/log"
+	"fmt"
 )
 
 // Test hello
@@ -16,6 +16,13 @@ func RunProgram() {
 
 	// 加载配置参数
 	conf := global.GetInstance()
+	value := conf.GetConfigValue("database", "hostname")
+	fmt.Println("1", value)
+	emptyValue := conf.GetConfigValue("UnknownList", "UnknownData")
+	if emptyValue == "no value" {
+		fmt.Println("asdhajksd")
+	}
+	fmt.Println("2", emptyValue)
 	// logConfig := log.LogConfig{
 	// 	Level:      conf.GetConfigValue("logconfig", "level"),
 	// 	FileName:   conf.GetConfigValue("logconfig", "file-name"),
@@ -28,10 +35,10 @@ func RunProgram() {
 	// 	Console:    conf.GetConfigValueBool("logconfig", "console"),
 	// }
 	// log.InitLogger(&logConfig, "aaaa")
-	log.InitLogger(log.InitLoggerWithConfig(), "asd")
-	log.Info("basicinfo: ", log.WithPair("AppName", conf.GetConfigValue("basicinfo", "appName")))
-	log.Info("basicinfo: ", log.WithPair("Version", conf.GetConfigValue("basicinfo", "version")))
-	log.Info("basicinfo: ", log.WithPair("Copyright", conf.GetConfigValue("basicinfo", "copyright")))
+	// log.InitLogger(log.InitLoggerWithConfig(), "asd")
+	// log.Info("basicinfo: ", log.WithPair("AppName", conf.GetConfigValue("basicinfo", "appName")))
+	// log.Info("basicinfo: ", log.WithPair("Version", conf.GetConfigValue("basicinfo", "version")))
+	// log.Info("basicinfo: ", log.WithPair("Copyright", conf.GetConfigValue("basicinfo", "copyright")))
 
 	// 加载数据库
 	// model.Connect()
