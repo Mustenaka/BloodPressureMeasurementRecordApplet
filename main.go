@@ -1,64 +1,42 @@
 package main
 
 import (
-	"fmt"
+	"BloodPressure/pkg/global"
+	"BloodPressure/pkg/log"
 )
 
 // Test hello
 func RunProgram() {
-
-	// user := model.BaseUser{
-	// 	// UserId:     11,
-	// 	OpenId:     random.RandomUpperString(16),
-	// 	UserName:   "刘头",
-	// 	Tel:        "18278262188",
-	// 	Email:      "liutou@outlook.com",
-	// 	Permission: 3,
-	// 	LastTime:   time.Now().Format("2006-01-02 15:04:05"),
-	// 	Sex:        "男",
-	// 	Status:     "开启",
-	// }
-	// if err := model.DB.Create(&user); err.Error != nil {
-	// 	// 错误处理
-	// 	fmt.Println("无法插入数据")
+	// // 解析服务器启动参数
+	// appOpt := &server.AppOptions{}
+	// server.ResolveAppOptions(appOpt)
+	// if appOpt.PrintVersion {
+	// 	version.PrintVersion()
 	// }
 
-	// 查询
-	// var users []model.BaseUser
-	// if err := model.DB.Where(&model.BaseUser{UserName: "李翠花"}).Find(&users); err.Error != nil {
-	// 	// 错误处理
-	// 	fmt.Println("没有找到该数据333")
+	// 加载配置参数
+	conf := global.GetInstance()
+	// logConfig := log.LogConfig{
+	// 	Level:      conf.GetConfigValue("logconfig", "level"),
+	// 	FileName:   conf.GetConfigValue("logconfig", "file-name"),
+	// 	TimeFormat: constant.TimeLayout,
+	// 	MaxSize:    conf.GetConfigValueInt("logconfig", "max-size"),
+	// 	MaxBackups: conf.GetConfigValueInt("logconfig", "max-backups"),
+	// 	MaxAge:     conf.GetConfigValueInt("logconfig", "max-age"),
+	// 	Compress:   conf.GetConfigValueBool("logconfig", "compress"),
+	// 	LocalTime:  conf.GetConfigValueBool("logconfig", "local-time"),
+	// 	Console:    conf.GetConfigValueBool("logconfig", "console"),
 	// }
+	// log.InitLogger(&logConfig, "aaaa")
+	log.InitLogger(log.InitLoggerWithConfig(), "asd")
+	log.Info("basicinfo: ", log.WithPair("AppName", conf.GetConfigValue("basicinfo", "appName")))
+	log.Info("basicinfo: ", log.WithPair("Version", conf.GetConfigValue("basicinfo", "version")))
+	log.Info("basicinfo: ", log.WithPair("Copyright", conf.GetConfigValue("basicinfo", "copyright")))
 
-	// 删除
-	// model.DB.Where(&model.BaseUser{UserName: "翠花"}).Delete(&model.BaseUser{})
-	// 修改
-	// model.DB.Model(&model.BaseUser{}).Where(&model.BaseUser{UserName: "李翠花"}).Updates(model.BaseUser{Sex: "其他"})
-
-	// 通过查询的用户插入高血压数据
-	// for _, user := range users {
-	// 	fmt.Println(user)
-
-	// 	// bpRecord := model.PatientBpRecord{
-	// 	// 	UserId:       user.UserId,
-	// 	// 	RecordDate:   time.Now().Format("2006-01-02"),
-	// 	// 	RecordTime:   time.Now().Format("15:04:05"),
-	// 	// 	LowPressure:  int16(tools.RandomInt(60, 90)),
-	// 	// 	HighPressure: int16(tools.RandomInt(90, 150)),
-	// 	// }
-	// 	// if err := model.DB.Create(&bpRecord); err.Error != nil {
-	// 	// 	// 错误处理
-	// 	// 	fmt.Println("无法插入数据")
-	// 	// }
-	// }
-
+	// 加载数据库
+	// model.Connect()
 }
 
 func main() {
-	fmt.Println("Beginning the Program!")
-
-	// 先加载package 因此数据库初始化先于这里的代码执行
 	RunProgram()
-
-	fmt.Println("Done.")
 }
