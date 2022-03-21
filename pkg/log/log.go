@@ -1,7 +1,7 @@
 package log
 
 import (
-	"BloodPressure/pkg/global"
+	"BloodPressure/pkg/config"
 	"BloodPressure/pkg/log/constant"
 	"context"
 	"os"
@@ -19,29 +19,13 @@ var (
 )
 
 type logger struct {
-	cfg    *LogConfig
+	cfg    *config.LogConfig
 	sugar  *zap.SugaredLogger
 	_level zapcore.Level
 }
 
-func InitLoggerWithConfig() (_cfg *LogConfig) {
-	conf := global.GetInstance()
-	logConfig := LogConfig{
-		Level:      conf.GetConfigValue("logconfig", "level"),
-		FileName:   conf.GetConfigValue("logconfig", "file-name"),
-		TimeFormat: constant.TimeLayout,
-		MaxSize:    conf.GetConfigValueInt("logconfig", "max-size"),
-		MaxBackups: conf.GetConfigValueInt("logconfig", "max-backups"),
-		MaxAge:     conf.GetConfigValueInt("logconfig", "max-age"),
-		Compress:   conf.GetConfigValueBool("logconfig", "compress"),
-		LocalTime:  conf.GetConfigValueBool("logconfig", "local-time"),
-		Console:    conf.GetConfigValueBool("logconfig", "console"),
-	}
-	return &logConfig
-}
-
 // InitLogger 初始化日志配置
-func InitLogger(_cfg *LogConfig, appName string) {
+func InitLogger(_cfg *config.LogConfig, appName string) {
 	once.Do(func() {
 		_logger = &logger{
 			cfg: _cfg,
