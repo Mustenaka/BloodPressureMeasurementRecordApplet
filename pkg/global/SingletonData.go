@@ -4,7 +4,7 @@ import (
 	"github.com/widuu/goini"
 )
 
-// 单例数据
+// 单例数据 - 全局数据
 type SingletonData struct {
 	config          goini.Config    // Config - ini的配置文件数据读取
 	Basicinfo       Basicinfo       // 软件基本信息
