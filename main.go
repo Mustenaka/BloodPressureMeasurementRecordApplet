@@ -1,7 +1,6 @@
 package main
 
 import (
-	"BloodPressure/pkg/global"
 	"fmt"
 )
 
@@ -15,7 +14,7 @@ func RunProgram() {
 	// }
 
 	// 加载配置参数
-	conf := global.GetInstance()
+
 	value := conf.GetConfigValue("database", "hostname")
 	fmt.Println("1", value)
 	emptyValue := conf.GetConfigValue("UnknownList", "UnknownData")

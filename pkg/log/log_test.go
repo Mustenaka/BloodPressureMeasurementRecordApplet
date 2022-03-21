@@ -1,7 +1,7 @@
 package log
 
 import (
-	"BloodPressure/pkg/global"
+	"BloodPressure/pkg/config"
 	"BloodPressure/pkg/log/constant"
 	"BloodPressure/tools/uuid"
 	"context"
@@ -10,19 +10,23 @@ import (
 
 func init() {
 	defer Sync()
-	conf := global.GetInstance()
-	logConfig := LogConfig{
-		Level:      conf.GetConfigValue("logconfig", "level"),
-		FileName:   conf.GetConfigValue("logconfig", "file-name"),
-		TimeFormat: constant.TimeLayout,
-		MaxSize:    conf.GetConfigValueInt("logconfig", "max-size"),
-		MaxBackups: conf.GetConfigValueInt("logconfig", "max-backups"),
-		MaxAge:     conf.GetConfigValueInt("logconfig", "max-age"),
-		Compress:   conf.GetConfigValueBool("logconfig", "compress"),
-		LocalTime:  conf.GetConfigValueBool("logconfig", "local-time"),
-		Console:    conf.GetConfigValueBool("logconfig", "console"),
+	c := config.Config{
+		LogConfig: config.LogConfig{
+			Level:      "debug",
+			FileName:   "test.log",
+			TimeFormat: constant.TimeLayout,
+			MaxSize:    1,
+			MaxBackups: 5,
+			MaxAge:     2,
+			Compress:   false,
+			LocalTime:  true,
+			Console:    true,
+		},
+		BasicinfoConfig: config.BasicinfoConfig{
+			AppName: "zapTest",
+		},
 	}
-	InitLogger(&(logConfig), conf.GetConfigValue("basicinfo", "appName"))
+	InitLogger(&(c.LogConfig), c.BasicinfoConfig.AppName)
 }
 
 func TestInfo(t *testing.T) {
