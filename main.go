@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 // Test hello
 func RunProgram() {
 	// // 解析服务器启动参数
@@ -14,14 +10,6 @@ func RunProgram() {
 	// }
 
 	// 加载配置参数
-
-	value := conf.GetConfigValue("database", "hostname")
-	fmt.Println("1", value)
-	emptyValue := conf.GetConfigValue("UnknownList", "UnknownData")
-	if emptyValue == "no value" {
-		fmt.Println("asdhajksd")
-	}
-	fmt.Println("2", emptyValue)
 	// logConfig := log.LogConfig{
 	// 	Level:      conf.GetConfigValue("logconfig", "level"),
 	// 	FileName:   conf.GetConfigValue("logconfig", "file-name"),
