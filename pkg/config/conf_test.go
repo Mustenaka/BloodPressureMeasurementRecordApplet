@@ -6,7 +6,7 @@ import (
 )
 
 func TestConfig(t *testing.T) {
-	c := Load("./config.ini")
+	c := Load("./config_back.ini")
 
 	// Basicinfo
 	log.Println("Load Basicinfo:", c.BasicinfoConfig.AppName)
