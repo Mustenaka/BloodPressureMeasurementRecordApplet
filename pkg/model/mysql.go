@@ -1,56 +1,94 @@
 package model
 
 import (
-	"BloodPressure/pkg/global"
-	"BloodPressure/pkg/log"
-	"strings"
+	"BloodPressure/pkg/config"
+	"fmt"
 	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
-var err error
+var _ IDataSource = (*defaultMysqlDataSource)(nil)
 
-// 初始化，建立链接
-func Connect() {
-	conf := global.GetInstance()
+// IDataSource 定义数据库数据源接口，按照业务需求可以返回主库链接Master和从库链接Slave
+type IDataSource interface {
+	Master() *gorm.DB
+	Slave() *gorm.DB
+	Close()
+}
 
-	// 读取ini配置文件获取mysql链接配置
-	// root:jx@#ww4D@tcp(localhost:3306)/HighBloodDB?charset=utf8&parseTime=True&loc=Local
-	var selection string = "database"
-	var dsn strings.Builder
-	dsn.WriteString(conf.GetConfigValue(selection, "username") + ":")
-	dsn.WriteString(conf.GetConfigValue(selection, "password") + "@")
-	dsn.WriteString(conf.GetConfigValue(selection, "function") + "(")
-	dsn.WriteString(conf.GetConfigValue(selection, "hostname") + ":")
-	dsn.WriteString(conf.GetConfigValue(selection, "port") + ")/")
-	dsn.WriteString(conf.GetConfigValue(selection, "dbname") + "?")
-	dsn.WriteString("charset=" + conf.GetConfigValue(selection, "charset") + "&")
-	dsn.WriteString("parseTime=" + conf.GetConfigValue(selection, "parseTime") + "&")
-	dsn.WriteString("loc=" + conf.GetConfigValue(selection, "loc"))
+// defaultMysqlDataSource 默认mysql数据源实现
+type defaultMysqlDataSource struct {
+	master *gorm.DB // 定义私有属性，用来持有主库链接，防止每次创建，创建后直接返回该变量。
+	slave  *gorm.DB // 同上，从库链接
+}
 
-	// 链接数据库
-	DB, err = gorm.Open(mysql.Open(dsn.String()), &gorm.Config{
-		PrepareStmt: true, // 缓存每一条sql,提高执行速度
+func (d *defaultMysqlDataSource) Master() *gorm.DB {
+	if d.master == nil {
+		panic("The [master] connection is nil, Please initialize it first.")
+	}
+	return d.master
+}
+
+func (d *defaultMysqlDataSource) Slave() *gorm.DB {
+	if d.master == nil {
+		panic("The [slave] connection is nil, Please initialize it first.")
+	}
+	return d.slave
+}
+
+func (d *defaultMysqlDataSource) Close() {
+	// 关闭主库链接
+	if d.master != nil {
+		m, err := d.master.DB()
+		if err != nil {
+			m.Close()
+		}
+	}
+	// 关闭从库链接
+	if d.slave != nil {
+		s, err := d.slave.DB()
+		if err != nil {
+			s.Close()
+		}
+	}
+}
+
+func NewDefaultMysql(c config.DBConfig) *defaultMysqlDataSource {
+	return &defaultMysqlDataSource{
+		master: connect(
+			c.Username,
+			c.Password,
+			c.Host,
+			c.Port,
+			c.Dbname,
+			c.Charset,
+			c.ParseTime,
+			c.Loc,
+			c.MaximumPoolSize,
+			c.MaximumIdleSize),
+	}
+}
+
+func connect(user, password, host, port, dbname, charset, parseTime, loc string, maxPoolSize, maxIdle int) *gorm.DB {
+	dsn := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=%s&parseTime=%s&loc=%s",
+		user, password,
+		host, port, dbname,
+		charset, parseTime, loc)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		PrepareStmt: true, // 缓存每一条sql语句，提高执行速度
 	})
 	if err != nil {
-		log.Panic("Database connect", log.WithPair("message", "falied"))
+		panic(err)
 	}
-	log.Info("Database connect", log.WithPair("message", "successful!"))
-
-	// 创建数据库连接池
-	sqlDB, err := DB.DB()
-	// SetMaxIdleConns 设置空闲连接池中连接的最大数量, SetMaxOpenConns 设置打开数据库连接的最大数量。
-	sqlDB.SetMaxIdleConns(conf.GetConfigValueInt("dbpool", "maxIdleConns"))
-	sqlDB.SetMaxOpenConns(conf.GetConfigValueInt("dbpool", "maxOpenCoons"))
-
-	// SetConnMaxLifetime 设置了连接可复用的最大时间。
-	sqlDB.SetConnMaxLifetime(time.Hour)
-
+	sqlDb, err := db.DB()
 	if err != nil {
-		log.Panic("Connection pool init", log.WithPair("message", "falied"))
+		panic(err)
 	}
-	log.Info("Connection pool init", log.WithPair("message", "successful!"))
+	sqlDb.SetConnMaxLifetime(time.Hour)
+	// 设置连接池大小
+	sqlDb.SetMaxOpenConns(maxPoolSize)
+	sqlDb.SetMaxIdleConns(maxIdle)
+	return db
 }

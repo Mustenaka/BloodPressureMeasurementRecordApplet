@@ -23,6 +23,7 @@ func Load(configFilePath string) *Config {
 	return GlobalConfig
 }
 
+// 初始化配置文件
 func initConfig() error {
 	viper.SetConfigType("ini")
 	viper.AutomaticEnv()

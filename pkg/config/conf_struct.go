@@ -37,6 +37,9 @@ type DBConfig struct {
 	MaximumPoolSize int    `mapstructure:"maximum-pool-size"`
 	MaximumIdleSize int    `mapstructure:"maximum-idle-size"`
 	LogMode         bool   `mapstructure:"log-mode"`
+	Charset         string `mapstructure:"charset"`
+	ParseTime       string `mapstructure:"parseTime"`
+	Loc             string `mapstructure:"loc"`
 }
 
 // RedisConfig is used to configure redis
