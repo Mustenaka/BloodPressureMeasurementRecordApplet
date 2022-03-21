@@ -59,6 +59,7 @@ func InitLogger(_cfg *LogConfig, appName string) {
 	})
 }
 
+// 新建zap日志核心
 func (l *logger) newCore(ws zapcore.WriteSyncer) zapcore.Core {
 	// 默认日志级别
 	atomicLevel := zap.NewAtomicLevel()
@@ -111,6 +112,7 @@ func (l *logger) customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncode
 	enc.AppendString(t.Format(format))
 }
 
+// 新建Lumber滚动日志
 func (l *logger) newLumber() *lumberjack.Logger {
 	return &lumberjack.Logger{
 		Filename:   l.cfg.FileName,
@@ -122,6 +124,7 @@ func (l *logger) newLumber() *lumberjack.Logger {
 	}
 }
 
+// 启动等级判断
 func (l *logger) EnabledLevel(level zapcore.Level) bool {
 	return level >= l._level
 }
