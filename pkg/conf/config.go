@@ -12,15 +12,29 @@ var GlobalConfig *Config
 
 // Config is application global config
 type Config struct {
-	Mode         string      `mapstructure:"mode"`           // gin启动模式
-	Port         string      `mapstructure:"port"`           // 启动端口
-	AppName      string      `mapstructure:"app-name"`       //应用名称
-	Url          string      `mapstructure:"url"`            // 应用地址,用于自检 eg. http://127.0.0.1
-	MaxPingCount int         `mapstructure:"max-ping-count"` // 最大自检次数，用户健康检查
-	JwtSecret    string      `mapstructure:"jwt-secret"`
-	DBConfig     DBConfig    `mapstructure:"database"` // 数据库信息
-	RedisConfig  RedisConfig `mapstructure:"redis"`    // redis
-	LogConfig    LogConfig   `mapstructure:"log"`      // uber zap
+	BasicinfoConfig BasicinfoConfig `mapstructure:"basicinfo"` // 项目基本配置信息
+	ServerConfig    ServerConfig    `mapstructure:"server"`    // 服务信息
+	DBConfig        DBConfig        `mapstructure:"database"`  // 数据库信息
+	RedisConfig     RedisConfig     `mapstructure:"redis"`     // redis
+	LogConfig       LogConfig       `mapstructure:"logconfig"` // uber zap
+}
+
+// Basic information is used to version control.
+type BasicinfoConfig struct {
+	AppName    string `mapstructure:"appName"` // 应用名称
+	Author     string `mapstructure:"author"`
+	AppCompany string `mapstructure:"appCompany"`
+	Version    string `mapstructure:"version"`
+	Copyright  string `mapstructure:"copyright"`
+}
+
+// Basic information is used to version control.
+type ServerConfig struct {
+	Mode         string `mapstructure:"mode"`           // gin启动模式
+	Port         string `mapstructure:"port"`           // 启动端口
+	Url          string `mapstructure:"url"`            // 应用地址,用于自检 eg. http://127.0.0.1
+	MaxPingCount int    `mapstructure:"max-ping-count"` // 最大自检次数，用户健康检查
+	JwtSecret    string `mapstructure:"jwt-secret"`
 }
 
 // DBConfig is used to configure mysql database
@@ -72,7 +86,7 @@ func Load(configFilePath string) *Config {
 }
 
 func initConfig() error {
-	viper.SetConfigType("yaml")
+	viper.SetConfigType("ini")
 	viper.AutomaticEnv()
 	viper.SetEnvPrefix("APPLICATION")
 	replacer := strings.NewReplacer(".", "_")
