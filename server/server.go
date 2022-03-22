@@ -90,6 +90,7 @@ func (s HttpServer) Run(rs ...Router) {
 		syscall.SIGHUP,
 		syscall.SIGQUIT)
 
+	// 检测服务是否shutdown了
 	go func() {
 		<-sgn
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -100,6 +101,7 @@ func (s HttpServer) Run(rs ...Router) {
 		wg.Done()
 	}()
 
+	// 监听服务
 	err := srv.ListenAndServe()
 	if err != nil {
 		if err != http.ErrServerClosed {
