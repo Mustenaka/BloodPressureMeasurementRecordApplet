@@ -12,10 +12,3 @@ type TreatmentPlan struct {
 	EndDate     string // 结束日期
 	EndTime     string // 结束时间
 }
-
-// 治疗计划使用药物表
-type TreatmentUseMedical struct {
-	Id          uint
-	TreatmentId uint
-	MedicalId   uint
-}

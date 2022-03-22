@@ -14,10 +14,3 @@ type BaseUser struct {
 	Sex        string // 用户性别，可选项"男"，"女"，"其他"
 	Status     string // 用户状态，可选项"开启"，"关闭"
 }
-
-// 后端管理权限表
-type PasswordUser struct {
-	AdminId  uint   // 管理权限id
-	UserId   uint   // 用户id
-	Password string // 用户密码(需要加密保存)
-}
