@@ -55,6 +55,7 @@ func (d *defaultMysqlDataSource) Close() {
 	}
 }
 
+// 初始化默认sql - Master
 func NewDefaultMysql(c config.DBConfig) *defaultMysqlDataSource {
 	return &defaultMysqlDataSource{
 		master: connect(
