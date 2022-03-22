@@ -1,34 +1,36 @@
 package main
 
-// Test hello
+import (
+	"BloodPressure/internal/model"
+	"BloodPressure/pkg/config"
+	"BloodPressure/pkg/db"
+	"BloodPressure/pkg/log"
+	"BloodPressure/pkg/version"
+	"BloodPressure/server"
+	"fmt"
+)
+
+// 启动应用代码
 func RunProgram() {
-	// // 解析服务器启动参数
-	// appOpt := &server.AppOptions{}
-	// server.ResolveAppOptions(appOpt)
-	// if appOpt.PrintVersion {
-	// 	version.PrintVersion()
-	// }
+	// 解析服务器配置参数
+	appOpt := &server.AppOptions{}
+	server.ResolveAppOptions(appOpt)
+	if appOpt.PrintVersion {
+		version.PrintVersion()
+	}
 
-	// 加载配置参数
-	// logConfig := log.LogConfig{
-	// 	Level:      conf.GetConfigValue("logconfig", "level"),
-	// 	FileName:   conf.GetConfigValue("logconfig", "file-name"),
-	// 	TimeFormat: constant.TimeLayout,
-	// 	MaxSize:    conf.GetConfigValueInt("logconfig", "max-size"),
-	// 	MaxBackups: conf.GetConfigValueInt("logconfig", "max-backups"),
-	// 	MaxAge:     conf.GetConfigValueInt("logconfig", "max-age"),
-	// 	Compress:   conf.GetConfigValueBool("logconfig", "compress"),
-	// 	LocalTime:  conf.GetConfigValueBool("logconfig", "local-time"),
-	// 	Console:    conf.GetConfigValueBool("logconfig", "console"),
-	// }
-	// log.InitLogger(&logConfig, "aaaa")
-	// log.InitLogger(log.InitLoggerWithConfig(), "asd")
-	// log.Info("basicinfo: ", log.WithPair("AppName", conf.GetConfigValue("basicinfo", "appName")))
-	// log.Info("basicinfo: ", log.WithPair("Version", conf.GetConfigValue("basicinfo", "version")))
-	// log.Info("basicinfo: ", log.WithPair("Copyright", conf.GetConfigValue("basicinfo", "copyright")))
-
-	// 加载数据库
-	// model.Connect()
+	// 加载配置文件
+	c := config.Load(appOpt.ConfigFilePath)
+	log.InitLogger(&c.LogConfig, c.BasicinfoConfig.AppName) // 日志
+	ds := db.NewDefaultMysql(c.DBConfig)                    // 创建数据库链接，使用默认的实现方式
+	var users []model.BaseUser
+	if err := ds.Master().Where(&model.BaseUser{UserName: "李翠花"}).Find(&users); err.Error != nil {
+		// 错误处理
+		fmt.Println("没有找到该数据333")
+	}
+	for _, value := range users {
+		fmt.Println(value.UserId, value.UserName)
+	}
 }
 
 func main() {

@@ -1,8 +1,8 @@
-package model
+package db
 
 import (
+	"BloodPressure/internal/model"
 	"BloodPressure/pkg/config"
-	"BloodPressure/pkg/model/entity"
 	"fmt"
 	"testing"
 )
@@ -11,8 +11,8 @@ import (
 func TestConnect(t *testing.T) {
 	c := config.Load("./../config/config_back.ini")
 	db := NewDefaultMysql(c.DBConfig)
-	var users []entity.BaseUser
-	if err := db.Master().Where(&entity.BaseUser{UserName: "李翠花"}).Find(&users); err.Error != nil {
+	var users []model.BaseUser
+	if err := db.Master().Where(&model.BaseUser{UserName: "李翠花"}).Find(&users); err.Error != nil {
 		// 错误处理
 		fmt.Println("没有找到该数据333")
 	}

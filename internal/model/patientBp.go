@@ -1,4 +1,4 @@
-package entity
+package model
 
 // 血压记录表
 type PatientBpRecord struct {
