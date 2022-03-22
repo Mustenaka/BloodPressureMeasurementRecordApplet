@@ -13,9 +13,9 @@ var _ IDataSource = (*defaultMysqlDataSource)(nil)
 
 // IDataSource 定义数据库数据源接口，按照业务需求可以返回主库链接Master和从库链接Slave
 type IDataSource interface {
-	Master() *gorm.DB
-	Slave() *gorm.DB
-	Close()
+	Master() *gorm.DB // 主数据库
+	Slave() *gorm.DB  // 从数据库 - 如果需要使用从数据库需要重新编译
+	Close()           // 关闭数据库（主从均关闭）
 }
 
 // defaultMysqlDataSource 默认mysql数据源实现
@@ -72,6 +72,7 @@ func NewDefaultMysql(c config.DBConfig) *defaultMysqlDataSource {
 	}
 }
 
+// 数据库链接
 func connect(user, password, host, port, dbname, charset, parseTime, loc string, maxPoolSize, maxIdle int) *gorm.DB {
 	dsn := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=%s&parseTime=%s&loc=%s",
 		user, password,
