@@ -8,28 +8,28 @@ import (
 	"context"
 )
 
-var _ UserService = (*userService)(nil)
+var _ BaseUserService = (*baseUserService)(nil)
 
-// UserService 定义用户操作服务接口
-type UserService interface {
+// BaseUserService 定义用户操作服务接口
+type BaseUserService interface {
 	GetByName(ctx context.Context, name string) (*model.BaseUser, error)
 	GetById(ctx context.Context, uid uint) (*model.BaseUser, error)
 }
 
-// userService 实现UserService接口
-type userService struct {
+// baseUserService 实现UserService接口
+type baseUserService struct {
 	ur repo.BaseUserRepo
 }
 
 // 新用户服务
-func NewUserService(_ur repo.BaseUserRepo) *userService {
-	return &userService{
+func NewUserService(_ur repo.BaseUserRepo) *baseUserService {
+	return &baseUserService{
 		ur: _ur,
 	}
 }
 
 // GetByName 通过用户名 查找用户
-func (us *userService) GetByName(ctx context.Context, name string) (*model.BaseUser, error) {
+func (us *baseUserService) GetByName(ctx context.Context, name string) (*model.BaseUser, error) {
 	if len(name) == 0 {
 		return nil, errors.WithCode(code.ValidateErr, "用户名称不能为空")
 	}
@@ -37,6 +37,6 @@ func (us *userService) GetByName(ctx context.Context, name string) (*model.BaseU
 }
 
 // GetById 根据用户ID查找用户
-func (us *userService) GetById(ctx context.Context, uid uint) (*model.BaseUser, error) {
+func (us *baseUserService) GetById(ctx context.Context, uid uint) (*model.BaseUser, error) {
 	return us.ur.GetUserById(ctx, uid)
 }
