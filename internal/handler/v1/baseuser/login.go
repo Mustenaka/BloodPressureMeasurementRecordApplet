@@ -15,7 +15,7 @@ import (
 )
 
 // 登录模块 - 通过用户名，密码登录
-func (uh *BaseUserHandler) LoginByPassword() gin.HandlerFunc {
+func (uh *BaseUserHandler) Login() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		type LoginParam struct {
 			Username string `json:"username" binding:"required"`

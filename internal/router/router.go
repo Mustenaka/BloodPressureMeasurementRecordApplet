@@ -41,13 +41,13 @@ func (r *router) Load(g *gin.Engine) {
 	g.GET("/ping", ping.Ping())
 
 	// login
-	g.POST("/login", r.uh.LoginByPassword())
+	g.POST("/login", r.uh.Login())
 
 	// user group
 	ug := g.Group("/v1/user", middleware.AuthToken())
 	{
 		ug.GET("", r.uh.GetBaseUserInfo())
 		// login
-		ug.POST("/login", r.uh.LoginByPassword())
+		ug.POST("/login", r.uh.Login())
 	}
 }

@@ -54,6 +54,8 @@ func RunProgram() {
 			ds.Close()
 		}
 	})
+
+	// 启动服务
 	srv.Run(routers...)
 }
 
