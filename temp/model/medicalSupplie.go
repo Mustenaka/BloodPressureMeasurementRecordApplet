@@ -1,4 +1,4 @@
-package entity
+package model
 
 // 药品供应表
 type MedicalSupplie struct {

@@ -15,6 +15,14 @@ const (
 	Unknown = -1
 )
 
+// const (
+// 	GETSuccessful = iota + 200
+// 	POSTCreated
+// 	PUTSuccessful
+// 	PATCHSuccessful
+// 	DELETESuccessful
+// )
+
 const (
 	// MpApiErr 小程序接口调用错误
 	MpApiErr = iota + 30000

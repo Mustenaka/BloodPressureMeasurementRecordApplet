@@ -1,6 +1,7 @@
 package server
 
 import (
+	"BloodPressure/pkg/config"
 	"BloodPressure/pkg/log"
 	"context"
 	"flag"
@@ -14,6 +15,19 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
+// HttpServer 代表当前服务端实例
+type HttpServer struct {
+	config *config.Config
+	f      func()
+}
+
+// NewHttpServer 创建server实例
+func NewHttpServer(config *config.Config) *HttpServer {
+	return &HttpServer{
+		config: config,
+	}
+}
 
 // Router 加载路由，使用侧提供接口，实现侧需要实现该接口
 type Router interface {
@@ -41,39 +55,36 @@ func ResolveAppOptions(opt *AppOptions) {
 	flag.Parse()
 
 	opt.PrintVersion = printVersion
-	opt.ConfigFilePath = configFilePath
+	// opt.ConfigFilePath = configFilePath
+	opt.ConfigFilePath = "./config/config.ini"
 }
 
 // Run server的启动入口
 // 加载路由, 启动服务
 func (s HttpServer) Run(rs ...Router) {
-	// 获取全局参数
-
 	var wg sync.WaitGroup
 	wg.Add(1)
 	// 设置gin启动模式，必须在创建gin实例之前
-	gin.SetMode(s.mode)
+	gin.SetMode(s.config.ServerConfig.Mode)
 	g := gin.New()
 	s.routerLoad(g, rs...)
 
 	// health check
 	go func() {
-		if err := Ping(s.port, s.maxPingCount); err != nil {
+		if err := Ping(s.config.ServerConfig.Port, s.config.ServerConfig.MaxPingCount); err != nil {
 			log.Fatal("server no response")
 		}
-		log.Infof("server started success! port: %s", s.port)
+		log.Infof("server started success! port: %s", s.config.ServerConfig.Port)
 	}()
 
-	// 创建http服务
 	srv := http.Server{
-		Addr:    s.port,
+		Addr:    s.config.ServerConfig.Port,
 		Handler: g,
 	}
-
-	// 发生错误，shutdown服务
 	if s.f != nil {
 		srv.RegisterOnShutdown(s.f)
 	}
+
 	// graceful shutdown
 	sgn := make(chan os.Signal, 1)
 	signal.Notify(sgn, syscall.SIGINT,
@@ -81,7 +92,7 @@ func (s HttpServer) Run(rs ...Router) {
 		syscall.SIGHUP,
 		syscall.SIGQUIT)
 
-	// shutdown server
+	// 检测服务是否shutdown了
 	go func() {
 		<-sgn
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -96,12 +107,12 @@ func (s HttpServer) Run(rs ...Router) {
 	err := srv.ListenAndServe()
 	if err != nil {
 		if err != http.ErrServerClosed {
-			log.Errorf("server start failed on port %s", s.port)
+			log.Errorf("server start failed on port %s", s.config.ServerConfig.Port)
 			return
 		}
 	}
 	wg.Wait()
-	log.Infof("server stop on port %s", s.port)
+	log.Infof("server stop on port %s", s.config.ServerConfig.Port)
 }
 
 // RouterLoad 加载自定义路由

@@ -9,12 +9,12 @@ import (
 
 // CustomClaims 在标准声明中加入用户id
 type CustomClaims struct {
-	UserId int64 `json:"user_id"`
+	UserId uint `json:"user_id"`
 	jwt.RegisteredClaims
 }
 
 // 创建申明
-func BuildClaims(exp time.Time, uid int64) *CustomClaims {
+func BuildClaims(exp time.Time, uid uint) *CustomClaims {
 	return &CustomClaims{
 		UserId: uid,
 		RegisteredClaims: jwt.RegisteredClaims{

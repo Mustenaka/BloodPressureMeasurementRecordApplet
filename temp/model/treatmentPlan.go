@@ -1,4 +1,4 @@
-package entity
+package model
 
 // 治疗计划表
 type TreatmentPlan struct {
@@ -11,11 +11,4 @@ type TreatmentPlan struct {
 	Status      string // 状态{“生效”，“失效”}
 	EndDate     string // 结束日期
 	EndTime     string // 结束时间
-}
-
-// 治疗计划使用药物表
-type TreatmentUseMedical struct {
-	Id          uint
-	TreatmentId uint
-	MedicalId   uint
 }

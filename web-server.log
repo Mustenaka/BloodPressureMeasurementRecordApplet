@@ -1,8 +1,0 @@
-2022-03-17 17:54:26	INFO	BloodPressureMeasurementRecordApplet/main.go:31	Start Program.	{"appName": "高血压测量记录小程序后端"}
-2022-03-17 17:54:55	INFO	BloodPressureMeasurementRecordApplet/main.go:31	Start Program.	{"appName": "高血压测量记录小程序后端"}
-2022-03-17 17:55:14	INFO	BloodPressureMeasurementRecordApplet/main.go:29	Start Program.	{"appName": "高血压测量记录小程序后端"}
-2022-03-17 17:55:20	INFO	BloodPressureMeasurementRecordApplet/main.go:29	Start Program.	{"appName": "高血压测量记录小程序后端"}
-2022-03-17 17:55:33	INFO	BloodPressureMeasurementRecordApplet/main.go:29	Start Program.	{"appName": "高血压测量记录小程序后端"}
-2022-03-17 18:05:27	INFO	BloodPressureMeasurementRecordApplet/main.go:32	basicinfo: 	{"appName": "aaaa", "AppName": "高血压测量记录小程序后端"}
-2022-03-17 18:05:27	INFO	BloodPressureMeasurementRecordApplet/main.go:33	basicinfo: 	{"appName": "aaaa", "Version": "v0.0.1"}
-2022-03-17 18:05:27	INFO	BloodPressureMeasurementRecordApplet/main.go:34	basicinfo: 	{"appName": "aaaa", "Copyright": "@2022 Begining Power,Inc. All rights reserved. 深圳始动科技有限公司保留所有权利"}

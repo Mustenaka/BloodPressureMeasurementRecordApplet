@@ -1,48 +1,65 @@
 package main
 
 import (
-	"fmt"
+	"BloodPressure/internal/handler/v1/baseuser"
+	"BloodPressure/internal/repo/mysql"
+	"BloodPressure/internal/router"
+	"BloodPressure/internal/service"
+	"BloodPressure/pkg/config"
+	"BloodPressure/pkg/db"
+	"BloodPressure/pkg/log"
+	"BloodPressure/pkg/version"
+	"BloodPressure/server"
 )
 
-// Test hello
-func RunProgram() {
-	// // 解析服务器启动参数
-	// appOpt := &server.AppOptions{}
-	// server.ResolveAppOptions(appOpt)
-	// if appOpt.PrintVersion {
-	// 	version.PrintVersion()
-	// }
+func initRouter(ds db.IDataSource) server.Router {
+	userRepo := mysql.NewBaseUserRepo(ds)
+	userService := service.NewBaseUserService(userRepo)
+	userHandler := baseuser.NewBaseUserHandler(userService)
+	routerRouter := router.NewRouter(userHandler)
+	return routerRouter
+}
 
-	// 加载配置参数
+func getRouters(ds db.IDataSource) []server.Router {
+	rts := make([]server.Router, 0)
+	rt := initRouter(ds)
 
-	value := conf.GetConfigValue("database", "hostname")
-	fmt.Println("1", value)
-	emptyValue := conf.GetConfigValue("UnknownList", "UnknownData")
-	if emptyValue == "no value" {
-		fmt.Println("asdhajksd")
+	if rt != nil {
+		rts = append(rts, rt)
 	}
-	fmt.Println("2", emptyValue)
-	// logConfig := log.LogConfig{
-	// 	Level:      conf.GetConfigValue("logconfig", "level"),
-	// 	FileName:   conf.GetConfigValue("logconfig", "file-name"),
-	// 	TimeFormat: constant.TimeLayout,
-	// 	MaxSize:    conf.GetConfigValueInt("logconfig", "max-size"),
-	// 	MaxBackups: conf.GetConfigValueInt("logconfig", "max-backups"),
-	// 	MaxAge:     conf.GetConfigValueInt("logconfig", "max-age"),
-	// 	Compress:   conf.GetConfigValueBool("logconfig", "compress"),
-	// 	LocalTime:  conf.GetConfigValueBool("logconfig", "local-time"),
-	// 	Console:    conf.GetConfigValueBool("logconfig", "console"),
-	// }
-	// log.InitLogger(&logConfig, "aaaa")
-	// log.InitLogger(log.InitLoggerWithConfig(), "asd")
-	// log.Info("basicinfo: ", log.WithPair("AppName", conf.GetConfigValue("basicinfo", "appName")))
-	// log.Info("basicinfo: ", log.WithPair("Version", conf.GetConfigValue("basicinfo", "version")))
-	// log.Info("basicinfo: ", log.WithPair("Copyright", conf.GetConfigValue("basicinfo", "copyright")))
+	return rts
+}
 
-	// 加载数据库
-	// model.Connect()
+// 启动应用代码
+func RunProgram() {
+	// 解析服务器配置参数
+	appOpt := &server.AppOptions{}
+	server.ResolveAppOptions(appOpt)
+	if appOpt.PrintVersion {
+		version.PrintVersion()
+	}
+
+	// 加载配置文件
+	c := config.Load(appOpt.ConfigFilePath)
+	log.InitLogger(&c.LogConfig, c.BasicinfoConfig.AppName) // 日志
+
+	// 创建数据库链接，使用默认的实现方式
+	ds := db.NewDefaultMysql(c.DBConfig)
+	routers := getRouters(ds)
+
+	// 创建HTTPServer
+	srv := server.NewHttpServer(config.GlobalConfig)
+	srv.RegisterOnShutdown(func() {
+		if ds != nil {
+			ds.Close()
+		}
+	})
+
+	// 启动服务
+	srv.Run(routers...)
 }
 
 func main() {
+	// example.ExampleRun()
 	RunProgram()
 }
