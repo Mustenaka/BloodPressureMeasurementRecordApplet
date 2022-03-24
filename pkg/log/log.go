@@ -2,7 +2,7 @@ package log
 
 import (
 	"BloodPressure/pkg/config"
-	"BloodPressure/pkg/log/constant"
+	"BloodPressure/pkg/constant"
 	"context"
 	"os"
 	"sync"

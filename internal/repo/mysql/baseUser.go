@@ -21,12 +21,18 @@ func NewUserRepo(_ds db.IDataSource) *baseUserRepo {
 
 func (ur *baseUserRepo) GetUserByName(ctx context.Context, name string) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
-	err := ur.ds.Master().Where("name = ?", name).Find(user).Error
+	err := ur.ds.Master().Where("user_name = ?", name).Find(user).Error
 	return user, err
 }
 
 func (ur *baseUserRepo) GetUserById(ctx context.Context, uid uint) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	err := ur.ds.Master().Where("id = ?", uid).Find(user).Error
+	return user, err
+}
+
+func (ur *baseUserRepo) GetUserByOpenId(ctx context.Context, openid string) (*model.BaseUser, error) {
+	user := &model.BaseUser{}
+	err := ur.ds.Master().Where("open_id = ?", openid).Find(user).Error
 	return user, err
 }

@@ -1,9 +1,9 @@
 package response
 
 import (
+	"BloodPressure/pkg/constant"
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
-	"BloodPressure/pkg/log/constant"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
