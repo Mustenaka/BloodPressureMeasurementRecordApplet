@@ -23,14 +23,15 @@ func NewBaseUserHandler(_userSrv service.BaseUserService) *BaseUserHandler {
 	}
 }
 
+// 获取用户信息
 func (uh *BaseUserHandler) GetBaseUserInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uid := c.GetUint(constant.UserID)
-		user, err := uh.userSrv.GetById(context.TODO(), uid)
+		baseUser, err := uh.userSrv.GetById(context.TODO(), uid) // 通过id找到基本用户
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.NotFoundErr, "用户信息为空"), nil)
 		} else {
-			response.JSON(c, nil, user)
+			response.JSON(c, nil, baseUser)
 		}
 	}
 }

@@ -1,14 +1,34 @@
 package main
 
 import (
-	"BloodPressure/internal/model"
+	"BloodPressure/internal/handler/v1/baseuser"
+	"BloodPressure/internal/repo/mysql"
+	"BloodPressure/internal/router"
+	"BloodPressure/internal/service"
 	"BloodPressure/pkg/config"
 	"BloodPressure/pkg/db"
 	"BloodPressure/pkg/log"
 	"BloodPressure/pkg/version"
 	"BloodPressure/server"
-	"fmt"
 )
+
+func initRouter(ds db.IDataSource) server.Router {
+	userRepo := mysql.NewUserRepo(ds)
+	userService := service.NewUserService(userRepo)
+	userHandler := baseuser.NewBaseUserHandler(userService)
+	routerRouter := router.NewRouter(userHandler)
+	return routerRouter
+}
+
+func getRouters(ds db.IDataSource) []server.Router {
+	rts := make([]server.Router, 0)
+	rt := initRouter(ds)
+
+	if rt != nil {
+		rts = append(rts, rt)
+	}
+	return rts
+}
 
 // 启动应用代码
 func RunProgram() {
@@ -22,15 +42,19 @@ func RunProgram() {
 	// 加载配置文件
 	c := config.Load(appOpt.ConfigFilePath)
 	log.InitLogger(&c.LogConfig, c.BasicinfoConfig.AppName) // 日志
-	ds := db.NewDefaultMysql(c.DBConfig)                    // 创建数据库链接，使用默认的实现方式
-	var users []model.BaseUser
-	if err := ds.Master().Where(&model.BaseUser{UserName: "李翠花"}).Find(&users); err.Error != nil {
-		// 错误处理
-		fmt.Println("没有找到该数据333")
-	}
-	for _, value := range users {
-		fmt.Println(value.UserId, value.UserName)
-	}
+
+	// 创建数据库链接，使用默认的实现方式
+	ds := db.NewDefaultMysql(c.DBConfig)
+	routers := getRouters(ds)
+
+	// 创建HTTPServer
+	srv := server.NewHttpServer(config.GlobalConfig)
+	srv.RegisterOnShutdown(func() {
+		if ds != nil {
+			ds.Close()
+		}
+	})
+	srv.Run(routers...)
 }
 
 func main() {

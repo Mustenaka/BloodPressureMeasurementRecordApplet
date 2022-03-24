@@ -83,6 +83,7 @@ func (s HttpServer) Run(rs ...Router) {
 	if s.f != nil {
 		srv.RegisterOnShutdown(s.f)
 	}
+
 	// graceful shutdown
 	sgn := make(chan os.Signal, 1)
 	signal.Notify(sgn, syscall.SIGINT,
