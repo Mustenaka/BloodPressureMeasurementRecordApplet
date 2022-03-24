@@ -15,10 +15,10 @@ func Logger(c *gin.Context) {
 	// 请求前
 	now := time.Now()
 	reqPath := c.Request.URL.Path
-	reqId := c.GetString(constant.RequestId)
-	method := c.Request.Method
-	ip := c.ClientIP()
-	requestBody, err := ioutil.ReadAll(c.Request.Body)
+	reqId := c.GetString(constant.RequestId)           //
+	method := c.Request.Method                         // 请求方法GET POST
+	ip := c.ClientIP()                                 // 客户端IP
+	requestBody, err := ioutil.ReadAll(c.Request.Body) // 请求body
 	if err != nil {
 		requestBody = []byte{}
 	}

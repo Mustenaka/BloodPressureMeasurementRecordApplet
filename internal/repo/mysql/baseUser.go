@@ -13,25 +13,26 @@ type baseUserRepo struct {
 	ds db.IDataSource
 }
 
-func NewUserRepo(_ds db.IDataSource) *baseUserRepo {
+// 创建一个新的UserRepo
+func NewBaseUserRepo(_ds db.IDataSource) *baseUserRepo {
 	return &baseUserRepo{
 		ds: _ds,
 	}
 }
 
-func (ur *baseUserRepo) GetUserByName(ctx context.Context, name string) (*model.BaseUser, error) {
+func (ur *baseUserRepo) GetBaseUserByName(ctx context.Context, name string) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	err := ur.ds.Master().Where("user_name = ?", name).Find(user).Error
 	return user, err
 }
 
-func (ur *baseUserRepo) GetUserById(ctx context.Context, uid uint) (*model.BaseUser, error) {
+func (ur *baseUserRepo) GetBaseUserById(ctx context.Context, uid uint) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	err := ur.ds.Master().Where("id = ?", uid).Find(user).Error
 	return user, err
 }
 
-func (ur *baseUserRepo) GetUserByOpenId(ctx context.Context, openid string) (*model.BaseUser, error) {
+func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	err := ur.ds.Master().Where("open_id = ?", openid).Find(user).Error
 	return user, err

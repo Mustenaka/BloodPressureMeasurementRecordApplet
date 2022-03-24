@@ -13,8 +13,8 @@ import (
 )
 
 func initRouter(ds db.IDataSource) server.Router {
-	userRepo := mysql.NewUserRepo(ds)
-	userService := service.NewUserService(userRepo)
+	userRepo := mysql.NewBaseUserRepo(ds)
+	userService := service.NewBaseUserService(userRepo)
 	userHandler := baseuser.NewBaseUserHandler(userService)
 	routerRouter := router.NewRouter(userHandler)
 	return routerRouter
@@ -58,5 +58,6 @@ func RunProgram() {
 }
 
 func main() {
+	// example.ExampleRun()
 	RunProgram()
 }

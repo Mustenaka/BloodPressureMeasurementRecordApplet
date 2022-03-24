@@ -1,5 +1,9 @@
 package model
 
+import (
+	validator "gopkg.in/go-playground/validator.v9"
+)
+
 // 基础用户信息表
 type BaseUser struct {
 	UserId     uint   // 用户id
@@ -14,4 +18,15 @@ type BaseUser struct {
 	Birthday   string // 该账户的生日，用来确定年龄
 	Sex        string // 用户性别，可选项"男"，"女"，"其他"
 	Status     string // 用户状态，可选项"开启"，"关闭"
+}
+
+// 获取表名称
+func (BaseUser) TableName() string {
+	return "base_users"
+}
+
+// 判断有效性
+func (baseUser *BaseUser) Validate() error {
+	validate := validator.New()
+	return validate.Struct(baseUser)
 }

@@ -22,7 +22,7 @@ type baseUserService struct {
 }
 
 // 新用户服务
-func NewUserService(_ur repo.BaseUserRepo) *baseUserService {
+func NewBaseUserService(_ur repo.BaseUserRepo) *baseUserService {
 	return &baseUserService{
 		ur: _ur,
 	}
@@ -33,10 +33,10 @@ func (us *baseUserService) GetByName(ctx context.Context, name string) (*model.B
 	if len(name) == 0 {
 		return nil, errors.WithCode(code.ValidateErr, "用户名称不能为空")
 	}
-	return us.ur.GetUserByName(ctx, name)
+	return us.ur.GetBaseUserByName(ctx, name)
 }
 
 // GetById 根据用户ID查找用户
 func (us *baseUserService) GetById(ctx context.Context, uid uint) (*model.BaseUser, error) {
-	return us.ur.GetUserById(ctx, uid)
+	return us.ur.GetBaseUserById(ctx, uid)
 }
