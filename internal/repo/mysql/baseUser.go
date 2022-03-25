@@ -28,12 +28,12 @@ func (ur *baseUserRepo) GetBaseUserByName(ctx context.Context, name string) (*mo
 
 func (ur *baseUserRepo) GetBaseUserById(ctx context.Context, uid uint) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
-	err := ur.ds.Master().Where("id = ?", uid).Find(user).Error
+	err := ur.ds.Master().Where("user_id = ?", uid).Find(user).Error
 	return user, err
 }
 
-func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) (*model.BaseUser, error) {
-	user := &model.BaseUser{}
-	err := ur.ds.Master().Where("open_id = ?", openid).Find(user).Error
-	return user, err
-}
+// func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) (*model.BaseUser, error) {
+// 	user := &model.BaseUser{}
+// 	err := ur.ds.Master().Where("open_id = ?", openid).Find(user).Error
+// 	return user, err
+// }

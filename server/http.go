@@ -70,6 +70,7 @@ func (s HttpServer) Run(rs ...Router) {
 	s.routerLoad(g, rs...)
 
 	// health check
+	log.Debug("进行health check")
 	go func() {
 		if err := Ping(s.config.ServerConfig.Port, s.config.ServerConfig.MaxPingCount); err != nil {
 			log.Fatal("server no response")
