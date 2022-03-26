@@ -14,6 +14,7 @@ var _ BaseUserService = (*baseUserService)(nil)
 type BaseUserService interface {
 	GetByName(ctx context.Context, name string) (*model.BaseUser, error)
 	GetById(ctx context.Context, uid uint) (*model.BaseUser, error)
+	GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error)
 }
 
 // baseUserService 实现UserService接口
@@ -39,4 +40,9 @@ func (us *baseUserService) GetByName(ctx context.Context, name string) (*model.B
 // GetById 根据用户ID查找用户
 func (us *baseUserService) GetById(ctx context.Context, uid uint) (*model.BaseUser, error) {
 	return us.ur.GetBaseUserById(ctx, uid)
+}
+
+// GetByOpenid 通过openid找到目标用户
+func (us *baseUserService) GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error) {
+	return us.ur.GetBaseUserByOpenId(ctx, openid)
 }

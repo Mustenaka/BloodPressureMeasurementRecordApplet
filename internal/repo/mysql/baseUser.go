@@ -32,8 +32,8 @@ func (ur *baseUserRepo) GetBaseUserById(ctx context.Context, uid uint) (*model.B
 	return user, err
 }
 
-// func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) (*model.BaseUser, error) {
-// 	user := &model.BaseUser{}
-// 	err := ur.ds.Master().Where("open_id = ?", openid).Find(user).Error
-// 	return user, err
-// }
+func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) (*model.BaseUser, error) {
+	user := &model.BaseUser{}
+	err := ur.ds.Master().Where("open_id = ?", openid).Find(user).Error
+	return user, err
+}
