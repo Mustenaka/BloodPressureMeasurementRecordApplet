@@ -1,6 +1,9 @@
 package security
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestEncrypt(t *testing.T) {
 	plaintext := "123456"
@@ -8,9 +11,11 @@ func TestEncrypt(t *testing.T) {
 	if err != nil {
 		t.Errorf("Encrypt err %v \r\n", err)
 	}
+	fmt.Println(ciphertext)
 	t.Log(ciphertext)
 }
 
+// 验证加密
 func TestValidatePassword(t *testing.T) {
 	plaintext := "123456"
 	for i := 0; i < 10; i++ {
@@ -24,5 +29,8 @@ func TestValidatePassword(t *testing.T) {
 		if !res {
 			t.Fatal("校验失败")
 		}
+
+		fmt.Println(plaintext, res)
 	}
+
 }

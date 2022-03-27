@@ -1,5 +1,7 @@
 package model
 
+import validator "gopkg.in/go-playground/validator.v9"
+
 // 治疗计划表
 type TreatmentPlan struct {
 	TreatmentId uint   // 治疗方案id
@@ -11,4 +13,15 @@ type TreatmentPlan struct {
 	Status      string // 状态{“生效”，“失效”}
 	EndDate     string // 结束日期
 	EndTime     string // 结束时间
+}
+
+// 获取表名称
+func (TreatmentPlan) TableName() string {
+	return "treatment_plans"
+}
+
+// 判断有效性
+func (treatmentPlan *TreatmentPlan) Validate() error {
+	validate := validator.New()
+	return validate.Struct(treatmentPlan)
 }

@@ -42,6 +42,8 @@ func (r *router) Load(g *gin.Engine) {
 
 	// login
 	g.POST("/login", r.uh.Login())
+	// loginWithOpenid - wechat user login.
+	g.POST("/wechatlogin", r.uh.LoginWithOpenid())
 
 	// user group
 	ug := g.Group("/v1/user", middleware.AuthToken())

@@ -14,7 +14,7 @@ func init() {
 		LogConfig: config.LogConfig{
 			Level:      "debug",
 			FileName:   "test.log",
-			TimeFormat: constant.TimeLayout,
+			TimeFormat: constant.DateTimeLayout,
 			MaxSize:    1,
 			MaxBackups: 5,
 			MaxAge:     2,

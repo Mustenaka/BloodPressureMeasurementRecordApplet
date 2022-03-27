@@ -27,7 +27,9 @@ func NewBaseUserHandler(_userSrv service.BaseUserService) *BaseUserHandler {
 func (uh *BaseUserHandler) GetBaseUserInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uid := c.GetUint(constant.UserID)
-		baseUser, err := uh.userSrv.GetById(context.TODO(), uid) // 通过id找到基本用户
+		// 通过id找到基本用户
+		baseUser, err := uh.userSrv.GetById(context.TODO(), uid)
+
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.NotFoundErr, "用户信息为空"), nil)
 		} else {
