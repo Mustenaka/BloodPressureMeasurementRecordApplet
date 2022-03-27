@@ -78,6 +78,8 @@ func (uh *BaseUserHandler) WeRegister() gin.HandlerFunc {
 			return
 		}
 
+		// 需要检查数据是否正常
+
 		// 注册信息
 		err = uh.userSrv.AddByDetail(context.TODO(),
 			param.Username,
