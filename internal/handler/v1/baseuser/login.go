@@ -85,6 +85,7 @@ func (uh *BaseUserHandler) LoginWithOpenid() gin.HandlerFunc {
 			response.JSON(c, errors.Wrap(err, code.UserLoginErr, "登录失败，用户不存在"), nil)
 			return
 		}
+		log.Debug("用户信息", log.WithPair("用户名:", user.UserName), log.WithPair("用户id", user.UserId))
 
 		// 生成jwt token
 		expireAt := time.Now().Add(24 * 7 * time.Hour)                                 // 当前时间+7天

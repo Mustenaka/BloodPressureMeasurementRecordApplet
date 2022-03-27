@@ -91,7 +91,7 @@ func (l *logger) newCore(ws zapcore.WriteSyncer) zapcore.Core {
 func (l *logger) customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
 	format := l.cfg.TimeFormat
 	if len(format) <= 0 {
-		format = constant.TimeLayoutMs
+		format = constant.DateTimeLayout
 	}
 	enc.AppendString(t.Format(format))
 }
