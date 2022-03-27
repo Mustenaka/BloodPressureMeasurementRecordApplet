@@ -37,13 +37,16 @@ func (r *router) Load(g *gin.Engine) {
 		c.JSON(http.StatusNotFound, "404 not found!")
 	})
 
-	// ping server - 测试服务器
+	// ping server - 测试服务器通畅
 	g.GET("/ping", ping.Ping())
 
 	// login
 	g.POST("/login", r.uh.Login())
-	// loginWithOpenid - wechat user login.
-	g.POST("/wechatlogin", r.uh.LoginWithOpenid())
+	g.POST("/wechatlogin", r.uh.WeLogin())
+
+	// register
+	g.POST("/register", r.uh.Register())
+	g.POST("/weregister", r.uh.WeRegister())
 
 	// user group
 	ug := g.Group("/v1/user", middleware.AuthToken())

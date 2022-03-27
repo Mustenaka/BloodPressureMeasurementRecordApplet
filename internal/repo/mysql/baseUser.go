@@ -4,6 +4,7 @@ import (
 	"BloodPressure/internal/model"
 	"BloodPressure/internal/repo"
 	"BloodPressure/pkg/db"
+	timeconvert "BloodPressure/tools/timeConvert"
 	"context"
 	"errors"
 )
@@ -25,7 +26,7 @@ func NewBaseUserRepo(_ds db.IDataSource) *baseUserRepo {
 func (ur *baseUserRepo) GetBaseUserByName(ctx context.Context, name string) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	var count int64
-	err := ur.ds.Master().Where("user_name = ?", name).Find(user).Error
+	err := ur.ds.Master().Where("user_name = ?", name).Find(user).Count(&count).Error
 	if count == 0 {
 		err = errors.New("record not found")
 	}
@@ -36,7 +37,7 @@ func (ur *baseUserRepo) GetBaseUserByName(ctx context.Context, name string) (*mo
 func (ur *baseUserRepo) GetBaseUserById(ctx context.Context, uid uint) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	var count int64
-	err := ur.ds.Master().Where("user_id = ?", uid).Find(user).Error
+	err := ur.ds.Master().Where("user_id = ?", uid).Find(user).Count(&count).Error
 	if count == 0 {
 		err = errors.New("record not found")
 	}
@@ -55,17 +56,23 @@ func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) 
 }
 
 // 通过用户名、密码创建新用户
-func (ur *baseUserRepo) AddBaseUserByAdmin(ctx context.Context, name, password string) (*model.BaseUser, error) {
+func (ur *baseUserRepo) AddBaseUserByNamePassword(ctx context.Context, name, password string) error {
+	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
 		UserName: name,
 		Password: password,
+
+		LastTime:   nowTime,
+		CreateTime: nowTime,
+		Status:     "开启",
 	}
 	err := ur.ds.Master().Create(user).Error
-	return user, err
+	return err
 }
 
 // 通过用户名、密码创建新用户
-func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) (*model.BaseUser, error) {
+func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error {
+	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
 		UserName: name,
 		OpenId:   openid,
@@ -74,7 +81,11 @@ func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, r
 		Email:    email,
 		Birthday: brithday, // 时间之间转换成字符串给mysql接收，会根据字符串格式进行自动转换的
 		Sex:      sex,
+
+		LastTime:   nowTime,
+		CreateTime: nowTime,
+		Status:     "开启",
 	}
 	err := ur.ds.Master().Create(user).Error
-	return user, err
+	return err
 }

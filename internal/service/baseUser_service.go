@@ -5,6 +5,7 @@ import (
 	"BloodPressure/internal/repo"
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
+	"BloodPressure/tools/reg"
 	"context"
 )
 
@@ -15,6 +16,8 @@ type BaseUserService interface {
 	GetByName(ctx context.Context, name string) (*model.BaseUser, error)
 	GetById(ctx context.Context, uid uint) (*model.BaseUser, error)
 	GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error)
+	AddByNameAndPassword(ctx context.Context, name, password string) error
+	AddByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error
 }
 
 // baseUserService 实现UserService接口
@@ -44,5 +47,31 @@ func (us *baseUserService) GetById(ctx context.Context, uid uint) (*model.BaseUs
 
 // GetByOpenid 通过openid找到目标用户
 func (us *baseUserService) GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error) {
+	if len(openid) == 0 {
+		return nil, errors.WithCode(code.ValidateErr, "openid不能为空")
+	}
 	return us.ur.GetBaseUserByOpenId(ctx, openid)
+}
+
+// 通过用户名密码添加新用户（后台管理端使用）
+func (us *baseUserService) AddByNameAndPassword(ctx context.Context, name, password string) error {
+	return us.ur.AddBaseUserByNamePassword(ctx, name, password)
+}
+
+// 通过详细信息创建用户（微信小程序端口使用）
+func (us *baseUserService) AddByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error {
+	// 验证生日字段
+	if !reg.VerifyDateFormat(brithday) {
+		return errors.WithCode(code.ValidateErr, "生日日期格式不对，正确 YYYY-MM-DD")
+	}
+	// 验证电话号码
+	if !reg.VerifyMobileFormat(telephone) {
+		return errors.WithCode(code.ValidateErr, "电话号码格式错误")
+	}
+	// 验证邮箱
+	if !reg.VerifyEmailFormat(email) {
+		return errors.WithCode(code.ValidateErr, "邮箱格式错误")
+	}
+
+	return us.ur.AddBaseUserByDetail(ctx, name, openid, realname, telephone, email, brithday, sex)
 }
