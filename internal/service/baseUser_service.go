@@ -15,6 +15,8 @@ type BaseUserService interface {
 	GetByName(ctx context.Context, name string) (*model.BaseUser, error)
 	GetById(ctx context.Context, uid uint) (*model.BaseUser, error)
 	GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error)
+	AddByNameAndPassword(ctx context.Context, name, password string) error
+	AddByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error
 }
 
 // baseUserService 实现UserService接口
@@ -45,4 +47,14 @@ func (us *baseUserService) GetById(ctx context.Context, uid uint) (*model.BaseUs
 // GetByOpenid 通过openid找到目标用户
 func (us *baseUserService) GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error) {
 	return us.ur.GetBaseUserByOpenId(ctx, openid)
+}
+
+// 通过用户名密码添加新用户（后台管理端使用）
+func (us *baseUserService) AddByNameAndPassword(ctx context.Context, name, password string) error {
+	return us.ur.AddBaseUserByNamePassword(ctx, name, password)
+}
+
+// 通过详细信息创建用户（微信小程序端口使用）
+func (us *baseUserService) AddByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error {
+	return us.ur.AddBaseUserByDetail(ctx, name, openid, realname, telephone, email, brithday, sex)
 }

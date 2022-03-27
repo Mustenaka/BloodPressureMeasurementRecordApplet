@@ -41,6 +41,9 @@ const (
 	// UserLoginErr 登录错误
 	UserLoginErr
 
+	// UserRegisterErr 注册错误
+	UserRegisterErr
+
 	// AuthTokenErr token 鉴权错误或权限不足
 	AuthTokenErr
 
