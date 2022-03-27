@@ -26,7 +26,7 @@ func NewBaseUserRepo(_ds db.IDataSource) *baseUserRepo {
 func (ur *baseUserRepo) GetBaseUserByName(ctx context.Context, name string) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	var count int64
-	err := ur.ds.Master().Where("user_name = ?", name).Find(user).Error
+	err := ur.ds.Master().Where("user_name = ?", name).Find(user).Count(&count).Error
 	if count == 0 {
 		err = errors.New("record not found")
 	}
@@ -37,7 +37,7 @@ func (ur *baseUserRepo) GetBaseUserByName(ctx context.Context, name string) (*mo
 func (ur *baseUserRepo) GetBaseUserById(ctx context.Context, uid uint) (*model.BaseUser, error) {
 	user := &model.BaseUser{}
 	var count int64
-	err := ur.ds.Master().Where("user_id = ?", uid).Find(user).Error
+	err := ur.ds.Master().Where("user_id = ?", uid).Find(user).Count(&count).Error
 	if count == 0 {
 		err = errors.New("record not found")
 	}

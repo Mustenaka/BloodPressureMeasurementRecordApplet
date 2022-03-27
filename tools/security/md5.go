@@ -27,5 +27,5 @@ func getResult(src string) string {
 // 验证MD5是否相等
 func ValidateMd5(src string, dst string) bool {
 	result := Md5(src)
-	return result != strings.ToUpper(dst)
+	return result == strings.ToUpper(dst)
 }

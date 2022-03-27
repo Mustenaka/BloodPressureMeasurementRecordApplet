@@ -46,6 +46,9 @@ func (us *baseUserService) GetById(ctx context.Context, uid uint) (*model.BaseUs
 
 // GetByOpenid 通过openid找到目标用户
 func (us *baseUserService) GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error) {
+	if len(openid) == 0 {
+		return nil, errors.WithCode(code.ValidateErr, "openid不能为空")
+	}
 	return us.ur.GetBaseUserByOpenId(ctx, openid)
 }
 

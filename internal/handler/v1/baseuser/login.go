@@ -5,7 +5,6 @@ import (
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
 	"BloodPressure/pkg/jwt"
-	"BloodPressure/pkg/log"
 	"BloodPressure/pkg/response"
 	jtime "BloodPressure/pkg/time"
 	"BloodPressure/tools/security"
@@ -21,7 +20,6 @@ func (uh *BaseUserHandler) Login() gin.HandlerFunc {
 		type LoginParam struct {
 			Username string `json:"username" binding:"required"`
 			Password string `json:"password" binding:"required"`
-			// OpenId   string `json:"openid"`
 		}
 
 		var param LoginParam
@@ -38,8 +36,7 @@ func (uh *BaseUserHandler) Login() gin.HandlerFunc {
 		}
 
 		// 检查用户名密码
-		log.Debug("密码为:", log.WithPair("传入密码", param.Password), log.WithPair("用户密码", user.Password))
-		if !security.ValidatePassword(param.Password, user.Password) {
+		if !security.ValidateMd5(param.Password, user.Password) {
 			response.JSON(c, errors.WithCode(code.UserLoginErr, "登录失败，用户名、密码不匹配"), nil)
 			return
 		}
@@ -67,7 +64,7 @@ func (uh *BaseUserHandler) Login() gin.HandlerFunc {
 }
 
 // 登录模块 - 直接通过openid做到一键登录
-func (uh *BaseUserHandler) LoginWithOpenid() gin.HandlerFunc {
+func (uh *BaseUserHandler) WeLogin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		type LoginParam struct {
 			OpenId string `json:"openid"   binding:"required"`
@@ -85,7 +82,6 @@ func (uh *BaseUserHandler) LoginWithOpenid() gin.HandlerFunc {
 			response.JSON(c, errors.Wrap(err, code.UserLoginErr, "登录失败，用户不存在"), nil)
 			return
 		}
-		log.Debug("用户信息", log.WithPair("用户名:", user.UserName), log.WithPair("用户id", user.UserId))
 
 		// 生成jwt token
 		expireAt := time.Now().Add(24 * 7 * time.Hour)                                 // 当前时间+7天
