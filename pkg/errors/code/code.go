@@ -44,6 +44,12 @@ const (
 	// UserRegisterErr 注册错误
 	UserRegisterErr
 
+	// UserUpdateErr 修改错误
+	UserUpdateErr
+
+	// UserDeleteErr 删除错误
+	UserDeleteErr
+
 	// AuthTokenErr token 鉴权错误或权限不足
 	AuthTokenErr
 

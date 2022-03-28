@@ -52,6 +52,8 @@ func (uh *BaseUserHandler) Login() gin.HandlerFunc {
 			return
 		}
 
+		// 记录 登录记录
+
 		// 返回这个token
 		response.JSON(c, nil, struct {
 			Token    string         `json:"token"`
