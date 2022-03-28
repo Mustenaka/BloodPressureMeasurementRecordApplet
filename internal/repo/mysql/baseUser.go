@@ -4,6 +4,8 @@ import (
 	"BloodPressure/internal/model"
 	"BloodPressure/internal/repo"
 	"BloodPressure/pkg/db"
+	"BloodPressure/pkg/log"
+	strtools "BloodPressure/tools/strTools"
 	timeconvert "BloodPressure/tools/timeConvert"
 	"context"
 	"errors"
@@ -55,13 +57,14 @@ func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) 
 	return user, err
 }
 
-// 通过用户名、密码创建新用户
+// 通过用户名、密码创建新用户（管理端用户使用）
 func (ur *baseUserRepo) AddBaseUserByNamePassword(ctx context.Context, name, password string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
 		UserName: name,
 		Password: password,
 
+		Permission: 1,
 		LastTime:   nowTime,
 		CreateTime: nowTime,
 		Status:     "开启",
@@ -70,7 +73,7 @@ func (ur *baseUserRepo) AddBaseUserByNamePassword(ctx context.Context, name, pas
 	return err
 }
 
-// 通过用户名、密码创建新用户
+// 通过openid创建新用户（微信用户使用）
 func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
@@ -82,10 +85,37 @@ func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, r
 		Birthday: brithday, // 时间之间转换成字符串给mysql接收，会根据字符串格式进行自动转换的
 		Sex:      sex,
 
+		Permission: 0,
 		LastTime:   nowTime,
 		CreateTime: nowTime,
 		Status:     "开启",
 	}
 	err := ur.ds.Master().Create(user).Error
 	return err
+}
+
+// 更新用户基本信息
+func (ur *baseUserRepo) UpdateBaseUserDetail(ctx context.Context, srcUser *model.BaseUser, realname, telephone, email, brithday, sex string) error {
+	nowTime := timeconvert.NowDateTimeString()
+	result := ur.ds.Master().Where(&model.BaseUser{UserId: srcUser.UserId}).Model(&srcUser).Updates(&model.BaseUser{
+		RealName: realname,
+		Tel:      strtools.UpdateNotNullStirng(telephone, srcUser.Tel),
+		Email:    strtools.UpdateNotNullStirng(email, srcUser.Email),
+		Birthday: strtools.UpdateNotNullStirng(brithday, srcUser.Birthday),
+		Sex:      sex,
+		LastTime: nowTime,
+	})
+	log.Debug("Update db", log.WithPair("affect count", result.RowsAffected))
+	return result.Error
+}
+
+// 更新用户密码
+func (ur *baseUserRepo) UpdateBaseUserPassword(ctx context.Context, srcUser *model.BaseUser, password string) error {
+	nowTime := timeconvert.NowDateTimeString()
+	result := ur.ds.Master().Where(&model.BaseUser{UserId: srcUser.UserId}).Model(&srcUser).Updates(&model.BaseUser{
+		Password: password,
+		LastTime: nowTime,
+	})
+	log.Debug("Update db", log.WithPair("affect count", result.RowsAffected))
+	return result.Error
 }

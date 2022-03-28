@@ -48,11 +48,28 @@ func (r *router) Load(g *gin.Engine) {
 	g.POST("/register", r.uh.Register())
 	g.POST("/weregister", r.uh.WeRegister())
 
-	// user group
+	// user group (wechat)
 	ug := g.Group("/v1/user", middleware.AuthToken())
 	{
+		// index info
 		ug.GET("", r.uh.GetBaseUserInfo())
-		// login
+
+		// login(relogin)
 		ug.POST("/login", r.uh.Login())
+		ug.POST("/wechatlogin", r.uh.WeLogin())
+
+		// curd
+		ug.PUT("/userpassword", r.uh.UpdateUserPassword())
+		ug.PUT("/user", r.uh.UpdateUserDetail())
+		ug.GET("/user", r.uh.GetBaseUserInfo())
+		// 禁止个人用户删除自己信息
+
+	}
+
+	// admin group (administrator)
+	ag := g.Group("/v1/admin", middleware.AuthToken())
+	{
+		// index info
+		ag.GET("", r.uh.GetBaseUserInfo())
 	}
 }

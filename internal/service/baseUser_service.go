@@ -5,6 +5,7 @@ import (
 	"BloodPressure/internal/repo"
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
+	"BloodPressure/pkg/log"
 	"BloodPressure/tools/reg"
 	"context"
 )
@@ -13,11 +14,17 @@ var _ BaseUserService = (*baseUserService)(nil)
 
 // BaseUserService 定义用户操作服务接口
 type BaseUserService interface {
+	// 查询
 	GetByName(ctx context.Context, name string) (*model.BaseUser, error)
 	GetById(ctx context.Context, uid uint) (*model.BaseUser, error)
 	GetByOpenid(ctx context.Context, openid string) (*model.BaseUser, error)
+	// 增加
 	AddByNameAndPassword(ctx context.Context, name, password string) error
 	AddByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error
+	// 修改
+	UpdateDetail(ctx context.Context, src *model.BaseUser, realname, telephone, email, brithday, sex string) error
+	UpdatePassword(ctx context.Context, src *model.BaseUser, password string) error
+	// 删除
 }
 
 // baseUserService 实现UserService接口
@@ -74,4 +81,32 @@ func (us *baseUserService) AddByDetail(ctx context.Context, name, openid, realna
 	}
 
 	return us.ur.AddBaseUserByDetail(ctx, name, openid, realname, telephone, email, brithday, sex)
+}
+
+// 更新用户详细信息
+func (us *baseUserService) UpdateDetail(ctx context.Context, src *model.BaseUser, realname, telephone, email, brithday, sex string) error {
+	log.Debug("验证实际格式",
+		log.WithPair("Telphone:", telephone),
+		log.WithPair("birthday:", brithday),
+		log.WithPair("email:", email))
+
+	// 验证生日字段
+	if brithday != "" && !reg.VerifyDateFormat(brithday) {
+		return errors.WithCode(code.ValidateErr, "生日日期格式不对，正确 YYYY-MM-DD")
+	}
+	// 验证电话号码
+	if telephone != "" && !reg.VerifyMobileFormat(telephone) {
+		return errors.WithCode(code.ValidateErr, "电话号码格式错误")
+	}
+	// 验证邮箱
+	if telephone != "" && !reg.VerifyEmailFormat(email) {
+		return errors.WithCode(code.ValidateErr, "邮箱格式错误")
+	}
+
+	return us.ur.UpdateBaseUserDetail(ctx, src, realname, telephone, email, brithday, sex)
+}
+
+// 更新用户密码
+func (us *baseUserService) UpdatePassword(ctx context.Context, src *model.BaseUser, password string) error {
+	return us.ur.UpdateBaseUserPassword(ctx, src, password)
 }
