@@ -64,6 +64,8 @@ func (r *router) Load(g *gin.Engine) {
 		ug.GET("/user", r.uh.GetBaseUserInfo())
 		// 禁止个人用户删除自己信息
 
+		// 添加血压测量记录功能
+		ug.POST("/bprecord", r.uh.RecordBp())
 	}
 
 	// admin group (administrator)
