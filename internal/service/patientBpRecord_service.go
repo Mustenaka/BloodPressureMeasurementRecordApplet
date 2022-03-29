@@ -3,7 +3,6 @@ package service
 import (
 	"BloodPressure/internal/model"
 	"BloodPressure/internal/repo"
-	"BloodPressure/pkg/log"
 	"context"
 )
 
@@ -36,6 +35,6 @@ func (us *patientBpRecordService) GetById(ctx context.Context, uid uint) ([]mode
 
 // 添加一条血压记录
 func (us *patientBpRecordService) AddById(ctx context.Context, uid uint, low, high int) error {
-	log.Debug("添加血压记录信息", log.WithPair("uid", uid), log.WithPair("low", low), log.WithPair("high", high))
+	// log.Debug("添加血压记录信息", log.WithPair("uid", uid), log.WithPair("low", low), log.WithPair("high", high))
 	return us.ur.AddRecord(ctx, uid, low, high)
 }
