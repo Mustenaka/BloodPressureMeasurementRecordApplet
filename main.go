@@ -13,9 +13,14 @@ import (
 )
 
 func initRouter(ds db.IDataSource) server.Router {
+	// 用户
 	userRepo := mysql.NewBaseUserRepo(ds)
 	userService := service.NewBaseUserService(userRepo)
-	userHandler := baseuser.NewBaseUserHandler(userService)
+	// 血压记录
+	bprRepo := mysql.NewPatientBpRecordRepo(ds)
+	bprService := service.NewPBPRecordService(bprRepo)
+	// 生成Handler并且传递至Router服务
+	userHandler := baseuser.NewBaseUserHandler(userService, bprService)
 	routerRouter := router.NewRouter(userHandler)
 	return routerRouter
 }

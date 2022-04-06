@@ -58,6 +58,14 @@ const (
 )
 
 const (
+	// BusinessErr 业务错误
+	BusinessErr = iota + 50000
+
+	// BPRecordErr 写入血压记录错误
+	BPRecordErr
+)
+
+const (
 	// TransactionErr 事物提交失败
 	TransactionErr = iota + 60000
 	// DuplicateErr 记录存在重复

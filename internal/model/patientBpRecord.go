@@ -8,8 +8,8 @@ type PatientBpRecord struct {
 	UserId       uint   // 用户id
 	RecordDate   string // 血压记录日期
 	RecordTime   string // 血压记录时间
-	LowPressure  int16  // 低压
-	HighPressure int16  // 高压
+	LowPressure  int    // 低压
+	HighPressure int    // 高压
 }
 
 // 获取表名称

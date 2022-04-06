@@ -13,13 +13,15 @@ import (
 
 // BaseUserHandler 用户业务handler
 type BaseUserHandler struct {
-	userSrv service.BaseUserService
+	userSrv service.BaseUserService        // 用户服务
+	bprSrv  service.PatientBpRecordService // 血压相关记录服务
 }
 
 // 新建一个handler
-func NewBaseUserHandler(_userSrv service.BaseUserService) *BaseUserHandler {
+func NewBaseUserHandler(_userSrv service.BaseUserService, _bprSrv service.PatientBpRecordService) *BaseUserHandler {
 	return &BaseUserHandler{
 		userSrv: _userSrv,
+		bprSrv:  _bprSrv,
 	}
 }
 
