@@ -55,8 +55,7 @@ func (uh *BaseUserHandler) GetRecordBp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RegisterParam struct {
-			LimitYears  string `json:"limityears"`
-			LimitMonths string `json:"limitmonths"`
+			LimitDays string `json:"limitdays"`
 		}
 
 		// 检验基本结构
