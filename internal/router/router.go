@@ -66,6 +66,8 @@ func (r *router) Load(g *gin.Engine) {
 
 		// 添加血压测量记录功能
 		ug.POST("/bprecord", r.uh.RecordBp())
+		// 获取血压记录（全部）
+		ug.GET("/bprecord", r.uh.GetRecordBp())
 	}
 
 	// admin group (administrator)
