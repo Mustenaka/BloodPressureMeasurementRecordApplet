@@ -12,6 +12,7 @@ import (
 	"BloodPressure/server"
 )
 
+// 初始化路由
 func initRouter(ds db.IDataSource) server.Router {
 	// 用户
 	userRepo := mysql.NewBaseUserRepo(ds)
@@ -25,6 +26,7 @@ func initRouter(ds db.IDataSource) server.Router {
 	return routerRouter
 }
 
+// 获取路由
 func getRouters(ds db.IDataSource) []server.Router {
 	rts := make([]server.Router, 0)
 	rt := initRouter(ds)
