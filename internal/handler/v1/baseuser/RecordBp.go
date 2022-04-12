@@ -15,8 +15,9 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RegisterParam struct {
-			Low  int `json:"Low"  binding:"required"`
-			High int `json:"High"  binding:"required"`
+			Low       int `json:"low"  binding:"required"`
+			High      int `json:"high"  binding:"required"`
+			HeartRate int `json:"heart_rate"  binding:"required"`
 		}
 
 		// 检验基本结构
@@ -35,7 +36,7 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 		}
 
 		// 进行血压记录
-		err = uh.bprSrv.AddById(context.TODO(), baseUser.UserId, param.Low, param.High)
+		err = uh.bprSrv.AddById(context.TODO(), baseUser.UserId, param.Low, param.High, param.HeartRate)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "添加血压记录失败"), nil)
 			return
