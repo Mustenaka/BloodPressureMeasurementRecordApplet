@@ -29,7 +29,7 @@ func (ur *patientBpRecordRepo) GetRecordById(ctx context.Context, id uint) ([]mo
 }
 
 // 添加一个血压记录
-func (ur *patientBpRecordRepo) AddRecord(ctx context.Context, id uint, low, high int) error {
+func (ur *patientBpRecordRepo) AddRecord(ctx context.Context, id uint, low, high, heartRate int) error {
 	nowDate := timeconvert.NowDateString()
 	nowTime := timeconvert.NowTimeString()
 	records := &model.PatientBpRecord{
@@ -38,6 +38,7 @@ func (ur *patientBpRecordRepo) AddRecord(ctx context.Context, id uint, low, high
 		RecordTime:   nowTime,
 		LowPressure:  low,
 		HighPressure: high,
+		HeartRate:    heartRate,
 	}
 	err := ur.ds.Master().Create(records).Error
 	return err

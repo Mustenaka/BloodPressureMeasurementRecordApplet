@@ -61,10 +61,8 @@ func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) 
 func (ur *baseUserRepo) AddBaseUserByNamePassword(ctx context.Context, name, password string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
-		UserName: name,
-		Password: password,
-
-		Permission: 1,
+		UserName:   name,
+		Password:   password,
 		LastTime:   nowTime,
 		CreateTime: nowTime,
 		Status:     "开启",
@@ -77,15 +75,13 @@ func (ur *baseUserRepo) AddBaseUserByNamePassword(ctx context.Context, name, pas
 func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
-		UserName: name,
-		OpenId:   openid,
-		RealName: realname,
-		Tel:      telephone,
-		Email:    email,
-		Birthday: brithday, // 时间之间转换成字符串给mysql接收，会根据字符串格式进行自动转换的
-		Sex:      sex,
-
-		Permission: 0,
+		UserName:   name,
+		OpenId:     openid,
+		RealName:   realname,
+		Tel:        telephone,
+		Email:      email,
+		Birthday:   brithday, // 时间之间转换成字符串给mysql接收，会根据字符串格式进行自动转换的
+		Sex:        sex,
 		LastTime:   nowTime,
 		CreateTime: nowTime,
 		Status:     "开启",

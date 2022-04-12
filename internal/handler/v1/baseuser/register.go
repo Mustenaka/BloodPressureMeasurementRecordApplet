@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 管理员注册
+// 用户根据用户密码注册裸信息账号
 func (uh *BaseUserHandler) Register() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构

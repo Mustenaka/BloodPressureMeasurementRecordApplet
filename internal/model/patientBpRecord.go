@@ -10,6 +10,7 @@ type PatientBpRecord struct {
 	RecordTime   string // 血压记录时间
 	LowPressure  int    // 低压
 	HighPressure int    // 高压
+	HeartRate    int    // 心率
 }
 
 // 获取表名称
