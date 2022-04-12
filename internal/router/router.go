@@ -45,7 +45,6 @@ func (r *router) Load(g *gin.Engine) {
 	g.POST("/wechatlogin", r.uh.WeLogin())
 
 	// register
-	g.POST("/register", r.uh.Register())
 	g.POST("/weregister", r.uh.WeRegister())
 
 	// user group (wechat)
