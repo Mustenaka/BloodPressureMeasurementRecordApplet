@@ -1,9 +1,12 @@
 # BloodPressureMeasurementRecordApplet
 
+本系统适用于高血压采集记录，
+
 ## 高血压测量记录小程序后端
 采用Golang开发，使用了Gin, Gorm, Viper, zap, jwt, go.uuid, sys, fsnotify, lumberjack.v2, goini 等系列库进行开发
 
-项目分层结构参考：https://github.com/xmgtony/apiserver-gin（一个基于gin的go生产及服务端）
+项目分层结构参考：https://github.com/xmgtony/apiserver-gin
+（一个基于gin的go生产及服务端）
 
 ### 代码结构介绍：
 example/
