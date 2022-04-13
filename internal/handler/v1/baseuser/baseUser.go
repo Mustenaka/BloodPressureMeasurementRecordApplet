@@ -13,8 +13,9 @@ import (
 
 // BaseUserHandler 用户业务handler
 type BaseUserHandler struct {
-	userSrv service.BaseUserService        // 用户服务
-	bprSrv  service.PatientBpRecordService // 血压相关记录服务
+	userSrv   service.BaseUserService        // 用户服务
+	bprSrv    service.PatientBpRecordService // 血压相关记录服务
+	trplanSrc service.TreatmentPlanService   // 治疗方案服务
 }
 
 // 新建一个handler
