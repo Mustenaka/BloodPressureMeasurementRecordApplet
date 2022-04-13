@@ -16,7 +16,7 @@ func (uh *BaseUserHandler) AddPlan() gin.HandlerFunc {
 		// 定义基本结构
 		type RecordParam struct {
 			Plan string `json:"plan"  binding:"required"`
-			Note string `json:"note"  binding:"required"`
+			Note string `json:"note"`
 		}
 
 		// 检验基本结构
@@ -37,7 +37,7 @@ func (uh *BaseUserHandler) AddPlan() gin.HandlerFunc {
 		// 进行血压记录
 		err = uh.trplanSrc.AddById(context.TODO(), baseUser.UserId, param.Plan, param.Note)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "添加血压记录失败"), nil)
+			response.JSON(c, errors.Wrap(err, code.TreatPlanErr, "添加治疗记录失败"), nil)
 			return
 		}
 
@@ -74,10 +74,10 @@ func (uh *BaseUserHandler) GetPlans() gin.HandlerFunc {
 			return
 		}
 
-		// 获取血压记录
+		// 获取治疗方案记录
 		records, err := uh.trplanSrc.GetByIdLimit(context.TODO(), baseUser.UserId, param.LimitCount)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "治疗方案记录获取失败"), nil)
+			response.JSON(c, errors.Wrap(err, code.TreatPlanErr, "治疗方案记录获取失败"), nil)
 			return
 		}
 

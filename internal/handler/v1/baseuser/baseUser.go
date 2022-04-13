@@ -19,10 +19,15 @@ type BaseUserHandler struct {
 }
 
 // 新建一个handler
-func NewBaseUserHandler(_userSrv service.BaseUserService, _bprSrv service.PatientBpRecordService) *BaseUserHandler {
+func NewBaseUserHandler(
+	_userSrv service.BaseUserService,
+	_bprSrv service.PatientBpRecordService,
+	_trplanSrc service.TreatmentPlanService) *BaseUserHandler {
+	// 新建Handler
 	return &BaseUserHandler{
-		userSrv: _userSrv,
-		bprSrv:  _bprSrv,
+		userSrv:   _userSrv,
+		bprSrv:    _bprSrv,
+		trplanSrc: _trplanSrc,
 	}
 }
 

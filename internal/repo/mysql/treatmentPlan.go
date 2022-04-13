@@ -4,6 +4,7 @@ import (
 	"BloodPressure/internal/model"
 	"BloodPressure/internal/repo"
 	"BloodPressure/pkg/db"
+	"BloodPressure/pkg/log"
 	timeconvert "BloodPressure/tools/timeConvert"
 	"context"
 )
@@ -31,6 +32,7 @@ func (ur *treatmentPlanRepo) AddPlan(ctx context.Context, id uint, plan, note st
 		CreateDatetime: createDatetime,
 		Status:         "生效",
 	}
+	log.Debug("添加计划", log.WithPair("计划", plans.Plan))
 	err := ur.ds.Master().Create(plans).Error
 	return err
 }
