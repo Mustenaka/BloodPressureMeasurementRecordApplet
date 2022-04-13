@@ -5,6 +5,7 @@ import (
 	"BloodPressure/internal/repo"
 	"BloodPressure/pkg/db"
 	"context"
+	"errors"
 )
 
 var _ repo.PatientInfoRepo = (*patientInfoRepo)(nil)
@@ -21,16 +22,25 @@ func NewPatientInfoRepo(_ds db.IDataSource) *patientInfoRepo {
 }
 
 // 添加病历信息记录
-func (ur *patientInfoRepo) AddInfo(ctx context.Context, id uint) error {
-	return nil
+func (ur *patientInfoRepo) AddInfo(ctx context.Context, patientInfo *model.PatientInfo) error {
+	// 添加 Patientinfo信息
+	err := ur.ds.Master().Create(patientInfo).Error
+	return err
 }
 
-// 获取记录组
+// 获取记录
 func (ur *patientInfoRepo) GetInfoById(ctx context.Context, id uint) (*model.PatientInfo, error) {
-	return nil, nil
+	patientinfo := &model.PatientInfo{}
+	var count int64
+	err := ur.ds.Master().Where("user_id = ?", id).Find(patientinfo).Count(&count).Error
+	if count == 0 {
+		err = errors.New("record not found")
+	}
+	return patientinfo, err
 }
 
 // 更新记录
-func (ur *patientInfoRepo) UpdateInfoById(ctx context.Context, id uint) (*model.PatientInfo, error) {
-	return nil, nil
+func (ur *patientInfoRepo) UpdateInfoById(ctx context.Context, id uint, patientInfo *model.PatientInfo) error {
+	err := ur.ds.Master().Where(&model.PatientInfo{UserId: id}).Updates(patientInfo).Error
+	return err
 }
