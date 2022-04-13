@@ -46,7 +46,7 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 		response.JSON(c, nil, struct {
 			Result string `json:"result"`
 		}{
-			Result: "record successful",
+			Result: "record add successful",
 		})
 	}
 }
