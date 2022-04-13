@@ -5,7 +5,6 @@ import (
 	"BloodPressure/internal/repo"
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
-	"BloodPressure/pkg/log"
 	"BloodPressure/tools/reg"
 	"context"
 )
@@ -85,11 +84,6 @@ func (us *baseUserService) AddByDetail(ctx context.Context, name, openid, realna
 
 // 更新用户详细信息
 func (us *baseUserService) UpdateDetail(ctx context.Context, src *model.BaseUser, realname, telephone, email, brithday, sex string) error {
-	log.Debug("验证实际格式",
-		log.WithPair("Telphone:", telephone),
-		log.WithPair("birthday:", brithday),
-		log.WithPair("email:", email))
-
 	// 验证生日字段
 	if brithday != "" && !reg.VerifyDateFormat(brithday) {
 		return errors.WithCode(code.ValidateErr, "生日日期格式不对，正确 YYYY-MM-DD")
