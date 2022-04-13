@@ -12,6 +12,7 @@ var _ PatientBpRecordService = (*patientBpRecordService)(nil)
 type PatientBpRecordService interface {
 	// 查询
 	GetById(ctx context.Context, uid uint) ([]model.PatientBpRecord, error)
+	GetByIdLimitDay(ctx context.Context, uid uint, limitdays int) ([]model.PatientBpRecord, error)
 	// 添加一条记录
 	AddById(ctx context.Context, uid uint, low, high, heartRate int) error
 }
@@ -31,6 +32,15 @@ func NewPBPRecordService(_ur repo.PatientBpRecordRepo) *patientBpRecordService {
 // 获取全部的测量数据
 func (us *patientBpRecordService) GetById(ctx context.Context, uid uint) ([]model.PatientBpRecord, error) {
 	return us.ur.GetRecordById(ctx, uid)
+}
+
+// 根据限制天数获取数据
+func (us *patientBpRecordService) GetByIdLimitDay(ctx context.Context, uid uint, limitdays int) ([]model.PatientBpRecord, error) {
+	// 如果限制天数为0，则降级为获取全部数据
+	if limitdays == 0 {
+		return us.ur.GetRecordById(ctx, uid)
+	}
+	return us.ur.GetRecordByIdLimitDays(ctx, uid, limitdays)
 }
 
 // 添加一条血压记录
