@@ -28,6 +28,11 @@ type PatientInfo struct {
 	IsNondrugControlPlan      bool   // 是否非药物控制手段
 	NondrugControlPlan        string // 非药物控制手段内容
 	// base_users 内容 - 姓名、性别、生日、电话、邮箱
+	RealName string
+	Sex      string
+	Birthday string
+	Tel      string
+	Email    string
 }
 
 // 获取表名称
