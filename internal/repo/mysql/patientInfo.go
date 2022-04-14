@@ -32,7 +32,8 @@ func (ur *patientInfoRepo) AddInfo(ctx context.Context, patientInfo *model.Patie
 func (ur *patientInfoRepo) GetInfoById(ctx context.Context, id uint) (*model.PatientInfo, error) {
 	patientinfo := &model.PatientInfo{}
 	var count int64
-	err := ur.ds.Master().Where("user_id = ?", id).Find(patientinfo).Count(&count).Error
+	// err := ur.ds.Master().Where("user_id = ?", id).Find(patientinfo).Count(&count).Error
+	err := ur.ds.Master().Where(&model.PatientInfo{UserId: id}).Find(patientinfo).Count(&count).Error
 	if count == 0 {
 		err = errors.New("record not found")
 	}
@@ -42,5 +43,11 @@ func (ur *patientInfoRepo) GetInfoById(ctx context.Context, id uint) (*model.Pat
 // 更新记录
 func (ur *patientInfoRepo) UpdateInfoById(ctx context.Context, id uint, patientInfo *model.PatientInfo) error {
 	err := ur.ds.Master().Where(&model.PatientInfo{UserId: id}).Updates(patientInfo).Error
+	return err
+}
+
+// 删除记录
+func (ur *patientInfoRepo) DeleteInfoByID(ctx context.Context, id uint) error {
+	err := ur.ds.Master().Where(&model.PatientInfo{UserId: id}).Delete(&model.PatientInfo{}).Error
 	return err
 }

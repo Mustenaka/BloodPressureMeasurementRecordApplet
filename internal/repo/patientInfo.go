@@ -15,4 +15,7 @@ type PatientInfoRepo interface {
 
 	// 更新记录
 	UpdateInfoById(ctx context.Context, id uint, patientInfo *model.PatientInfo) error
+
+	// 删除记录
+	DeleteInfoByID(ctx context.Context, id uint) error
 }
