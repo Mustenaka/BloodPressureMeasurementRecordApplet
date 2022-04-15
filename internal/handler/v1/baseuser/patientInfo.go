@@ -18,28 +18,28 @@ func (uh *BaseUserHandler) AddPatientInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type InfoParam struct {
-			RealName                  string `json:"real_name"  binding:"required"` // 真实姓名
-			Sex                       string `json:"sex"`                           // 性别
-			Birthday                  string `json:"birthday" `                     // 生日
-			Tel                       string `json:"tel" `                          // 电话号码
-			IsMarried                 bool   `json:"is_married"  `                  // 0-未婚、1-已婚
-			HbpYears                  int    `json:"hbp_years"  `                   // 高血压患病时间（年）
-			Anamnesis                 string `json:"anamnesis"  `                   // 既往病史(对应表格1~12)
-			IsSmoking                 bool   `json:"is_smoking"  `                  // 是否吸烟
-			SmokingHistory            int    `json:"smoking_history" `              // 吸烟史（年）
-			SmokingDaily              int    `json:"smoking_daily"  `               // 日吸烟数
-			IsDrink                   bool   `json:"is_drink"  `                    // 是否饮酒
-			DrinkHistory              int    `json:"drink_history"  `               // 饮酒史（年）
-			DrinkDaily                int    `json:"drink_daily"`                   // 每日饮酒量
-			PatientHeight             int    `json:"patient_height" `               // 身高
-			PatientWeight             int    `json:"patient_weight" `               // 体重
-			PatientWaistCircumference int    `json:"patient_waist_circumference" `  // 腰围
-			PatientChestCircumference int    `json:"patient_chest_circumference"  ` // 胸围
-			PatientHipCircumference   int    `json:"patient_hip_circumference"  `   // 臀围
-			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine" `     // 是否服用中药
-			AntihypertensivePlan      string `json:"antihypertensive_plan" `        // 降压方案
-			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan"  `     // 是否非药物控制手段
-			NondrugControlPlan        string `json:"nondrug_control_plan"  `        // 非药物控制手段内容
+			RealName                  string `json:"real_name,omitempty"`                     // 真实姓名
+			Sex                       string `json:"sex,omitempty"`                           // 性别
+			Birthday                  string `json:"birthday,omitempty" `                     // 生日
+			Tel                       string `json:"tel,omitempty" `                          // 电话号码
+			IsMarried                 bool   `json:"is_married,omitempty"  `                  // 0-未婚、1-已婚
+			HbpYears                  int    `json:"hbp_years,omitempty"  `                   // 高血压患病时间（年）
+			Anamnesis                 string `json:"anamnesis,omitempty"  `                   // 既往病史(对应表格1~12)
+			IsSmoking                 bool   `json:"is_smoking,omitempty"  `                  // 是否吸烟
+			SmokingHistory            int    `json:"smoking_history,omitempty" `              // 吸烟史（年）
+			SmokingDaily              int    `json:"smoking_daily,omitempty"  `               // 日吸烟数
+			IsDrink                   bool   `json:"is_drink,omitempty"  `                    // 是否饮酒
+			DrinkHistory              int    `json:"drink_history,omitempty"  `               // 饮酒史（年）
+			DrinkDaily                int    `json:"drink_daily,omitempty"`                   // 每日饮酒量
+			PatientHeight             int    `json:"patient_height,omitempty" `               // 身高
+			PatientWeight             int    `json:"patient_weight,omitempty" `               // 体重
+			PatientWaistCircumference int    `json:"patient_waist_circumference,omitempty" `  // 腰围
+			PatientChestCircumference int    `json:"patient_chest_circumference,omitempty"  ` // 胸围
+			PatientHipCircumference   int    `json:"patient_hip_circumference,omitempty"  `   // 臀围
+			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine,omitempty" `     // 是否服用中药
+			AntihypertensivePlan      string `json:"antihypertensive_plan,omitempty" `        // 降压方案
+			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan,omitempty"  `     // 是否非药物控制手段
+			NondrugControlPlan        string `json:"nondrug_control_plan,omitempty"  `        // 非药物控制手段内容
 		}
 
 		// 检验基本结构
@@ -101,28 +101,28 @@ func (uh *BaseUserHandler) UpdatePatientInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type InfoParam struct {
-			RealName                  string `json:"real_name"  binding:"required"` // 真实姓名
-			Sex                       string `json:"sex"`                           // 性别
-			Birthday                  string `json:"birthday" `                     // 生日
-			Tel                       string `json:"tel" `                          // 电话号码
-			IsMarried                 bool   `json:"is_married"  `                  // 0-未婚、1-已婚
-			HbpYears                  int    `json:"hbp_years"  `                   // 高血压患病时间（年）
-			Anamnesis                 string `json:"anamnesis"  `                   // 既往病史(对应表格1~12)
-			IsSmoking                 bool   `json:"is_smoking"  `                  // 是否吸烟
-			SmokingHistory            int    `json:"smoking_history" `              // 吸烟史（年）
-			SmokingDaily              int    `json:"smoking_daily"  `               // 日吸烟数
-			IsDrink                   bool   `json:"is_drink"  `                    // 是否饮酒
-			DrinkHistory              int    `json:"drink_history"  `               // 饮酒史（年）
-			DrinkDaily                int    `json:"drink_daily"`                   // 每日饮酒量
-			PatientHeight             int    `json:"patient_height" `               // 身高
-			PatientWeight             int    `json:"patient_weight" `               // 体重
-			PatientWaistCircumference int    `json:"patient_waist_circumference" `  // 腰围
-			PatientChestCircumference int    `json:"patient_chest_circumference"  ` // 胸围
-			PatientHipCircumference   int    `json:"patient_hip_circumference"  `   // 臀围
-			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine" `     // 是否服用中药
-			AntihypertensivePlan      string `json:"antihypertensive_plan" `        // 降压方案
-			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan"  `     // 是否非药物控制手段
-			NondrugControlPlan        string `json:"nondrug_control_plan"  `        // 非药物控制手段内容
+			RealName                  string `json:"real_name,omitempty"`                     // 真实姓名
+			Sex                       string `json:"sex,omitempty"`                           // 性别
+			Birthday                  string `json:"birthday,omitempty" `                     // 生日
+			Tel                       string `json:"tel,omitempty" `                          // 电话号码
+			IsMarried                 bool   `json:"is_married,omitempty"  `                  // 0-未婚、1-已婚
+			HbpYears                  int    `json:"hbp_years,omitempty"  `                   // 高血压患病时间（年）
+			Anamnesis                 string `json:"anamnesis,omitempty"  `                   // 既往病史(对应表格1~12)
+			IsSmoking                 bool   `json:"is_smoking,omitempty"  `                  // 是否吸烟
+			SmokingHistory            int    `json:"smoking_history,omitempty" `              // 吸烟史（年）
+			SmokingDaily              int    `json:"smoking_daily,omitempty"  `               // 日吸烟数
+			IsDrink                   bool   `json:"is_drink,omitempty"  `                    // 是否饮酒
+			DrinkHistory              int    `json:"drink_history,omitempty"  `               // 饮酒史（年）
+			DrinkDaily                int    `json:"drink_daily,omitempty"`                   // 每日饮酒量
+			PatientHeight             int    `json:"patient_height,omitempty" `               // 身高
+			PatientWeight             int    `json:"patient_weight,omitempty" `               // 体重
+			PatientWaistCircumference int    `json:"patient_waist_circumference,omitempty" `  // 腰围
+			PatientChestCircumference int    `json:"patient_chest_circumference,omitempty"  ` // 胸围
+			PatientHipCircumference   int    `json:"patient_hip_circumference,omitempty"  `   // 臀围
+			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine,omitempty" `     // 是否服用中药
+			AntihypertensivePlan      string `json:"antihypertensive_plan,omitempty" `        // 降压方案
+			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan,omitempty"  `     // 是否非药物控制手段
+			NondrugControlPlan        string `json:"nondrug_control_plan,omitempty"  `        // 非药物控制手段内容
 		}
 
 		// 检验基本结构
