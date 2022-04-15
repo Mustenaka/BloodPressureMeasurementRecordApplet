@@ -70,6 +70,11 @@ func (r *router) Load(g *gin.Engine) {
 		// 用户治疗方案
 		ug.POST("/treatmentplan", r.uh.AddPlan())
 		ug.GET("/treatmentplan", r.uh.GetPlans())
+
+		// 患者信息记录
+		ug.POST("/patientinfo", r.uh.UpdatePatientInfo())
+		ug.GET("/patientinfo", r.uh.GetPatientInfo())
+		ug.PUT("/patientinfo", r.uh.UpdatePatientInfo())
 	}
 
 	// admin group (administrator)
