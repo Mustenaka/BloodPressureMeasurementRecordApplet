@@ -7,8 +7,10 @@
 
 项目分层结构参考：https://github.com/xmgtony/apiserver-gin
 （一个基于gin的go生产及服务端）
+https://github.com/golang-standards/project-layout/blob/master/README_zh.md
+(关于golang的项目命名，结构，规范相关的中文文档)
 
-### 代码结构介绍：
+### 核心代码结构介绍：
 example/
 Gin的标准案例
 
