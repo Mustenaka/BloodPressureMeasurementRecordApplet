@@ -4,12 +4,12 @@ import validator "gopkg.in/go-playground/validator.v9"
 
 // 治疗计划表
 type TreatmentPlan struct {
-	TreatmentId    uint   // 治疗方案id
-	UserId         uint   // 用户id
-	Plan           string // 治疗计划
-	Note           string // 治疗计划备注（如禁忌症）
-	CreateDatetime string // 创建时间
-	Status         string // 状态{“生效”，“失效”}
+	TreatmentId    uint   `json:"treatment_id"`    // 治疗方案id
+	UserId         uint   `json:"user_id"`         // 用户id
+	Plan           string `json:"plan"`            // 治疗计划
+	Note           string `json:"note"`            // 治疗计划备注（如禁忌症）
+	CreateDatetime string `json:"create_datetime"` // 创建时间
+	Status         string `json:"status"`          // 状态{“生效”，“失效”}
 }
 
 // 获取表名称
