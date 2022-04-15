@@ -5,6 +5,7 @@ import (
 	"BloodPressure/pkg/constant"
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
+	"BloodPressure/pkg/log"
 	"BloodPressure/pkg/response"
 	"context"
 	"reflect"
@@ -17,28 +18,28 @@ func (uh *BaseUserHandler) AddPatientInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type InfoParam struct {
-			RealName                  string `json:"real_name"  binding:"required"`                   // 真实姓名
-			Sex                       string `json:"sex"  binding:"required"`                         // 性别
-			Birthday                  string `json:"birthday"  binding:"required"`                    // 生日
-			Tel                       string `json:"tel"  binding:"required"`                         // 电话号码
-			IsMarried                 bool   `json:"is_married"  binding:"required"`                  // 0-未婚、1-已婚
-			HbpYears                  int    `json:"hbp_years"  binding:"required"`                   // 高血压患病时间（年）
-			Anamnesis                 string `json:"anamnesis"  binding:"required"`                   // 既往病史(对应表格1~12)
-			IsSmoking                 bool   `json:"is_smoking"  binding:"required"`                  // 是否吸烟
-			SmokingHistory            int    `json:"smoking_history"  binding:"required"`             // 吸烟史（年）
-			SmokingDaily              int    `json:"smoking_daily"  binding:"required"`               // 日吸烟数
-			IsDrink                   bool   `json:"is_drink"  binding:"required"`                    // 是否饮酒
-			DrinkHistory              int    `json:"drink_history"  binding:"required"`               // 饮酒史（年）
-			DrinkDaily                int    `json:"drink_daily"  binding:"required"`                 // 每日饮酒量
-			PatientHeight             int    `json:"patient_height"  binding:"required"`              // 身高
-			PatientWeight             int    `json:"patient_weight"  binding:"required"`              // 体重
-			PatientWaistCircumference int    `json:"patient_waist_circumference"  binding:"required"` // 腰围
-			PatientChestCircumference int    `json:"patient_chest_circumference"  binding:"required"` // 胸围
-			PatientHipCircumference   int    `json:"patient_hip_circumference"  binding:"required"`   // 臀围
-			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine"  binding:"required"`    // 是否服用中药
-			AntihypertensivePlan      string `json:"antihypertensive_plan"  binding:"required"`       // 降压方案
-			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan"  binding:"required"`     // 是否非药物控制手段
-			NondrugControlPlan        string `json:"nondrug_control_plan"  binding:"required"`        // 非药物控制手段内容
+			RealName                  string `json:"real_name"  binding:"required"` // 真实姓名
+			Sex                       string `json:"sex"`                           // 性别
+			Birthday                  string `json:"birthday" `                     // 生日
+			Tel                       string `json:"tel" `                          // 电话号码
+			IsMarried                 bool   `json:"is_married"  `                  // 0-未婚、1-已婚
+			HbpYears                  int    `json:"hbp_years"  `                   // 高血压患病时间（年）
+			Anamnesis                 string `json:"anamnesis"  `                   // 既往病史(对应表格1~12)
+			IsSmoking                 bool   `json:"is_smoking"  `                  // 是否吸烟
+			SmokingHistory            int    `json:"smoking_history" `              // 吸烟史（年）
+			SmokingDaily              int    `json:"smoking_daily"  `               // 日吸烟数
+			IsDrink                   bool   `json:"is_drink"  `                    // 是否饮酒
+			DrinkHistory              int    `json:"drink_history"  `               // 饮酒史（年）
+			DrinkDaily                int    `json:"drink_daily"`                   // 每日饮酒量
+			PatientHeight             int    `json:"patient_height" `               // 身高
+			PatientWeight             int    `json:"patient_weight" `               // 体重
+			PatientWaistCircumference int    `json:"patient_waist_circumference" `  // 腰围
+			PatientChestCircumference int    `json:"patient_chest_circumference"  ` // 胸围
+			PatientHipCircumference   int    `json:"patient_hip_circumference"  `   // 臀围
+			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine" `     // 是否服用中药
+			AntihypertensivePlan      string `json:"antihypertensive_plan" `        // 降压方案
+			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan"  `     // 是否非药物控制手段
+			NondrugControlPlan        string `json:"nondrug_control_plan"  `        // 非药物控制手段内容
 		}
 
 		// 检验基本结构
@@ -56,13 +57,17 @@ func (uh *BaseUserHandler) AddPatientInfo() gin.HandlerFunc {
 			return
 		}
 
-		// 利用reflect反射构造插入结构（数据字段太多了）
-		var insertInfo *model.PatientInfo
-		typeNameOfInfoParam := reflect.TypeOf(param)
-		typeNameOfInsertInfo := reflect.TypeOf(insertInfo)
+		log.Debug("获取InfoParam", log.WithPair("IsMarried", param.IsMarried))
 
-		valueOfInfoParam := reflect.ValueOf(param).Elem()
-		valueOfInsertInfo := reflect.ValueOf(insertInfo).Elem()
+		// 利用reflect反射构造插入结构（数据字段太多了）
+		objOfInfo := &model.PatientInfo{}
+		objOfParam := &param
+
+		typeNameOfInsertInfo := reflect.TypeOf(*objOfInfo)
+		typeNameOfInfoParam := reflect.TypeOf(*objOfParam) // 获取type
+
+		valueOfInsertInfo := reflect.ValueOf(objOfInfo).Elem()
+		valueOfInfoParam := reflect.ValueOf(objOfParam).Elem() // 获取value
 
 		for i := 0; i < typeNameOfInfoParam.NumField(); i++ {
 			for j := 0; j < typeNameOfInsertInfo.NumField(); j++ {
@@ -72,11 +77,11 @@ func (uh *BaseUserHandler) AddPatientInfo() gin.HandlerFunc {
 			}
 		}
 
-		// 插入uid
-		insertInfo.UserId = baseUser.UserId
+		// 设置uid
+		objOfInfo.UserId = baseUser.UserId
 
 		// 患者信息插入
-		err = uh.pinfoService.Add(context.TODO(), insertInfo)
+		err = uh.pinfoService.Add(context.TODO(), objOfInfo)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.PatientInfoErr, "添加患者信息失败"), nil)
 			return
@@ -86,7 +91,7 @@ func (uh *BaseUserHandler) AddPatientInfo() gin.HandlerFunc {
 		response.JSON(c, nil, struct {
 			Result string `json:"result"`
 		}{
-			Result: "record add successful",
+			Result: "info add successful",
 		})
 	}
 }
@@ -96,28 +101,28 @@ func (uh *BaseUserHandler) UpdatePatientInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type InfoParam struct {
-			RealName                  string `json:"real_name"  binding:"required"`                   // 真实姓名
-			Sex                       string `json:"sex"  binding:"required"`                         // 性别
-			Birthday                  string `json:"birthday"  binding:"required"`                    // 生日
-			Tel                       string `json:"tel"  binding:"required"`                         // 电话号码
-			IsMarried                 bool   `json:"is_married"  binding:"required"`                  // 0-未婚、1-已婚
-			HbpYears                  int    `json:"hbp_years"  binding:"required"`                   // 高血压患病时间（年）
-			Anamnesis                 string `json:"anamnesis"  binding:"required"`                   // 既往病史(对应表格1~12)
-			IsSmoking                 bool   `json:"is_smoking"  binding:"required"`                  // 是否吸烟
-			SmokingHistory            int    `json:"smoking_history"  binding:"required"`             // 吸烟史（年）
-			SmokingDaily              int    `json:"smoking_daily"  binding:"required"`               // 日吸烟数
-			IsDrink                   bool   `json:"is_drink"  binding:"required"`                    // 是否饮酒
-			DrinkHistory              int    `json:"drink_history"  binding:"required"`               // 饮酒史（年）
-			DrinkDaily                int    `json:"drink_daily"  binding:"required"`                 // 每日饮酒量
-			PatientHeight             int    `json:"patient_height"  binding:"required"`              // 身高
-			PatientWeight             int    `json:"patient_weight"  binding:"required"`              // 体重
-			PatientWaistCircumference int    `json:"patient_waist_circumference"  binding:"required"` // 腰围
-			PatientChestCircumference int    `json:"patient_chest_circumference"  binding:"required"` // 胸围
-			PatientHipCircumference   int    `json:"patient_hip_circumference"  binding:"required"`   // 臀围
-			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine"  binding:"required"`    // 是否服用中药
-			AntihypertensivePlan      string `json:"antihypertensive_plan"  binding:"required"`       // 降压方案
-			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan"  binding:"required"`     // 是否非药物控制手段
-			NondrugControlPlan        string `json:"nondrug_control_plan"  binding:"required"`        // 非药物控制手段内容
+			RealName                  string `json:"real_name"  binding:"required"` // 真实姓名
+			Sex                       string `json:"sex"`                           // 性别
+			Birthday                  string `json:"birthday" `                     // 生日
+			Tel                       string `json:"tel" `                          // 电话号码
+			IsMarried                 bool   `json:"is_married"  `                  // 0-未婚、1-已婚
+			HbpYears                  int    `json:"hbp_years"  `                   // 高血压患病时间（年）
+			Anamnesis                 string `json:"anamnesis"  `                   // 既往病史(对应表格1~12)
+			IsSmoking                 bool   `json:"is_smoking"  `                  // 是否吸烟
+			SmokingHistory            int    `json:"smoking_history" `              // 吸烟史（年）
+			SmokingDaily              int    `json:"smoking_daily"  `               // 日吸烟数
+			IsDrink                   bool   `json:"is_drink"  `                    // 是否饮酒
+			DrinkHistory              int    `json:"drink_history"  `               // 饮酒史（年）
+			DrinkDaily                int    `json:"drink_daily"`                   // 每日饮酒量
+			PatientHeight             int    `json:"patient_height" `               // 身高
+			PatientWeight             int    `json:"patient_weight" `               // 体重
+			PatientWaistCircumference int    `json:"patient_waist_circumference" `  // 腰围
+			PatientChestCircumference int    `json:"patient_chest_circumference"  ` // 胸围
+			PatientHipCircumference   int    `json:"patient_hip_circumference"  `   // 臀围
+			IsTakeChineseMedicine     bool   `json:"is_take_chinese_medicine" `     // 是否服用中药
+			AntihypertensivePlan      string `json:"antihypertensive_plan" `        // 降压方案
+			IsNondrugControlPlan      bool   `json:"is_nondrug_control_plan"  `     // 是否非药物控制手段
+			NondrugControlPlan        string `json:"nondrug_control_plan"  `        // 非药物控制手段内容
 		}
 
 		// 检验基本结构
@@ -135,13 +140,17 @@ func (uh *BaseUserHandler) UpdatePatientInfo() gin.HandlerFunc {
 			return
 		}
 
-		// 利用reflect反射构造插入结构（数据字段太多了）
-		var insertInfo *model.PatientInfo
-		typeNameOfInfoParam := reflect.TypeOf(param)
-		typeNameOfInsertInfo := reflect.TypeOf(insertInfo)
+		log.Debug("获取InfoParam", log.WithPair("IsMarried", param.IsMarried))
 
-		valueOfInfoParam := reflect.ValueOf(param).Elem()
-		valueOfInsertInfo := reflect.ValueOf(insertInfo).Elem()
+		// 利用reflect反射构造插入结构（数据字段太多了）
+		objOfInfo := &model.PatientInfo{}
+		objOfParam := &param
+
+		typeNameOfInsertInfo := reflect.TypeOf(*objOfInfo)
+		typeNameOfInfoParam := reflect.TypeOf(*objOfParam) // 获取type
+
+		valueOfInsertInfo := reflect.ValueOf(objOfInfo).Elem()
+		valueOfInfoParam := reflect.ValueOf(objOfParam).Elem() // 获取value
 
 		for i := 0; i < typeNameOfInfoParam.NumField(); i++ {
 			for j := 0; j < typeNameOfInsertInfo.NumField(); j++ {
@@ -151,13 +160,13 @@ func (uh *BaseUserHandler) UpdatePatientInfo() gin.HandlerFunc {
 			}
 		}
 
-		// 插入uid
-		insertInfo.UserId = baseUser.UserId
+		// 设置uid
+		objOfInfo.UserId = baseUser.UserId
 
 		// 患者信息插入
-		err = uh.pinfoService.Update(context.TODO(), insertInfo)
+		err = uh.pinfoService.Update(context.TODO(), objOfInfo)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.PatientInfoErr, "更新患者信息失败"), nil)
+			response.JSON(c, errors.Wrap(err, code.PatientInfoErr, "添加患者信息失败"), nil)
 			return
 		}
 
@@ -165,12 +174,12 @@ func (uh *BaseUserHandler) UpdatePatientInfo() gin.HandlerFunc {
 		response.JSON(c, nil, struct {
 			Result string `json:"result"`
 		}{
-			Result: "record add successful",
+			Result: "info update successful",
 		})
 	}
 }
 
-// 获取血压记录
+// 获取患者信息
 func (uh *BaseUserHandler) GetPatientInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 通过id找到基本用户
