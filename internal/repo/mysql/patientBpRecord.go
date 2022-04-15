@@ -6,6 +6,7 @@ import (
 	"BloodPressure/pkg/db"
 	timeconvert "BloodPressure/tools/timeConvert"
 	"context"
+	"time"
 )
 
 var _ repo.PatientBpRecordRepo = (*patientBpRecordRepo)(nil)
@@ -25,6 +26,16 @@ func NewPatientBpRecordRepo(_ds db.IDataSource) *patientBpRecordRepo {
 func (ur *patientBpRecordRepo) GetRecordById(ctx context.Context, id uint) ([]model.PatientBpRecord, error) {
 	records := []model.PatientBpRecord{}
 	err := ur.ds.Master().Where("user_id = ?", id).Find(&records).Error
+	return records, err
+}
+
+// 获取指定日期（截止到当日）记录组
+func (ur *patientBpRecordRepo) GetRecordByIdLimitDays(ctx context.Context, id uint, limitdays int) ([]model.PatientBpRecord, error) {
+	// 获取目标时间段
+	period := time.Now().AddDate(0, 0, -limitdays)
+	periodStr := timeconvert.DateString(period)
+	records := []model.PatientBpRecord{}
+	err := ur.ds.Master().Where("user_id = ? and record_date >= ?", id, periodStr).Find(&records).Error
 	return records, err
 }
 

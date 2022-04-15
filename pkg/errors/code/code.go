@@ -15,14 +15,6 @@ const (
 	Unknown = -1
 )
 
-// const (
-// 	GETSuccessful = iota + 200
-// 	POSTCreated
-// 	PUTSuccessful
-// 	PATCHSuccessful
-// 	DELETESuccessful
-// )
-
 const (
 	// MpApiErr 小程序接口调用错误
 	MpApiErr = iota + 30000
@@ -63,6 +55,12 @@ const (
 
 	// BPRecordErr 写入血压记录错误
 	BPRecordErr
+
+	// TreatPlanErr 治疗方案记录错误
+	TreatPlanErr
+
+	// PatientInfoErr 病历信息记录错误
+	PatientInfoErr
 )
 
 const (

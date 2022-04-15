@@ -11,13 +11,12 @@ import (
 )
 
 // 记录血压
-func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
+func (uh *BaseUserHandler) AddPlan() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RecordParam struct {
-			Low       int `json:"low"  binding:"required"`
-			High      int `json:"high"  binding:"required"`
-			HeartRate int `json:"heart_rate"  binding:"required"`
+			Plan string `json:"plan"  binding:"required"`
+			Note string `json:"note"`
 		}
 
 		// 检验基本结构
@@ -36,9 +35,9 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 		}
 
 		// 进行血压记录
-		err = uh.bprSrv.AddById(context.TODO(), baseUser.UserId, param.Low, param.High, param.HeartRate)
+		err = uh.trplanSrc.AddById(context.TODO(), baseUser.UserId, param.Plan, param.Note)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "添加血压记录失败"), nil)
+			response.JSON(c, errors.Wrap(err, code.TreatPlanErr, "添加治疗记录失败"), nil)
 			return
 		}
 
@@ -46,18 +45,18 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 		response.JSON(c, nil, struct {
 			Result string `json:"result"`
 		}{
-			Result: "record add successful",
+			Result: "plan add successful",
 		})
 	}
 }
 
-// 获取血压记录
-func (uh *BaseUserHandler) GetRecordBp() gin.HandlerFunc {
+// 获取治疗方案记录
+func (uh *BaseUserHandler) GetPlans() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RecordParam struct {
-			// 日期限制、常用有7天，30天（一个月），90天（三个月）
-			LimitDays int `form:"limit_days"`
+			// 数量限制
+			LimitCount int `form:"limit_count"`
 		}
 
 		// 检验基本结构
@@ -75,10 +74,10 @@ func (uh *BaseUserHandler) GetRecordBp() gin.HandlerFunc {
 			return
 		}
 
-		// 获取血压记录
-		records, err := uh.bprSrv.GetByIdLimitDay(context.TODO(), baseUser.UserId, param.LimitDays)
+		// 获取治疗方案记录
+		records, err := uh.trplanSrc.GetByIdLimit(context.TODO(), baseUser.UserId, param.LimitCount)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "血压记录获取失败"), nil)
+			response.JSON(c, errors.Wrap(err, code.TreatPlanErr, "治疗方案记录获取失败"), nil)
 			return
 		}
 

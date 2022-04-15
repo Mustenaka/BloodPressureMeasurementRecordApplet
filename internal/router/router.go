@@ -57,16 +57,24 @@ func (r *router) Load(g *gin.Engine) {
 		ug.POST("/login", r.uh.Login())
 		ug.POST("/wechatlogin", r.uh.WeLogin())
 
-		// curd
+		// 用户基本信息
 		ug.PUT("/userpassword", r.uh.UpdateUserPassword())
 		ug.PUT("/user", r.uh.UpdateUserDetail())
 		ug.GET("/user", r.uh.GetBaseUserInfo())
 		// 禁止个人用户删除自己信息
 
-		// 添加血压测量记录功能
+		// 血压测量记录功能
 		ug.POST("/bprecord", r.uh.RecordBp())
-		// 获取血压记录（全部）
 		ug.GET("/bprecord", r.uh.GetRecordBp())
+
+		// 用户治疗方案
+		ug.POST("/treatmentplan", r.uh.AddPlan())
+		ug.GET("/treatmentplan", r.uh.GetPlans())
+
+		// 患者信息记录
+		ug.POST("/patientinfo", r.uh.AddPatientInfo())
+		ug.GET("/patientinfo", r.uh.GetPatientInfo())
+		ug.PUT("/patientinfo", r.uh.UpdatePatientInfo())
 	}
 
 	// admin group (administrator)

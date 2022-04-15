@@ -29,6 +29,21 @@ func NowDateString() string {
 	return TimeConvertString(ti.Now(), date)
 }
 
+// 获取当前时间字符串格式
+func TimeString(t ti.Time) string {
+	return TimeConvertString(t, time)
+}
+
+// 获取当前日期时间字符串格式
+func DateTimeString(t ti.Time) string {
+	return TimeConvertString(t, datetime)
+}
+
+// 获取当前日期字符串格式
+func DateString(t ti.Time) string {
+	return TimeConvertString(t, date)
+}
+
 // 传入date，datetime，time返回当前时间参数
 func TimeConvertString(t ti.Time, enumTimeType EnumTimeType) string {
 	return t.Format(checkTimeType(enumTimeType))
