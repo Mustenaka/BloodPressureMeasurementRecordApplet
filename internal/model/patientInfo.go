@@ -9,7 +9,7 @@ type PatientInfo struct {
 	// patient_infos 内容
 	PatientId                 uint   // 病历信息
 	UserId                    uint   // 对应用户
-	RealName                  string //真实姓名
+	RealName                  string // 真实姓名
 	Sex                       string // 性别
 	Birthday                  string // 生日
 	Tel                       string // 电话号码
