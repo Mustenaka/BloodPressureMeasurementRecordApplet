@@ -13,21 +13,24 @@ import (
 
 // BaseUserHandler 用户业务handler
 type BaseUserHandler struct {
-	userSrv   service.BaseUserService        // 用户服务
-	bprSrv    service.PatientBpRecordService // 血压相关记录服务
-	trplanSrc service.TreatmentPlanService   // 治疗方案服务
+	userSrv      service.BaseUserService        // 用户服务
+	bprSrv       service.PatientBpRecordService // 血压相关记录服务
+	trplanSrc    service.TreatmentPlanService   // 治疗方案服务
+	pinfoService service.PatientInfoService     // 患者信息记录
 }
 
 // 新建一个handler
 func NewBaseUserHandler(
 	_userSrv service.BaseUserService,
 	_bprSrv service.PatientBpRecordService,
-	_trplanSrc service.TreatmentPlanService) *BaseUserHandler {
+	_trplanSrc service.TreatmentPlanService,
+	_pinfoService service.PatientInfoService) *BaseUserHandler {
 	// 新建Handler
 	return &BaseUserHandler{
-		userSrv:   _userSrv,
-		bprSrv:    _bprSrv,
-		trplanSrc: _trplanSrc,
+		userSrv:      _userSrv,
+		bprSrv:       _bprSrv,
+		trplanSrc:    _trplanSrc,
+		pinfoService: _pinfoService,
 	}
 }
 

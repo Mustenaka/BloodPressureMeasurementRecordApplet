@@ -23,9 +23,11 @@ func initRouter(ds db.IDataSource) server.Router {
 	// 治疗方案记录
 	trplanRepo := mysql.NewTreatmentPlanRepo(ds)
 	trplanService := service.NewTreatmentPlanService(trplanRepo)
-
+	// 患者信息记录
+	pinfoRepo := mysql.NewPatientInfoRepo(ds)
+	pinfoService := service.NewPatientInfoService(pinfoRepo)
 	// 生成Handler并且传递至Router服务
-	userHandler := baseuser.NewBaseUserHandler(userService, bprService, trplanService)
+	userHandler := baseuser.NewBaseUserHandler(userService, bprService, trplanService, pinfoService)
 	routerRouter := router.NewRouter(userHandler)
 	return routerRouter
 }
