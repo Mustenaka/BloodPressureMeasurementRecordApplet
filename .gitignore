@@ -17,3 +17,6 @@
 
 # server log file
 web-server.log
+
+# target files.(it build by Makefile.)
+target/
