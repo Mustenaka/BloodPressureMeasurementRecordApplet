@@ -6,7 +6,7 @@ import (
 
 // 基础用户信息表
 type AdminUser struct {
-	AdminId    uint   `json:"admin_id"`    // 用户id
+	UserId     uint   `json:"user_id"`     // 用户id
 	AdminName  string `json:"admin_name"`  // 管理员用户名
 	RealName   string `json:"real_name"`   // 管理员真实姓名
 	Password   string `json:"-"`           // 密码(需要加密保存)
