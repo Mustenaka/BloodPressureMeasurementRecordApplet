@@ -57,7 +57,7 @@ func (ur *baseUserRepo) GetBaseUserByOpenId(ctx context.Context, openid string) 
 	return user, err
 }
 
-// 通过用户名、密码创建新用户（管理端用户使用）
+// 通过用户名、密码创建新用户（内部接口、目前不需要不对外使用）
 func (ur *baseUserRepo) AddBaseUserByNamePassword(ctx context.Context, name, password string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
