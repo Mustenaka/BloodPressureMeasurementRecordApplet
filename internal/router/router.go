@@ -1,6 +1,7 @@
 package router
 
 import (
+	"BloodPressure/internal/handler/copyright"
 	"BloodPressure/internal/handler/ping"
 	"BloodPressure/internal/handler/v1/baseuser"
 	"BloodPressure/internal/middleware"
@@ -39,6 +40,9 @@ func (r *router) Load(g *gin.Engine) {
 
 	// ping server - 测试服务器通畅
 	g.GET("/ping", ping.Ping())
+
+	// Copyright - 版权信息彩蛋
+	g.GET("/copyright", copyright.Copyright())
 
 	// login
 	g.POST("/login", r.uh.Login())
