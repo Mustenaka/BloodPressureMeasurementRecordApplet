@@ -7,10 +7,11 @@ import (
 	"BloodPressure/pkg/config"
 	"BloodPressure/pkg/log"
 	"fmt"
+	"sync"
 )
 
 // 版权结构体
-type Copyright struct {
+type copyright struct {
 	AppName    string `mapstructure:"appName"` // 应用名称
 	Author     string `mapstructure:"author"`
 	AppCompany string `mapstructure:"appCompany"`
@@ -18,14 +19,45 @@ type Copyright struct {
 	Copyright  string `mapstructure:"copyright"`
 }
 
+// 单例模式加载版权信息
+type Singleton struct {
+	*copyright
+}
+
+var single *Singleton
+var mut sync.Mutex
+
+// 单例加载版权信息(双重锁)
+func GetInstance() *Singleton {
+	if single == nil {
+		mut.Lock()
+		defer mut.Unlock()
+		if single == nil {
+			single = &Singleton{}
+		}
+	}
+	return single
+}
+
 // 加载版权信息
-func LoadCopyright(conf config.BasicinfoConfig) Copyright {
+func (s *Singleton) LoadCopyright(conf config.BasicinfoConfig) {
+	// 空数据排查
 	if conf == (config.BasicinfoConfig{}) {
 		panic("GlobalConfig Basicinfo config is empty.")
 	}
-	return Copyright{
-		AppName: conf.AppName,
+
+	// 加载数据
+	s.copyright = &copyright{
+		AppName:    conf.AppName,
+		Author:     conf.Author,
+		AppCompany: conf.AppCompany,
+		Version:    conf.Version,
+		Copyright:  conf.Copyright,
 	}
+}
+
+func (s *Singleton) GetCopyright() copyright {
+	return *s.copyright
 }
 
 // fmt 直接控制台输出软件版本、版权等信息
