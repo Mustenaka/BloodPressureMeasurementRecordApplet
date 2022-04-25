@@ -6,6 +6,7 @@ import (
 	"BloodPressure/internal/router"
 	"BloodPressure/internal/service"
 	"BloodPressure/pkg/config"
+	"BloodPressure/pkg/copyright"
 	"BloodPressure/pkg/db"
 	"BloodPressure/pkg/log"
 	"BloodPressure/pkg/version"
@@ -53,8 +54,9 @@ func RunProgram() {
 		version.PrintVersion()
 	}
 
-	// 加载配置文件
+	// 加载配置文件,日志文件
 	c := config.Load(appOpt.ConfigFilePath)
+	copyright.GetInstance().LoadCopyright(c.BasicinfoConfig)
 	log.InitLogger(&c.LogConfig, c.BasicinfoConfig.AppName) // 日志
 
 	// 创建数据库链接，使用默认的实现方式
