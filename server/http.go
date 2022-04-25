@@ -64,6 +64,7 @@ func ResolveAppOptions(opt *AppOptions) {
 func (s HttpServer) Run(rs ...Router) {
 	var wg sync.WaitGroup
 	wg.Add(1)
+
 	// 设置gin启动模式，必须在创建gin实例之前
 	gin.SetMode(s.config.ServerConfig.Mode)
 	g := gin.New()
@@ -78,6 +79,7 @@ func (s HttpServer) Run(rs ...Router) {
 		log.Infof("server started success! port: %s", s.config.ServerConfig.Port)
 	}()
 
+	// 创建http服务
 	srv := http.Server{
 		Addr:    s.config.ServerConfig.Port,
 		Handler: g,
