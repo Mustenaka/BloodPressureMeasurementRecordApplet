@@ -4,6 +4,7 @@ import (
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
 	"BloodPressure/pkg/response"
+	"BloodPressure/tools/openid"
 	"BloodPressure/tools/security"
 	"context"
 	e "errors"
@@ -56,7 +57,7 @@ func (uh *BaseUserHandler) WeRegister() gin.HandlerFunc {
 		// 定义基本结构
 		type RegisterParam struct {
 			Username  string `json:"username" binding:"required"`
-			Code      string `json:"code"   binding:"required"`
+			Code      string `json:"code" binding:"required"`
 			Sex       string `json:"sex" binding:"required"`
 			AvatarUrl string `json:"avatarUrl" binding:"required"`
 		}
@@ -68,8 +69,15 @@ func (uh *BaseUserHandler) WeRegister() gin.HandlerFunc {
 			return
 		}
 
-		// 查询用户是否存在
-		_, err := uh.userSrv.GetByOpenid(context.TODO(), param.Code)
+		// 通过传入的Code生成Openid
+		openid, err := openid.GetOpenidByCode(param.Code)
+		if err != nil {
+			response.JSON(c, errors.Wrap(err, code.OpenidGetErr, "登录失败, openid获取失败"), nil)
+			return
+		}
+
+		// 查询用户是否已经存在
+		_, err = uh.userSrv.GetByOpenid(context.TODO(), openid)
 		if err == nil {
 			response.JSON(c, errors.Wrap(e.New("account repeated existence"), code.UserRegisterErr, "注册失败，用户已存在"), nil)
 			return
@@ -78,7 +86,7 @@ func (uh *BaseUserHandler) WeRegister() gin.HandlerFunc {
 		// 注册信息
 		err = uh.userSrv.AddByDetail(context.TODO(),
 			param.Username,
-			param.Code,
+			openid,
 			param.Sex,
 			param.AvatarUrl)
 		if err != nil {
