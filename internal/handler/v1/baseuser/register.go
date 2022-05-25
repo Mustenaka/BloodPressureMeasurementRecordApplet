@@ -56,12 +56,9 @@ func (uh *BaseUserHandler) WeRegister() gin.HandlerFunc {
 		// 定义基本结构
 		type RegisterParam struct {
 			Username  string `json:"username" binding:"required"`
-			OpenId    string `json:"openid"   binding:"required"`
-			RealName  string `json:"realname"   binding:"required"`
-			Telephone string `json:"telephone"   binding:"required"`
-			Email     string `json:"email"`
-			Brithday  string `json:"brithday"`
-			Sex       string `json:"sex"`
+			Code      string `json:"code"   binding:"required"`
+			Sex       string `json:"sex" binding:"required"`
+			AvatarUrl string `json:"avatarUrl" binding:"required"`
 		}
 
 		// 检验基本结构
@@ -72,7 +69,7 @@ func (uh *BaseUserHandler) WeRegister() gin.HandlerFunc {
 		}
 
 		// 查询用户是否存在
-		_, err := uh.userSrv.GetByOpenid(context.TODO(), param.OpenId)
+		_, err := uh.userSrv.GetByOpenid(context.TODO(), param.Code)
 		if err == nil {
 			response.JSON(c, errors.Wrap(e.New("account repeated existence"), code.UserRegisterErr, "注册失败，用户已存在"), nil)
 			return
@@ -81,12 +78,9 @@ func (uh *BaseUserHandler) WeRegister() gin.HandlerFunc {
 		// 注册信息
 		err = uh.userSrv.AddByDetail(context.TODO(),
 			param.Username,
-			param.OpenId,
-			param.RealName,
-			param.Telephone,
-			param.Email,
-			param.Brithday,
-			param.Sex)
+			param.Code,
+			param.Sex,
+			param.AvatarUrl)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.UserRegisterErr, "注册失败，无法注册"), nil)
 			return

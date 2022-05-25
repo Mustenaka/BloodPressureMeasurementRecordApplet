@@ -69,7 +69,7 @@ func (uh *BaseUserHandler) Login() gin.HandlerFunc {
 func (uh *BaseUserHandler) WeLogin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		type LoginParam struct {
-			OpenId string `json:"openid"   binding:"required"`
+			Code string `json:"code"   binding:"required"`
 		}
 
 		var param LoginParam
@@ -79,7 +79,7 @@ func (uh *BaseUserHandler) WeLogin() gin.HandlerFunc {
 		}
 
 		// 查询用户信息
-		user, err := uh.userSrv.GetByOpenid(context.TODO(), param.OpenId)
+		user, err := uh.userSrv.GetByOpenid(context.TODO(), param.Code)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.UserLoginErr, "登录失败，用户不存在"), nil)
 			return

@@ -55,8 +55,8 @@ func ResolveAppOptions(opt *AppOptions) {
 	flag.Parse()
 
 	opt.PrintVersion = printVersion
-	opt.ConfigFilePath = configFilePath
-	// opt.ConfigFilePath = "./config/config.ini"
+	// opt.ConfigFilePath = configFilePath
+	opt.ConfigFilePath = "./config/config.ini"
 }
 
 // Run server的启动入口

@@ -62,6 +62,7 @@ func (uh *BaseUserHandler) UpdateUserDetail() gin.HandlerFunc {
 			Email     string `json:"email"`
 			Brithday  string `json:"brithday"`
 			Sex       string `json:"sex"`
+			AvatarUrl string `json:"avatarUrl"`
 		}
 
 		// 检验基本结构
@@ -86,7 +87,8 @@ func (uh *BaseUserHandler) UpdateUserDetail() gin.HandlerFunc {
 			param.Telephone,
 			param.Email,
 			param.Brithday,
-			param.Sex)
+			param.Sex,
+			param.AvatarUrl)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.UserUpdateErr, "用户信息修改失败"), nil)
 			return

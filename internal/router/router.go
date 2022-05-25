@@ -44,12 +44,12 @@ func (r *router) Load(g *gin.Engine) {
 	// Copyright - 版权信息彩蛋
 	g.GET("/copyright", copyright.Copyright())
 
-	// login
+	// login & wechat login
 	g.POST("/login", r.uh.Login())
-	g.POST("/wechatlogin", r.uh.WeLogin())
+	g.POST("/wxlogin", r.uh.WeLogin())
 
-	// register
-	g.POST("/weregister", r.uh.WeRegister())
+	// wechat register
+	g.POST("/wxregister", r.uh.WeRegister())
 
 	// user group (wechat)
 	ug := g.Group("/v1/user", middleware.AuthToken())
@@ -59,7 +59,7 @@ func (r *router) Load(g *gin.Engine) {
 
 		// login(relogin)
 		ug.POST("/login", r.uh.Login())
-		ug.POST("/wechatlogin", r.uh.WeLogin())
+		ug.POST("/wxlogin", r.uh.WeLogin())
 
 		// 用户基本信息
 		ug.PUT("/userpassword", r.uh.UpdateUserPassword())
