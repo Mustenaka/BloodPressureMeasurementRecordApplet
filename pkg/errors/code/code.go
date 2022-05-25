@@ -47,6 +47,9 @@ const (
 
 	// RecordCreateErr 创建记录，数据持久化失败
 	RecordCreateErr
+
+	// openidGetErr openid获取错误，可能是服务器到腾讯服务器链接出问题
+	OpenidGetErr
 )
 
 const (
