@@ -73,6 +73,7 @@ func (uh *BaseUserHandler) WeLogin() gin.HandlerFunc {
 			Code string `json:"code"   binding:"required"`
 		}
 
+		// 检验传入内容
 		var param LoginParam
 		if err := c.ShouldBind(&param); err != nil {
 			response.JSON(c, errors.Wrap(err, code.ValidateErr, "openid 不能为空"), nil)
