@@ -58,7 +58,6 @@ func (r *router) Load(g *gin.Engine) {
 		ug.GET("", r.uh.GetBaseUserInfo())
 
 		// login(relogin)
-		ug.POST("/login", r.uh.Login())
 		ug.POST("/wxlogin", r.uh.WeLogin())
 
 		// 用户基本信息
