@@ -5,6 +5,7 @@ import (
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
 	"BloodPressure/pkg/response"
+	strtools "BloodPressure/tools/strTools"
 	"context"
 
 	"github.com/gin-gonic/gin"
@@ -15,6 +16,9 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RecordParam struct {
+			RecordDateTime string `form:"record_date_time" binding:"required"`
+			// RecordDate string `form:"record_date"  binding:"required"`
+			// RecordTime string `form:"record_time"  binding:"required"`
 			Low       int `json:"low"  binding:"required"`
 			High      int `json:"high"  binding:"required"`
 			HeartRate int `json:"heart_rate"  binding:"required"`
@@ -35,8 +39,11 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 			return
 		}
 
+		// 处理日期时间为指定格式
+		date, time := strtools.SplitDateTime(param.RecordDateTime)
+
 		// 进行血压记录
-		err = uh.bprSrv.AddById(context.TODO(), baseUser.UserId, param.Low, param.High, param.HeartRate)
+		err = uh.bprSrv.AddByIdWithDateTime(context.TODO(), date, time, baseUser.UserId, param.Low, param.High, param.HeartRate)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "添加血压记录失败"), nil)
 			return

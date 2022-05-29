@@ -15,6 +15,7 @@ type PatientBpRecordService interface {
 	GetByIdLimitDay(ctx context.Context, uid uint, limitdays int) ([]model.PatientBpRecord, error)
 	// 添加一条记录
 	AddById(ctx context.Context, uid uint, low, high, heartRate int) error
+	AddByIdWithDateTime(ctx context.Context, date, time string, uid uint, low, high, heartRate int) error
 }
 
 // patientBpRecordService 实现UserService接口
@@ -47,4 +48,8 @@ func (us *patientBpRecordService) GetByIdLimitDay(ctx context.Context, uid uint,
 func (us *patientBpRecordService) AddById(ctx context.Context, uid uint, low, high, heartRate int) error {
 	// log.Debug("添加血压记录信息", log.WithPair("uid", uid), log.WithPair("low", low), log.WithPair("high", high))
 	return us.bprr.AddRecord(ctx, uid, low, high, heartRate)
+}
+
+func (us *patientBpRecordService) AddByIdWithDateTime(ctx context.Context, date, time string, uid uint, low, high, heartRate int) error {
+	return us.bprr.AddRecordWithDateTime(ctx, date, time, uid, low, high, heartRate)
 }
