@@ -224,13 +224,13 @@ func (uh *BaseUserHandler) WxUpdatePatientInfo() gin.HandlerFunc {
 		}
 
 		// 判断是否初次记录患者信息
-		var isFirstRecord bool = false
+		var isFirstRecord bool = true
 
-		// 获取血压记录 - 如果没有，就添加
+		// 获取血压记录
 		_, err = uh.pinfoService.GetById(context.TODO(), baseUser.UserId)
 		if err == nil {
 			// 无出错，表示获取成功血压记录了，则应该采用PUT方法更新记录
-			isFirstRecord = true
+			isFirstRecord = false
 		}
 
 		// 利用reflect反射构造插入结构（数据字段太多了）
