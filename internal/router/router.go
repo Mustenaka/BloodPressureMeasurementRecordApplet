@@ -76,6 +76,7 @@ func (r *router) Load(g *gin.Engine) {
 
 		// 患者信息记录
 		ug.POST("/patientinfo", r.uh.AddPatientInfo())
+		ug.POST("/wxpatientinfo", r.uh.WxUpdatePatientInfo()) // 微信用接口
 		ug.GET("/patientinfo", r.uh.GetPatientInfo())
 		ug.PUT("/patientinfo", r.uh.UpdatePatientInfo())
 	}

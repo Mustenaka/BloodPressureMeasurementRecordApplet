@@ -7,6 +7,7 @@ import (
 	"BloodPressure/pkg/response"
 	strtools "BloodPressure/tools/strTools"
 	"context"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -62,15 +63,22 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 func (uh *BaseUserHandler) GetRecordBp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
-		type RecordParam struct {
-			// 日期限制、常用有7天，30天（一个月），90天（三个月）
-			LimitDays int `form:"limit_days"`
-		}
+		// type RecordParam struct {
+		// 	// 日期限制、常用有7天，30天（一个月），90天（三个月）
+		// 	LimitDays int `form:"limit_days"`
+		// }
 
 		// 检验基本结构
-		var param RecordParam
-		if err := c.ShouldBind(&param); err != nil {
-			response.JSON(c, errors.Wrap(err, code.ValidateErr, "存在必要信息未填写"), nil)
+		// var param RecordParam
+		// if err := c.ShouldBind(&param); err != nil {
+		// 	response.JSON(c, errors.Wrap(err, code.ValidateErr, "存在必要信息未填写"), nil)
+		// 	return
+		// }
+
+		// 字符串转换数字
+		limitDays, err := strconv.Atoi(c.DefaultQuery("limit_days", "0"))
+		if err != nil {
+			response.JSON(c, errors.Wrap(err, code.ValidateErr, "数据校验出错"), nil)
 			return
 		}
 
@@ -83,7 +91,7 @@ func (uh *BaseUserHandler) GetRecordBp() gin.HandlerFunc {
 		}
 
 		// 获取血压记录
-		records, err := uh.bprSrv.GetByIdLimitDay(context.TODO(), baseUser.UserId, param.LimitDays)
+		records, err := uh.bprSrv.GetByIdLimitDay(context.TODO(), baseUser.UserId, limitDays)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "血压记录获取失败"), nil)
 			return
