@@ -15,6 +15,6 @@ type BaseUserRepo interface {
 	AddBaseUserByNamePassword(ctx context.Context, name, password string) error
 	AddBaseUserByDetail(ctx context.Context, name, openid, sex, avatarUrl string) error
 	// 修改
-	UpdateBaseUserDetail(ctx context.Context, srcUser *model.BaseUser, realname, telephone, email, brithday, sex, avatarUrl string) error
+	UpdateBaseUserDetail(ctx context.Context, srcUser *model.BaseUser, realname, username, telephone, email, brithday, sex, avatarUrl string) error
 	UpdateBaseUserPassword(ctx context.Context, srcUser *model.BaseUser, password string) error
 }

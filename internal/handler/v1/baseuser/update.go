@@ -58,6 +58,7 @@ func (uh *BaseUserHandler) UpdateUserDetail() gin.HandlerFunc {
 		// 定义基本结构
 		type RegisterParam struct {
 			RealName  string `json:"realname"`
+			UserName  string `json:"username"`
 			Telephone string `json:"telephone"`
 			Email     string `json:"email"`
 			Brithday  string `json:"brithday"`
@@ -84,6 +85,7 @@ func (uh *BaseUserHandler) UpdateUserDetail() gin.HandlerFunc {
 		err = uh.userSrv.UpdateDetail(context.TODO(),
 			baseUser,
 			param.RealName,
+			param.UserName,
 			param.Telephone,
 			param.Email,
 			param.Brithday,

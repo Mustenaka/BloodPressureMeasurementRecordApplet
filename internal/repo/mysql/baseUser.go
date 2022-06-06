@@ -88,7 +88,7 @@ func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, s
 }
 
 // 更新用户基本信息 - 修改建议，srcUser改用传入id的方式, 然后tel,birthday,sex 采用可变参数
-func (ur *baseUserRepo) UpdateBaseUserDetail(ctx context.Context, srcUser *model.BaseUser, realname, telephone, email, brithday, sex, avatarUrl string) error {
+func (ur *baseUserRepo) UpdateBaseUserDetail(ctx context.Context, srcUser *model.BaseUser, realname, username, telephone, email, brithday, sex, avatarUrl string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	result := ur.ds.Master().Where(&model.BaseUser{UserId: srcUser.UserId}).Model(&srcUser).Updates(&model.BaseUser{
 		RealName:  realname,

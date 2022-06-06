@@ -21,7 +21,7 @@ type BaseUserService interface {
 	AddByNameAndPassword(ctx context.Context, name, password string) error
 	AddByDetail(ctx context.Context, name, openid, sex, avatarUrl string) error
 	// 修改
-	UpdateDetail(ctx context.Context, src *model.BaseUser, realname, telephone, email, brithday, sex, avatarUrl string) error
+	UpdateDetail(ctx context.Context, src *model.BaseUser, realname, username, telephone, email, brithday, sex, avatarUrl string) error
 	UpdatePassword(ctx context.Context, src *model.BaseUser, password string) error
 	// 删除
 }
@@ -70,7 +70,7 @@ func (us *baseUserService) AddByDetail(ctx context.Context, name, openid, sex, a
 }
 
 // 更新用户详细信息
-func (us *baseUserService) UpdateDetail(ctx context.Context, src *model.BaseUser, realname, telephone, email, brithday, sex, avatarUrl string) error {
+func (us *baseUserService) UpdateDetail(ctx context.Context, src *model.BaseUser, realname, username, telephone, email, brithday, sex, avatarUrl string) error {
 	// 验证生日字段
 	if brithday != "" && !reg.VerifyDateFormat(brithday) {
 		return errors.WithCode(code.ValidateErr, "生日日期格式不对，正确 YYYY-MM-DD")
@@ -84,7 +84,7 @@ func (us *baseUserService) UpdateDetail(ctx context.Context, src *model.BaseUser
 		return errors.WithCode(code.ValidateErr, "邮箱格式错误")
 	}
 
-	return us.ur.UpdateBaseUserDetail(ctx, src, realname, telephone, email, brithday, sex, avatarUrl)
+	return us.ur.UpdateBaseUserDetail(ctx, src, realname, username, telephone, email, brithday, sex, avatarUrl)
 }
 
 // 更新用户密码
