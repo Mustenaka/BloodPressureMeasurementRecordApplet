@@ -37,6 +37,11 @@ func (uh *BaseUserHandler) DiscardUserUploadedPhotos() gin.HandlerFunc {
 			filename := file.Filename
 			// 获取文件内容
 			log.Info("文件获取", log.WithPair("filename", filename))
+			// 定位用户文件夹 - path.join 会自动添加'/'
+			// userDir := path.Join(constant.UserUploadedPhotosPath, strconv.Itoa(int(uid)))
+			// // 保存地址
+			// dst := path.Join(userDir, filename)
+			// c.SaveUploadedFile(file, dst)
 		}
 
 		response.JSON(c, nil, struct {
