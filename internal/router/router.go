@@ -82,6 +82,8 @@ func (r *router) Load(g *gin.Engine) {
 
 		// 用户检查报告
 
+		// 用户上传照片 - 先抛弃，啥也不做
+		ug.POST("/upload", r.uh.DiscardUserUploadedPhotos())
 	}
 
 	// admin group (administrator)

@@ -50,6 +50,9 @@ const (
 
 	// openidGetErr openid获取错误，可能是服务器到腾讯服务器链接出问题
 	OpenidGetErr
+
+	// BadRequestErr 错误响应码过多时
+	BadRequestErr
 )
 
 const (
