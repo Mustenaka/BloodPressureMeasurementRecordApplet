@@ -6,7 +6,7 @@ import (
 )
 
 // TestIndicatorBnp 检验报告-BNP参数 repo接口
-type TestIndicatorBnp interface {
+type TestIndicatorBnpRepo interface {
 	// 添加
 	AddBnp(ctx context.Context, id uint, data int) error
 	AddBnpWithTime(ctx context.Context, id uint, data int, createAt string) error

@@ -9,21 +9,21 @@ import (
 	"context"
 )
 
-var _ repo.TestIndicatorCreatinine = (*testIndicatorCreatinine)(nil)
+var _ repo.TestIndicatorCreatinineRepo = (*testIndicatorCreatinineRepo)(nil)
 
-type testIndicatorCreatinine struct {
+type testIndicatorCreatinineRepo struct {
 	ds db.IDataSource
 }
 
 // 创建一个新的UserRepo
-func NewTestIndicatorCreatinine(_ds db.IDataSource) *testIndicatorCreatinine {
-	return &testIndicatorCreatinine{
+func NewTestIndicatorCreatinine(_ds db.IDataSource) *testIndicatorCreatinineRepo {
+	return &testIndicatorCreatinineRepo{
 		ds: _ds,
 	}
 }
 
 // 添加肌酐
-func (ur *testIndicatorCreatinine) AddBnp(ctx context.Context, id uint, data int) error {
+func (ur *testIndicatorCreatinineRepo) AddBnp(ctx context.Context, id uint, data int) error {
 	createDatetime := timeconvert.NowDateTimeString()
 	tongueDetails := &model.TestIndicatorCreatinine{
 		UserId:   id,
@@ -36,7 +36,7 @@ func (ur *testIndicatorCreatinine) AddBnp(ctx context.Context, id uint, data int
 }
 
 // 自定义事件添加肌酐
-func (ur *testIndicatorCreatinine) AddBnpWithTime(ctx context.Context, id uint, data int, createAt string) error {
+func (ur *testIndicatorCreatinineRepo) AddBnpWithTime(ctx context.Context, id uint, data int, createAt string) error {
 	tongueDetails := &model.TestIndicatorCreatinine{
 		UserId:   id,
 		Data:     data,
@@ -48,27 +48,27 @@ func (ur *testIndicatorCreatinine) AddBnpWithTime(ctx context.Context, id uint, 
 }
 
 // 获取肌酐
-func (ur *testIndicatorCreatinine) GetBnpById(ctx context.Context, id uint) ([]model.TestIndicatorCreatinine, error) {
+func (ur *testIndicatorCreatinineRepo) GetBnpById(ctx context.Context, id uint) ([]model.TestIndicatorCreatinine, error) {
 	tongueDetails := []model.TestIndicatorCreatinine{}
 	err := ur.ds.Master().Where("user_id = ?", id).Find(&tongueDetails).Error
 	return tongueDetails, err
 }
 
 // 通过limit查询限制的肌酐
-func (ur *testIndicatorCreatinine) GetBnpByIdLimit(ctx context.Context, id uint, limit int) ([]model.TestIndicatorCreatinine, error) {
+func (ur *testIndicatorCreatinineRepo) GetBnpByIdLimit(ctx context.Context, id uint, limit int) ([]model.TestIndicatorCreatinine, error) {
 	tongueDetails := []model.TestIndicatorCreatinine{}
 	err := ur.ds.Master().Where("user_id = ?", id).Limit(limit).Find(&tongueDetails).Error
 	return tongueDetails, err
 }
 
 // 删除该用户的全部肌酐信息
-func (ur *testIndicatorCreatinine) DeleteBnpByUserId(ctx context.Context, userId uint) error {
+func (ur *testIndicatorCreatinineRepo) DeleteBnpByUserId(ctx context.Context, userId uint) error {
 	err := ur.ds.Master().Where("user_id = ?", userId).Delete(&model.TestIndicatorCreatinine{}).Error
 	return err
 }
 
 // 通过id删除肌酐信息
-func (ur *testIndicatorCreatinine) DeleteBnpById(ctx context.Context, id uint) error {
+func (ur *testIndicatorCreatinineRepo) DeleteBnpById(ctx context.Context, id uint) error {
 	err := ur.ds.Master().Where("id = ?", id).Delete(&model.TestIndicatorCreatinine{}).Error
 	return err
 }

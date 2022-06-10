@@ -9,21 +9,21 @@ import (
 	"context"
 )
 
-var _ repo.TestIndicatorBnp = (*testIndicatorBnp)(nil)
+var _ repo.TestIndicatorBnpRepo = (*testIndicatorBnpRepo)(nil)
 
-type testIndicatorBnp struct {
+type testIndicatorBnpRepo struct {
 	ds db.IDataSource
 }
 
 // 创建一个新的UserRepo
-func NewTestIndicatorBnp(_ds db.IDataSource) *testIndicatorBnp {
-	return &testIndicatorBnp{
+func NewTestIndicatorBnpRepo(_ds db.IDataSource) *testIndicatorBnpRepo {
+	return &testIndicatorBnpRepo{
 		ds: _ds,
 	}
 }
 
 // 添加Bnp
-func (ur *testIndicatorBnp) AddBnp(ctx context.Context, id uint, data int) error {
+func (ur *testIndicatorBnpRepo) AddBnp(ctx context.Context, id uint, data int) error {
 	createDatetime := timeconvert.NowDateTimeString()
 	tongueDetails := &model.TestIndicatorBnp{
 		UserId:   id,
@@ -36,7 +36,7 @@ func (ur *testIndicatorBnp) AddBnp(ctx context.Context, id uint, data int) error
 }
 
 // 自定义时间添加Bnp
-func (ur *testIndicatorBnp) AddBnpWithTime(ctx context.Context, id uint, data int, createAt string) error {
+func (ur *testIndicatorBnpRepo) AddBnpWithTime(ctx context.Context, id uint, data int, createAt string) error {
 	tongueDetails := &model.TestIndicatorBnp{
 		UserId:   id,
 		Data:     data,
@@ -48,27 +48,27 @@ func (ur *testIndicatorBnp) AddBnpWithTime(ctx context.Context, id uint, data in
 }
 
 // 获取Bnp
-func (ur *testIndicatorBnp) GetBnpById(ctx context.Context, id uint) ([]model.TestIndicatorBnp, error) {
+func (ur *testIndicatorBnpRepo) GetBnpById(ctx context.Context, id uint) ([]model.TestIndicatorBnp, error) {
 	tongueDetails := []model.TestIndicatorBnp{}
 	err := ur.ds.Master().Where("user_id = ?", id).Find(&tongueDetails).Error
 	return tongueDetails, err
 }
 
 // 通过limit查询限制的Bnp
-func (ur *testIndicatorBnp) GetBnpByIdLimit(ctx context.Context, id uint, limit int) ([]model.TestIndicatorBnp, error) {
+func (ur *testIndicatorBnpRepo) GetBnpByIdLimit(ctx context.Context, id uint, limit int) ([]model.TestIndicatorBnp, error) {
 	tongueDetails := []model.TestIndicatorBnp{}
 	err := ur.ds.Master().Where("user_id = ?", id).Limit(limit).Find(&tongueDetails).Error
 	return tongueDetails, err
 }
 
 // 删除该用户全部Bnp信息
-func (ur *testIndicatorBnp) DeleteBnpByUserId(ctx context.Context, userId uint) error {
+func (ur *testIndicatorBnpRepo) DeleteBnpByUserId(ctx context.Context, userId uint) error {
 	err := ur.ds.Master().Where("user_id = ?", userId).Delete(&model.TestIndicatorBnp{}).Error
 	return err
 }
 
 // 通过id删除详细信息
-func (ur *testIndicatorBnp) DeleteBnpById(ctx context.Context, id uint) error {
+func (ur *testIndicatorBnpRepo) DeleteBnpById(ctx context.Context, id uint) error {
 	err := ur.ds.Master().Where("id = ?", id).Delete(&model.TestIndicatorBnp{}).Error
 	return err
 }

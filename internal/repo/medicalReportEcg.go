@@ -6,7 +6,7 @@ import (
 )
 
 // MedicalReportEcg 体检报告-心电图参数 repo接口
-type MedicalReportEcg interface {
+type MedicalReportEcgRepo interface {
 	// 添加
 	AddEcg(ctx context.Context, id uint, data string) error
 	AddEcgWithTime(ctx context.Context, id uint, data string, createAt string) error

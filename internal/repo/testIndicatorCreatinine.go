@@ -6,7 +6,7 @@ import (
 )
 
 // TestIndicatorCreatinine 检验报告-肌酐参数 repo接口
-type TestIndicatorCreatinine interface {
+type TestIndicatorCreatinineRepo interface {
 	// 添加
 	AddBnp(ctx context.Context, id uint, data int) error
 	AddBnpWithTime(ctx context.Context, id uint, data int, createAt string) error
