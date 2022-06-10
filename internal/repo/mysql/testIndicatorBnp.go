@@ -35,7 +35,7 @@ func (ur *testIndicatorBnp) AddBnp(ctx context.Context, id uint, data int) error
 	return err
 }
 
-// 自定义事件添加Bnp
+// 自定义时间添加Bnp
 func (ur *testIndicatorBnp) AddBnpWithTime(ctx context.Context, id uint, data int, createAt string) error {
 	tongueDetails := &model.TestIndicatorBnp{
 		UserId:   id,
