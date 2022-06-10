@@ -5,7 +5,7 @@ import (
 )
 
 // 心超报告
-type MedicalReportEchocardiographys struct {
+type MedicalReportEchocardiography struct {
 	Id       uint   `json:"id"`
 	UserId   uint   `json:"user_id"`
 	Ef       int    `json:"ef"`
@@ -15,12 +15,12 @@ type MedicalReportEchocardiographys struct {
 }
 
 // 获取表名称
-func (MedicalReportEchocardiographys) TableName() string {
+func (MedicalReportEchocardiography) TableName() string {
 	return "medical_report_echocardiographys"
 }
 
 // 判断有效性
-func (medicalReportEchocardiographys *MedicalReportEchocardiographys) Validate() error {
+func (medicalReportEchocardiography *MedicalReportEchocardiography) Validate() error {
 	validate := validator.New()
-	return validate.Struct(medicalReportEchocardiographys)
+	return validate.Struct(medicalReportEchocardiography)
 }

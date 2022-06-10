@@ -4,7 +4,7 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-type MedicalReport24hoursbprs struct {
+type MedicalReport24hoursbpr struct {
 	Id        uint   `json:"id"`
 	UserId    uint   `json:"user_id"`
 	DayHigh   int    `json:"day_high"`
@@ -25,12 +25,12 @@ type MedicalReport24hoursbprs struct {
 }
 
 // 获取表名称
-func (MedicalReport24hoursbprs) TableName() string {
+func (MedicalReport24hoursbpr) TableName() string {
 	return "medical_report_24hoursbprs"
 }
 
 // 判断有效性
-func (medicalReport24hoursbprs *MedicalReport24hoursbprs) Validate() error {
+func (medicalReport24hoursbpr *MedicalReport24hoursbpr) Validate() error {
 	validate := validator.New()
-	return validate.Struct(medicalReport24hoursbprs)
+	return validate.Struct(medicalReport24hoursbpr)
 }

@@ -4,8 +4,8 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// 肌酐检验指标
-type TestIndicatorCreatinines struct {
+// BNP检验指标
+type TestIndicatorBnp struct {
 	Id       uint   `json:"id"`
 	UserId   uint   `json:"user_id"`
 	Data     int    `json:"data"`      // 检测数据
@@ -13,12 +13,12 @@ type TestIndicatorCreatinines struct {
 }
 
 // 获取表名称
-func (TestIndicatorCreatinines) TableName() string {
-	return "test_indicator_creatinines"
+func (TestIndicatorBnp) TableName() string {
+	return "test_indicator_bnps"
 }
 
 // 判断有效性
-func (testIndicatorCreatinines *TestIndicatorCreatinines) Validate() error {
+func (testIndicatorBnp *TestIndicatorBnp) Validate() error {
 	validate := validator.New()
-	return validate.Struct(testIndicatorCreatinines)
+	return validate.Struct(testIndicatorBnp)
 }
