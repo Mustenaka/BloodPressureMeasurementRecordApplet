@@ -70,6 +70,12 @@ const (
 
 	// TongueDetailErr 舌苔脉象信息记录错误
 	TongueDetailErr
+
+	// TestIndicatorErr 检验指标错误
+	TestIndicatorErr
+
+	// MedicalRecordErr 检查报告错误
+	MedicalRecordErr
 )
 
 const (

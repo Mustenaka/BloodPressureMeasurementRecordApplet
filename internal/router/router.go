@@ -81,6 +81,10 @@ func (r *router) Load(g *gin.Engine) {
 		ug.PUT("/patientinfo", r.uh.UpdatePatientInfo())
 
 		// 用户检验指标 test indicator
+		ug.POST("/tibnp", r.uh.AddTiBnps())
+		ug.GET("/tibnp", r.uh.GetTiBnps())
+		ug.POST("/ticreatinine", r.uh.AddTiCreatinines())
+		ug.GET("/ticreatinine", r.uh.GetTiCreatinines())
 
 		// 用户检查报告 medical report
 
