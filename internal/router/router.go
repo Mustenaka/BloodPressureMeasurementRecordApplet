@@ -87,6 +87,8 @@ func (r *router) Load(g *gin.Engine) {
 		ug.GET("/ticreatinine", r.uh.GetTiCreatinines())
 
 		// 用户检查报告 medical report
+		ug.POST("/mr24hoursbpr", r.uh.AddMr24HoursBpr())
+		ug.GET("/mr24hoursbpr", r.uh.GetMr24HoursBpr())
 
 		// 用户上传照片 - 先抛弃，啥也不做
 		ug.POST("/upload", r.uh.DiscardUserUploadedPhotos())
