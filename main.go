@@ -13,7 +13,7 @@ import (
 	"BloodPressure/server"
 )
 
-// 初始化路由
+// 初始化路由 <- 随着项目越来越大，这里一定要IOT处理，尽快熟悉dig库运行
 func initRouter(ds db.IDataSource) server.Router {
 	// 用户
 	userRepo := mysql.NewBaseUserRepo(ds)
@@ -27,10 +27,35 @@ func initRouter(ds db.IDataSource) server.Router {
 	// 患者信息记录
 	pinfoRepo := mysql.NewPatientInfoRepo(ds)
 	pinfoService := service.NewPatientInfoService(pinfoRepo)
+	// 舌苔迈向记录
+	tongueRepo := mysql.NewTongueDetailRepo(ds)
+	tongueService := service.NewTongueDetailService(tongueRepo)
+	// 24小时 bpr记录
+	bpr24Repo := mysql.NewMedicalReport24HoursbprRepo(ds)
+	bpr24Service := service.NewMedicalReport24HoursbprService(bpr24Repo)
+	// 24小时 ecg记录
+	ecg24Repo := mysql.NewMedicalReport24hoursecgRepo(ds)
+	ecg24Service := service.NewMedicalReport24hoursecgService(ecg24Repo)
+	// ecg记录
+	ecgRepo := mysql.NewMedicalReportEcgRepo(ds)
+	ecgService := service.NewMedicalReportEcgService(ecgRepo)
+	// 心超记录
+	echoRepo := mysql.NewMedicalReportEchocardiographyRepo(ds)
+	echoService := service.NewMedicalReportEchocardiographyService(echoRepo)
+	// BNP记录
+	bnpRepo := mysql.NewTestIndicatorBnpRepo(ds)
+	bnpService := service.NewTestIndicatorBnpService(bnpRepo)
+	// 肌酐参数
+	creatinineRepo := mysql.NewTestIndicatorCreatinine(ds)
+	creatinineService := service.NewTestIndicatorCreatinineService(creatinineRepo)
 
 	// 生成Handler并且传递至Router服务
-	userHandler := baseuser.NewBaseUserHandler(userService, bprService, trplanService, pinfoService)
+	userHandler := baseuser.NewBaseUserHandler(
+		userService, bprService, trplanService, pinfoService, tongueService,
+		bpr24Service, ecg24Service, ecgService, echoService,
+		bnpService, creatinineService)
 	routerRouter := router.NewRouter(userHandler)
+
 	return routerRouter
 }
 

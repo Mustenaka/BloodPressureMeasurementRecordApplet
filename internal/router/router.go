@@ -80,13 +80,16 @@ func (r *router) Load(g *gin.Engine) {
 		ug.GET("/patientinfo", r.uh.GetPatientInfo())
 		ug.PUT("/patientinfo", r.uh.UpdatePatientInfo())
 
-		// 用户检查报告
+		// 用户检验指标 test indicator
+
+		// 用户检查报告 medical report
 
 		// 用户上传照片 - 先抛弃，啥也不做
 		ug.POST("/upload", r.uh.DiscardUserUploadedPhotos())
 
 		// 用户舌苔报告
-
+		ug.POST("/tonguedetail", r.uh.AddTongueDetail())
+		ug.GET("/tonguedetail", r.uh.GetTongueDetail())
 	}
 
 	// admin group (administrator)

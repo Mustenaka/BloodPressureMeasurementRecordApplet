@@ -67,6 +67,9 @@ const (
 
 	// PatientInfoErr 病历信息记录错误
 	PatientInfoErr
+
+	// TongueDetailErr 舌苔脉象信息记录错误
+	TongueDetailErr
 )
 
 const (
