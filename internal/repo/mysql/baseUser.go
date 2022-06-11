@@ -72,16 +72,13 @@ func (ur *baseUserRepo) AddBaseUserByNamePassword(ctx context.Context, name, pas
 }
 
 // 通过openid创建新用户（微信用户使用）
-func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, realname, telephone, email, brithday, sex string) error {
+func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, sex, avatarUrl string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	user := &model.BaseUser{
 		UserName:   name,
 		OpenId:     openid,
-		RealName:   realname,
-		Tel:        telephone,
-		Email:      email,
-		Birthday:   brithday, // 时间之间转换成字符串给mysql接收，会根据字符串格式进行自动转换的
 		Sex:        sex,
+		AvatarUrl:  avatarUrl, // 头像url
 		LastTime:   nowTime,
 		CreateTime: nowTime,
 		Status:     "开启",
@@ -91,15 +88,16 @@ func (ur *baseUserRepo) AddBaseUserByDetail(ctx context.Context, name, openid, r
 }
 
 // 更新用户基本信息 - 修改建议，srcUser改用传入id的方式, 然后tel,birthday,sex 采用可变参数
-func (ur *baseUserRepo) UpdateBaseUserDetail(ctx context.Context, srcUser *model.BaseUser, realname, telephone, email, brithday, sex string) error {
+func (ur *baseUserRepo) UpdateBaseUserDetail(ctx context.Context, srcUser *model.BaseUser, realname, username, telephone, email, brithday, sex, avatarUrl string) error {
 	nowTime := timeconvert.NowDateTimeString()
 	result := ur.ds.Master().Where(&model.BaseUser{UserId: srcUser.UserId}).Model(&srcUser).Updates(&model.BaseUser{
-		RealName: realname,
-		Tel:      strtools.UpdateNotNullStirng(telephone, srcUser.Tel),
-		Email:    strtools.UpdateNotNullStirng(email, srcUser.Email),
-		Birthday: strtools.UpdateNotNullStirng(brithday, srcUser.Birthday),
-		Sex:      sex,
-		LastTime: nowTime,
+		RealName:  realname,
+		Tel:       strtools.UpdateNotNullStirng(telephone, srcUser.Tel),
+		Email:     strtools.UpdateNotNullStirng(email, srcUser.Email),
+		Birthday:  strtools.UpdateNotNullStirng(brithday, srcUser.Birthday),
+		Sex:       sex,
+		AvatarUrl: avatarUrl,
+		LastTime:  nowTime,
 	})
 	log.Debug("Update db", log.WithPair("affect count", result.RowsAffected))
 	return result.Error

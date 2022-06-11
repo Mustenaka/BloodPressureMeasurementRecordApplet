@@ -1,0 +1,16 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/root/gofiles/BloodPressureMeasurementRecordApplet'
+mkdir target
+ 
+go build -ldflags \
+"-X BloodPressureMeasurementRecordApplet/pkg/version.CommitId=f7475ec46d0bbc222caa445b23d74e550cfe9c24 \
+-X BloodPressureMeasurementRecordApplet/pkg/version.BranchName=dev \
+-X BloodPressureMeasurementRecordApplet/pkg/version.BuildTime=2022-06-11_10:35:00 \
+-X BloodPressureMeasurementRecordApplet/pkg/version.AppVersion=v0.1.4" -v \
+-o target/BloodPressureMeasurementRecordApplet ./.
+# 使用tar命令对
+cp -r config  target/
+cp ./scripts/run.sh target/
+cd target/ && tar -zcvf BloodPressureMeasurementRecordApplet.tar.gz *
+make: Leaving directory `/root/gofiles/BloodPressureMeasurementRecordApplet'
+ 

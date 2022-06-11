@@ -17,6 +17,7 @@ type BaseUser struct {
 	CreateTime string `json:"create_time"` // 该账户的注册时间
 	Birthday   string `json:"birthday"`    // 该账户的生日，用来确定年龄
 	Sex        string `json:"sex"`         // 用户性别，可选项"男"，"女"，"其他"
+	AvatarUrl  string `json:"avatarUrl"`   // 头像地址
 	Status     string `json:"status"`      // 用户状态，可选项"开启"，"关闭"
 }
 

@@ -7,6 +7,7 @@ import (
 	"BloodPressure/pkg/jwt"
 	"BloodPressure/pkg/response"
 	jtime "BloodPressure/pkg/time"
+	"BloodPressure/tools/openid"
 	"BloodPressure/tools/security"
 	"context"
 	"time"
@@ -69,19 +70,27 @@ func (uh *BaseUserHandler) Login() gin.HandlerFunc {
 func (uh *BaseUserHandler) WeLogin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		type LoginParam struct {
-			OpenId string `json:"openid"   binding:"required"`
+			Code string `json:"code"   binding:"required"`
 		}
 
+		// 检验传入内容
 		var param LoginParam
 		if err := c.ShouldBind(&param); err != nil {
 			response.JSON(c, errors.Wrap(err, code.ValidateErr, "openid 不能为空"), nil)
 			return
 		}
 
-		// 查询用户信息
-		user, err := uh.userSrv.GetByOpenid(context.TODO(), param.OpenId)
+		// 通过传入的Code生成Openid
+		openid, err := openid.GetOpenidByCode(param.Code)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.UserLoginErr, "登录失败，用户不存在"), nil)
+			response.JSON(c, errors.Wrap(err, code.OpenidGetErr, "登录失败, openid获取失败"), nil)
+			return
+		}
+
+		// 通过openID查询用户信息
+		user, err := uh.userSrv.GetByOpenid(context.TODO(), openid)
+		if err != nil {
+			response.JSON(c, errors.Wrap(err, code.UserLoginErr, "登录失败, 用户不存在"), nil)
 			return
 		}
 

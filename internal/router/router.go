@@ -1,6 +1,7 @@
 package router
 
 import (
+	"BloodPressure/internal/handler/copyright"
 	"BloodPressure/internal/handler/ping"
 	"BloodPressure/internal/handler/v1/baseuser"
 	"BloodPressure/internal/middleware"
@@ -40,12 +41,15 @@ func (r *router) Load(g *gin.Engine) {
 	// ping server - 测试服务器通畅
 	g.GET("/ping", ping.Ping())
 
-	// login
-	g.POST("/login", r.uh.Login())
-	g.POST("/wechatlogin", r.uh.WeLogin())
+	// Copyright - 版权信息彩蛋
+	g.GET("/copyright", copyright.Copyright())
 
-	// register
-	g.POST("/weregister", r.uh.WeRegister())
+	// login & wechat login
+	g.POST("/login", r.uh.Login())
+	g.POST("/wxlogin", r.uh.WeLogin())
+
+	// wechat register
+	g.POST("/wxregister", r.uh.WeRegister())
 
 	// user group (wechat)
 	ug := g.Group("/v1/user", middleware.AuthToken())
@@ -54,8 +58,7 @@ func (r *router) Load(g *gin.Engine) {
 		ug.GET("", r.uh.GetBaseUserInfo())
 
 		// login(relogin)
-		ug.POST("/login", r.uh.Login())
-		ug.POST("/wechatlogin", r.uh.WeLogin())
+		ug.POST("/wxlogin", r.uh.WeLogin())
 
 		// 用户基本信息
 		ug.PUT("/userpassword", r.uh.UpdateUserPassword())
@@ -73,8 +76,32 @@ func (r *router) Load(g *gin.Engine) {
 
 		// 患者信息记录
 		ug.POST("/patientinfo", r.uh.AddPatientInfo())
+		ug.POST("/wxpatientinfo", r.uh.WxUpdatePatientInfo()) // 微信用接口自动更新或者添加
 		ug.GET("/patientinfo", r.uh.GetPatientInfo())
 		ug.PUT("/patientinfo", r.uh.UpdatePatientInfo())
+
+		// 用户检验指标 test indicator
+		ug.POST("/tibnp", r.uh.AddTiBnps())
+		ug.GET("/tibnp", r.uh.GetTiBnps())
+		ug.POST("/ticreatinine", r.uh.AddTiCreatinines())
+		ug.GET("/ticreatinine", r.uh.GetTiCreatinines())
+
+		// 用户检查报告 medical report
+		ug.POST("/mr24hoursbpr", r.uh.AddMr24HoursBpr())
+		ug.GET("/mr24hoursbpr", r.uh.GetMr24HoursBpr())
+		ug.POST("/mr24hoursecg", r.uh.AddMr24HoursEcg())
+		ug.GET("/mr24hoursecg", r.uh.GetMr24HoursEcg())
+		ug.POST("/mrecg", r.uh.AddMrEcg())
+		ug.GET("/mrsecg", r.uh.GetMrEcg())
+		ug.POST("/mrechocardiographys", r.uh.AddMreChocardiographys())
+		ug.GET("/mrechocardiographys", r.uh.GetMreChocardiographys())
+
+		// 用户上传照片 - 先抛弃，啥也不做
+		ug.POST("/upload", r.uh.DiscardUserUploadedPhotos())
+
+		// 用户舌苔报告
+		ug.POST("/tonguedetail", r.uh.AddTongueDetail())
+		ug.GET("/tonguedetail", r.uh.GetTongueDetail())
 	}
 
 	// admin group (administrator)

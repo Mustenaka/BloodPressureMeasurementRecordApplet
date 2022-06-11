@@ -54,3 +54,17 @@ func (ur *patientBpRecordRepo) AddRecord(ctx context.Context, id uint, low, high
 	err := ur.ds.Master().Create(records).Error
 	return err
 }
+
+// 添加一个血压记录
+func (ur *patientBpRecordRepo) AddRecordWithDateTime(ctx context.Context, date, time string, id uint, low, high, heartRate int) error {
+	records := &model.PatientBpRecord{
+		UserId:       id,
+		RecordDate:   date,
+		RecordTime:   time,
+		LowPressure:  low,
+		HighPressure: high,
+		HeartRate:    heartRate,
+	}
+	err := ur.ds.Master().Create(records).Error
+	return err
+}

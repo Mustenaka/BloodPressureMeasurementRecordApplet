@@ -17,3 +17,8 @@ const (
 	// UserID 用户id key
 	UserID = "user_id"
 )
+
+const (
+	// 用户上传的图片保存的地址
+	UserUploadedPhotosPath = "./upload/images/"
+)

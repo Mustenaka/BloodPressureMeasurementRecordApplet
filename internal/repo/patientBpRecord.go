@@ -9,6 +9,7 @@ import (
 type PatientBpRecordRepo interface {
 	// 添加血压记录
 	AddRecord(ctx context.Context, id uint, low, high, heartRate int) error
+	AddRecordWithDateTime(ctx context.Context, date, time string, id uint, low, high, heartRate int) error
 
 	// 获取记录组
 	GetRecordById(ctx context.Context, id uint) ([]model.PatientBpRecord, error)

@@ -17,6 +17,15 @@ type BaseUserHandler struct {
 	bprSrv       service.PatientBpRecordService // 血压相关记录服务
 	trplanSrc    service.TreatmentPlanService   // 治疗方案服务
 	pinfoService service.PatientInfoService     // 患者信息记录
+	tonSrv       service.TongueDetailService    // 舌苔脉象记录
+	// 我的检验指标
+	m24bprSrv      service.MedicalReport24HoursbprService
+	m24ecgSrv      service.MedicalReport24hoursecgService
+	mecgSrv        service.MedicalReportEcgService
+	mcreatinineSrv service.MedicalReportEchocardiographyService
+	// 我的检查报告
+	tbnpSrv        service.TestIndicatorBnpService
+	tcreatinineSrv service.TestIndicatorCreatinineService
 }
 
 // 新建一个handler
@@ -24,13 +33,32 @@ func NewBaseUserHandler(
 	_userSrv service.BaseUserService,
 	_bprSrv service.PatientBpRecordService,
 	_trplanSrc service.TreatmentPlanService,
-	_pinfoService service.PatientInfoService) *BaseUserHandler {
+	_pinfoService service.PatientInfoService,
+	_tonSrv service.TongueDetailService,
+
+	_m24bprSrv service.MedicalReport24HoursbprService,
+	_m24ecgSrv service.MedicalReport24hoursecgService,
+	_mecgSrv service.MedicalReportEcgService,
+	_mcreatinineSrv service.MedicalReportEchocardiographyService,
+
+	_tbnpSrv service.TestIndicatorBnpService,
+	_tcreatinineSrv service.TestIndicatorCreatinineService,
+) *BaseUserHandler {
 	// 新建Handler
 	return &BaseUserHandler{
 		userSrv:      _userSrv,
 		bprSrv:       _bprSrv,
 		trplanSrc:    _trplanSrc,
 		pinfoService: _pinfoService,
+		tonSrv:       _tonSrv,
+		// 我的检验指标
+		m24bprSrv:      _m24bprSrv,
+		m24ecgSrv:      _m24ecgSrv,
+		mecgSrv:        _mecgSrv,
+		mcreatinineSrv: _mcreatinineSrv,
+		// 我的检查报告
+		tbnpSrv:        _tbnpSrv,
+		tcreatinineSrv: _tcreatinineSrv,
 	}
 }
 

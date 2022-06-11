@@ -19,6 +19,7 @@ require (
 	github.com/shirou/gopsutil v3.21.11+incompatible // indirect
 	github.com/shirou/gopsutil/v3 v3.22.2 // indirect
 	github.com/spf13/viper v1.10.1 // indirect
+	github.com/thedevsaddam/gojsonq/v2 v2.5.2 // indirect
 	github.com/ugorji/go v1.2.7 // indirect
 	github.com/widuu/goini v0.0.0-20180603013956-56a38bd2e09b
 	github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77 // indirect

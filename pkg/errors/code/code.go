@@ -47,6 +47,12 @@ const (
 
 	// RecordCreateErr 创建记录，数据持久化失败
 	RecordCreateErr
+
+	// openidGetErr openid获取错误，可能是服务器到腾讯服务器链接出问题
+	OpenidGetErr
+
+	// BadRequestErr 错误响应码过多时
+	BadRequestErr
 )
 
 const (
@@ -61,6 +67,15 @@ const (
 
 	// PatientInfoErr 病历信息记录错误
 	PatientInfoErr
+
+	// TongueDetailErr 舌苔脉象信息记录错误
+	TongueDetailErr
+
+	// TestIndicatorErr 检验指标错误
+	TestIndicatorErr
+
+	// MedicalRecordErr 检查报告错误
+	MedicalRecordErr
 )
 
 const (

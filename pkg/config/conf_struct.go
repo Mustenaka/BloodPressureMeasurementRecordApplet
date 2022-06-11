@@ -64,3 +64,9 @@ type LogConfig struct {
 	LocalTime  bool   `mapstructure:"local-time"`
 	Console    bool   `mapstructure:"console"`
 }
+
+// wxApp config
+type WxAppConfig struct {
+	AppID     string `mapstructure:"appid"`
+	AppSecret string `mapstructure:"appsecret"`
+}

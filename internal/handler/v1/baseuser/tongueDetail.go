@@ -5,22 +5,25 @@ import (
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
 	"BloodPressure/pkg/response"
-	"BloodPressure/tools/security"
+	timeconvert "BloodPressure/tools/timeConvert"
 	"context"
 
 	"github.com/gin-gonic/gin"
 )
 
-// 修改密码
-func (uh *BaseUserHandler) UpdateUserPassword() gin.HandlerFunc {
+// 添加一个舌苔记录
+func (uh *BaseUserHandler) AddTongueDetail() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
-		type RegisterParam struct {
-			Password string `json:"password" binding:"required"`
+		type RecordParam struct {
+			Tongue        string `json:"tongue"  binding:"required"`
+			TongueCoating string `json:"tongue_coating"  binding:"required"`
+			Pulse         string `json:"pulse"  binding:"required"`
+			CreateAt      string `json:"create_at" `
 		}
 
 		// 检验基本结构
-		var param RegisterParam
+		var param RecordParam
 		if err := c.ShouldBind(&param); err != nil {
 			response.JSON(c, errors.Wrap(err, code.ValidateErr, "存在必要信息未填写"), nil)
 			return
@@ -31,15 +34,18 @@ func (uh *BaseUserHandler) UpdateUserPassword() gin.HandlerFunc {
 		baseUser, err := uh.userSrv.GetById(context.TODO(), uid)
 		if err != nil {
 			response.JSON(c, errors.Wrap(err, code.NotFoundErr, "用户信息为空"), nil)
+			return
 		}
 
-		// 对密码进行MD5加密
-		securityPassword := security.Md5(param.Password)
+		// 特判是否输入了时间，没有则记录当前时间
+		if param.CreateAt == "" {
+			param.CreateAt = timeconvert.NowDateTimeString()
+		}
 
-		// 修改用户信息
-		err = uh.userSrv.UpdatePassword(context.TODO(), baseUser, securityPassword)
+		// 进行血压记录
+		err = uh.tonSrv.AddByIdWithTime(context.TODO(), baseUser.UserId, param.Tongue, param.TongueCoating, param.Pulse, param.CreateAt)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.UserUpdateErr, "用户信息修改失败"), nil)
+			response.JSON(c, errors.Wrap(err, code.TongueDetailErr, "舌苔脉象信息记录失败"), nil)
 			return
 		}
 
@@ -47,25 +53,22 @@ func (uh *BaseUserHandler) UpdateUserPassword() gin.HandlerFunc {
 		response.JSON(c, nil, struct {
 			Result string `json:"result"`
 		}{
-			Result: "update successful",
+			Result: "tongue datail add successful",
 		})
 	}
 }
 
-// 修改用户信息
-func (uh *BaseUserHandler) UpdateUserDetail() gin.HandlerFunc {
+// 获取舌苔迈向记录
+func (uh *BaseUserHandler) GetTongueDetail() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
-		type RegisterParam struct {
-			RealName  string `json:"realname"`
-			Telephone string `json:"telephone"`
-			Email     string `json:"email"`
-			Brithday  string `json:"brithday"`
-			Sex       string `json:"sex"`
+		type RecordParam struct {
+			// 数量限制
+			Limit int `form:"limit"`
 		}
 
 		// 检验基本结构
-		var param RegisterParam
+		var param RecordParam
 		if err := c.ShouldBind(&param); err != nil {
 			response.JSON(c, errors.Wrap(err, code.ValidateErr, "存在必要信息未填写"), nil)
 			return
@@ -79,24 +82,14 @@ func (uh *BaseUserHandler) UpdateUserDetail() gin.HandlerFunc {
 			return
 		}
 
-		// 修改用户信息
-		err = uh.userSrv.UpdateDetail(context.TODO(),
-			baseUser,
-			param.RealName,
-			param.Telephone,
-			param.Email,
-			param.Brithday,
-			param.Sex)
+		// 获取治疗方案记录
+		records, err := uh.tonSrv.GetByIdLimit(context.TODO(), baseUser.UserId, param.Limit)
 		if err != nil {
-			response.JSON(c, errors.Wrap(err, code.UserUpdateErr, "用户信息修改失败"), nil)
+			response.JSON(c, errors.Wrap(err, code.TongueDetailErr, "舌苔迈向记录获取失败"), nil)
 			return
 		}
 
 		// 返回这个结果
-		response.JSON(c, nil, struct {
-			Result string `json:"result"`
-		}{
-			Result: "update successful",
-		})
+		response.JSON(c, nil, records)
 	}
 }
