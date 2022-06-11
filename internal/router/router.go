@@ -93,8 +93,8 @@ func (r *router) Load(g *gin.Engine) {
 		ug.GET("/mr24hoursecg", r.uh.GetMr24HoursEcg())
 		ug.POST("/mrecg", r.uh.AddMrEcg())
 		ug.GET("/mrsecg", r.uh.GetMrEcg())
-		ug.POST("/mrechocardiographys", r.uh.AddMreChocardiographys())
-		ug.GET("/mrechocardiographys", r.uh.GetMreChocardiographys())
+		ug.POST("/mrechocardiographys", r.uh.AddMrechocardiographys())
+		ug.GET("/mrechocardiographys", r.uh.GetMrechocardiographys())
 
 		// 用户上传照片 - 先抛弃，啥也不做
 		ug.POST("/upload", r.uh.DiscardUserUploadedPhotos())
