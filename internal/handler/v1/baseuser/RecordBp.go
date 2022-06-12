@@ -17,7 +17,7 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RecordParam struct {
-			RecordDateTime string `form:"record_date_time" binding:"required"`
+			RecordDateTime string `json:"record_date_time" binding:"required"`
 			// RecordDate string `form:"record_date"  binding:"required"`
 			// RecordTime string `form:"record_time"  binding:"required"`
 			Low       int `json:"low"  binding:"required"`
