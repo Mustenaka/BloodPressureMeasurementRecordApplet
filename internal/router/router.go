@@ -40,6 +40,7 @@ func (r *router) Load(g *gin.Engine) {
 
 	// ping server - 测试服务器通畅
 	g.GET("/ping", ping.Ping())
+	g.POST("/score", ping.GetImageScore())
 
 	// Copyright - 版权信息彩蛋
 	g.GET("/copyright", copyright.Copyright())
