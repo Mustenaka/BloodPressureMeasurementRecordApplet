@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Tue Jun 14 07:47:01 2022
+# Make data base, printed on Wed Jun 22 19:13:00 2022
 
 # Variables
 
@@ -34,7 +34,7 @@ CURDIR := /root/gofiles/BloodPressureMeasurementRecordApplet
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4d12339779e8282869a6d44b7af3df1e.zh-cn","_translationsConfigFile":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/4af164ea3a06f701fe3e89a2bcbb421d2026b68f","_corruptedFile":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4d12339779e8282869a6d44b7af3df1e.zh-cn","_translationsConfigFile":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/30d9c6cd9483b2cc586687151bcbcd635f373630","_corruptedFile":"/root/.vscode-server/data/clp/4d12339779e8282869a6d44b7af3df1e.zh-cn/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 1)
@@ -56,9 +56,9 @@ app_version = v0.1.5
 # makefile (from `Makefile', line 4)
 build_time = $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 # environment
-SSH_CONNECTION = 163.125.208.211 26261 172.17.0.8 22
+SSH_CONNECTION = 163.125.208.52 24055 172.17.0.8 22
 # environment
-PATH = /root/.vscode-server/bin/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+PATH = /root/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 # environment
 XDG_RUNTIME_DIR = /run/user/0
 # environment
@@ -76,7 +76,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /root/gofiles/BloodPressureMeasurementRecordApplet
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-10311bb7-9e8d-4673-a679-4e10d68e9863.sock
+VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-97a684f6-4211-45da-9d52-aa2e36a1d63d.sock
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -108,7 +108,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 5
 # environment
-XDG_SESSION_ID = 197903
+XDG_SESSION_ID = 215622
 # environment
 USER = root
 # makefile
@@ -126,13 +126,13 @@ MAKEFLAGS = Rrqp
 # environment
 MFLAGS = -Rrqp
 # environment
-SSH_CLIENT = 163.125.208.211 26261 22
+SSH_CLIENT = 163.125.208.52 24055 22
 # environment
 MAIL = /var/spool/mail/root
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
-BROWSER = /root/.vscode-server/bin/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/helpers/browser.sh
+BROWSER = /root/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/helpers/browser.sh
 # environment
 VSCODE_HANDLES_SIGPIPE = true
 # default
@@ -288,7 +288,7 @@ clean:
  
 target:
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-12 22:02:53.739407453
+#  Last modified 2022-06-14 08:42:30.356115398
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from `Makefile', line 25):
@@ -309,6 +309,6 @@ target:
 
 # strcache hash-table stats:
 # Load=32/8192=0%, Rehash=0, Collisions=1/55=2%
-# Finished Make data base on Tue Jun 14 07:47:01 2022
+# Finished Make data base on Wed Jun 22 19:13:00 2022
 
  
