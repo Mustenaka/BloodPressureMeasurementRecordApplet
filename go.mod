@@ -15,7 +15,7 @@ require (
 	github.com/thedevsaddam/gojsonq/v2 v2.5.2
 	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	github.com/ugorji/go v1.2.7 // indirect
-	github.com/unrolled/secure v1.10.0 // indirect
+	github.com/unrolled/secure v1.10.0
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.uber.org/zap v1.21.0
 	golang.org/x/crypto v0.0.0-20220314234724-5d542ad81a58
