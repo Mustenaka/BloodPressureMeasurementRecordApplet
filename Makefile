@@ -28,6 +28,7 @@ target:
 package: build
 	@# 使用tar命令对${word_dir下面的文件打包}
 	cp -r config  ${work_dir}/
+	cp -r ssl/ ${work_dir}/
 	cp ./scripts/run.sh ${work_dir}/
 	cd ${work_dir}/ && tar -zcvf ${app_name}.tar.gz *
 
