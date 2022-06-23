@@ -4,9 +4,7 @@ import (
 	"BloodPressure/pkg/config"
 	"BloodPressure/pkg/log"
 	"context"
-	"crypto/tls"
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -61,7 +59,7 @@ func ResolveAppOptions(opt *AppOptions) {
 }
 
 // Run server的启动入口
-// 加载路由, 启动服务
+// 加载路由, 启动HTTP服务
 func (s HttpServer) Run(rs ...Router) {
 	var wg sync.WaitGroup
 	wg.Add(1)
@@ -74,7 +72,7 @@ func (s HttpServer) Run(rs ...Router) {
 	// health check
 	log.Debug("进行health check")
 	go func() {
-		if err := Ping(s.config.ServerConfig.Port, s.config.ServerConfig.MaxPingCount); err != nil {
+		if err := Ping(s.config.ServerConfig.Url, s.config.ServerConfig.Port, s.config.ServerConfig.MaxPingCount); err != nil {
 			log.Fatal("server no response")
 		}
 		log.Infof("server started success! port: %s", s.config.ServerConfig.Port)
@@ -120,7 +118,7 @@ func (s HttpServer) Run(rs ...Router) {
 }
 
 // Run server的启动入口
-// 加载路由, 启动服务
+// 加载路由, 启动HTTPS服务
 func (s HttpServer) RunTLS(rs ...Router) {
 	var wg sync.WaitGroup
 	wg.Add(1)
@@ -133,7 +131,7 @@ func (s HttpServer) RunTLS(rs ...Router) {
 	// health check
 	log.Debug("进行health check")
 	go func() {
-		if err := HttpsPing(s.config.ServerConfig.Port, s.config.ServerConfig.MaxPingCount); err != nil {
+		if err := HttpsPing(s.config.ServerConfig.Url, s.config.ServerConfig.Port, s.config.ServerConfig.MaxPingCount); err != nil {
 			log.Fatal("server no response")
 		}
 		log.Infof("server started success! port: %s", s.config.ServerConfig.Port)
@@ -192,42 +190,4 @@ func (s *HttpServer) routerLoad(g *gin.Engine, rs ...Router) *HttpServer {
 // RegisterOnShutdown 注册shutdown后的回调处理函数，用于清理资源
 func (s *HttpServer) RegisterOnShutdown(_f func()) {
 	s.f = _f
-}
-
-// Ping 用来检查是否程序正常启动
-func Ping(port string, maxCount int) error {
-	seconds := 1
-	url := "http://127.0.0.1" + port + "/ping"
-	for i := 0; i < maxCount; i++ {
-		resp, err := http.Get(url)
-		if err == nil && resp != nil && resp.StatusCode == http.StatusOK {
-			return nil
-		}
-		log.Infof("等待服务在线, 已等待 %d 秒，最多等待 %d 秒", seconds, maxCount)
-		time.Sleep(time.Second * 1)
-		seconds++
-	}
-	return fmt.Errorf("服务启动失败，端口 %s", port)
-}
-
-// Ping 用来检查是否程序正常启动
-func HttpsPing(port string, maxCount int) error {
-	seconds := 1
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := &http.Client{Transport: transport}
-
-	url := "https://127.0.0.1" + port + "/ping"
-	// url := "https://www.lyhxxcx.cn/ping"
-	for i := 0; i < maxCount; i++ {
-		resp, err := client.Get(url)
-		if err == nil && resp != nil && resp.StatusCode == http.StatusOK {
-			return nil
-		}
-		log.Infof("等待服务在线, 已等待 %d 秒，最多等待 %d 秒", seconds, maxCount)
-		time.Sleep(time.Second * 1)
-		seconds++
-	}
-	return fmt.Errorf("服务启动失败，端口 %s", port)
 }
