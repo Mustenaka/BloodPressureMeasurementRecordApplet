@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/unrolled/secure"
 )
 
 var db = make(map[string]string)
@@ -77,10 +78,32 @@ func Testmain() {
 // 最简单的，最小化测试运行
 func ExampleRun() {
 	r := gin.Default()
+
+	r.Use(TlsHandler())
+
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "ExampleTest Successful!",
 		})
 	})
-	r.Run(":80") // 监听并在 0.0.0.0:8080 上启动服务
+
+	r.RunTLS(":443", "ssl/www.lyhxxcx.cn.pem", "ssl/www.lyhxxcx.cn.key")
+	// r.Run(":80") // 监听并在 0.0.0.0:8080 上启动服务
+}
+
+func TlsHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		secureMiddleware := secure.New(secure.Options{
+			SSLRedirect: true,
+			SSLHost:     "localhost:8080",
+		})
+		err := secureMiddleware.Process(c.Writer, c.Request)
+
+		// If there was an error, do not continue.
+		if err != nil {
+			return
+		}
+
+		c.Next()
+	}
 }

@@ -32,6 +32,7 @@ func (r *router) Load(g *gin.Engine) {
 	g.Use(middleware.Secure())
 	g.Use(middleware.RequestId())
 	g.Use(middleware.Logger)
+	// g.Use(middleware.TlsHandler())
 
 	// 404
 	g.NoRoute(func(c *gin.Context) {
