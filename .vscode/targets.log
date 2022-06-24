@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Fri Jun 24 11:21:15 2022
+# Make data base, printed on Fri Jun 24 17:24:43 2022
 
 # Variables
 
@@ -76,7 +76,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /root/gofiles/BloodPressureMeasurementRecordApplet
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-091ce56d-3524-44e6-a1a0-18de43027e21.sock
+VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-3e3cc1e6-1f8c-484f-8682-bb280a3bc1aa.sock
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -310,6 +310,6 @@ target:
 
 # strcache hash-table stats:
 # Load=34/8192=0%, Rehash=0, Collisions=1/57=2%
-# Finished Make data base on Fri Jun 24 11:21:15 2022
+# Finished Make data base on Fri Jun 24 17:24:43 2022
 
  

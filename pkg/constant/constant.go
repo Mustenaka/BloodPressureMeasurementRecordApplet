@@ -7,8 +7,9 @@ const (
 	// RequestId 请求id名称
 	RequestId = "request_id"
 	// DateTimeLayout 时间格式
-	DateTimeLayout   = "2006-01-02 15:04:05"
-	DateTimeLayoutMs = "2006-01-02 15:04:05.000"
+	DateTimeLayout      = "2006-01-02 15:04:05"
+	MysqlDataTimeLayout = "2006-01-02T00:00:00+08:00"
+	DateTimeLayoutMs    = "2006-01-02 15:04:05.000"
 	// DateLayout 日期格式
 	DateLayout = "2006-01-02"
 	// TimeLayout 时间格式
