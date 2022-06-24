@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Thu Jun 23 09:55:32 2022
+# Make data base, printed on Fri Jun 24 11:21:15 2022
 
 # Variables
 
@@ -52,11 +52,11 @@ VSCODE_CWD = /root
 # environment
 GOPROXY = https://goproxy.cn,direct
 # makefile (from `Makefile', line 5)
-app_version = v0.1.5
+app_version = v0.1.6
 # makefile (from `Makefile', line 4)
 build_time = $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 # environment
-SSH_CONNECTION = 163.125.208.52 23977 172.17.0.8 22
+SSH_CONNECTION = 163.125.208.52 23637 172.17.0.8 22
 # environment
 PATH = /root/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 # environment
@@ -76,7 +76,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /root/gofiles/BloodPressureMeasurementRecordApplet
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-e749a35e-cf8d-45e9-a084-a298c50f26b0.sock
+VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-091ce56d-3524-44e6-a1a0-18de43027e21.sock
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -108,7 +108,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 5
 # environment
-XDG_SESSION_ID = 216904
+XDG_SESSION_ID = 219118
 # environment
 USER = root
 # makefile
@@ -126,7 +126,7 @@ MAKEFLAGS = Rrqp
 # environment
 MFLAGS = -Rrqp
 # environment
-SSH_CLIENT = 163.125.208.52 23977 22
+SSH_CLIENT = 163.125.208.52 23637 22
 # environment
 MAIL = /var/spool/mail/root
 # automatic
@@ -172,9 +172,9 @@ work_dir = target
 
 # Directories
 
-# . (device 64769, inode 921672): 21 files, no impossibilities.
+# . (device 64769, inode 921672): 23 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 23 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -211,7 +211,7 @@ all: package
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-11 18:36:23.498420433
+#  Last modified 2022-06-23 16:40:26.822573464
 #  File has been updated.
 #  Successfully updated.
 
@@ -274,6 +274,7 @@ package: build
 #  recipe to execute (from `Makefile', line 29):
 	@# 使用tar命令对${word_dir下面的文件打包}
 	cp -r config  ${work_dir}/
+	cp -r ssl/ ${work_dir}/
 	cp ./scripts/run.sh ${work_dir}/
 	cd ${work_dir}/ && tar -zcvf ${app_name}.tar.gz *
 
@@ -284,11 +285,11 @@ clean:
 #  File has not been updated.
 #  recipe to execute (from `Makefile', line 23):
 	@rm -rf target
-
  
+
 target:
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-14 08:42:30.356115398
+#  Last modified 2022-06-23 16:41:27.244547093
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from `Makefile', line 25):
@@ -302,13 +303,13 @@ target:
 
 # No general (`VPATH' variable) search path.
 
-# # of strings in strcache: 0 / lookups = 55 / hits = 55
+# # of strings in strcache: 0 / lookups = 57 / hits = 57
 # # of strcache buffers: 1 (* 8176 B/buffer = 8176 B)
-# strcache used: total = 0 (249) / max = 0 / min = 8176 / avg = 0
-# strcache free: total = 0 (7927) / max = 0 / min = 8176 / avg = 0
+# strcache used: total = 0 (263) / max = 0 / min = 8176 / avg = 0
+# strcache free: total = 0 (7913) / max = 0 / min = 8176 / avg = 0
 
 # strcache hash-table stats:
-# Load=32/8192=0%, Rehash=0, Collisions=1/55=2%
-# Finished Make data base on Thu Jun 23 09:55:32 2022
+# Load=34/8192=0%, Rehash=0, Collisions=1/57=2%
+# Finished Make data base on Fri Jun 24 11:21:15 2022
 
  

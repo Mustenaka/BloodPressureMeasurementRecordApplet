@@ -3,13 +3,14 @@ make: Entering directory `/root/gofiles/BloodPressureMeasurementRecordApplet'
 mkdir target
  
 go build -ldflags \
-"-X BloodPressureMeasurementRecordApplet/pkg/version.CommitId=4d2774761fe08ffd113f1549e13c98efce7b2c0d \
+"-X BloodPressureMeasurementRecordApplet/pkg/version.CommitId=8d5a64e8e200d30b403e2f86291f959a4b61044d \
 -X BloodPressureMeasurementRecordApplet/pkg/version.BranchName=dev \
--X BloodPressureMeasurementRecordApplet/pkg/version.BuildTime=2022-06-23_01:55:32 \
--X BloodPressureMeasurementRecordApplet/pkg/version.AppVersion=v0.1.5" -v \
+-X BloodPressureMeasurementRecordApplet/pkg/version.BuildTime=2022-06-24_03:21:15 \
+-X BloodPressureMeasurementRecordApplet/pkg/version.AppVersion=v0.1.6" -v \
 -o target/BloodPressureMeasurementRecordApplet ./.
 # 使用tar命令对
 cp -r config  target/
+cp -r ssl/ target/
 cp ./scripts/run.sh target/
 cd target/ && tar -zcvf BloodPressureMeasurementRecordApplet.tar.gz *
 make: Leaving directory `/root/gofiles/BloodPressureMeasurementRecordApplet'

@@ -20,3 +20,6 @@ web-server.log
 
 # target files.(it build by Makefile.)
 target/
+
+# vscode config files.
+.vscode/
