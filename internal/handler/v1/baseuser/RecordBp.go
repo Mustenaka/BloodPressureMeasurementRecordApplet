@@ -1,13 +1,16 @@
 package baseuser
 
 import (
+	"BloodPressure/internal/model"
 	"BloodPressure/pkg/constant"
 	"BloodPressure/pkg/errors"
 	"BloodPressure/pkg/errors/code"
 	"BloodPressure/pkg/response"
 	strtools "BloodPressure/tools/strTools"
 	"context"
+	"sort"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,7 +20,7 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RecordParam struct {
-			RecordDateTime string `form:"record_date_time" binding:"required"`
+			RecordDateTime string `json:"record_date_time" binding:"required"`
 			// RecordDate string `form:"record_date"  binding:"required"`
 			// RecordTime string `form:"record_time"  binding:"required"`
 			Low       int `json:"low"  binding:"required"`
@@ -59,22 +62,29 @@ func (uh *BaseUserHandler) RecordBp() gin.HandlerFunc {
 	}
 }
 
+// 自定义排序设计
+type SortBy []model.PatientBpRecord
+
+func (a SortBy) Len() int      { return len(a) }
+func (a SortBy) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a SortBy) Less(i, j int) bool {
+	d1, _ := time.Parse(constant.MysqlDataTimeLayout, a[i].RecordDate)
+	d2, _ := time.Parse(constant.MysqlDataTimeLayout, a[j].RecordDate)
+
+	t1, _ := time.Parse(constant.TimeLayout, a[i].RecordTime)
+	t2, _ := time.Parse(constant.TimeLayout, a[j].RecordTime)
+
+	if d1.Equal(d2) {
+		return t1.Before(t2)
+	} else {
+		return d1.Before(d2)
+	}
+
+}
+
 // 获取血压记录
 func (uh *BaseUserHandler) GetRecordBp() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 定义基本结构
-		// type RecordParam struct {
-		// 	// 日期限制、常用有7天，30天（一个月），90天（三个月）
-		// 	LimitDays int `form:"limit_days"`
-		// }
-
-		// 检验基本结构
-		// var param RecordParam
-		// if err := c.ShouldBind(&param); err != nil {
-		// 	response.JSON(c, errors.Wrap(err, code.ValidateErr, "存在必要信息未填写"), nil)
-		// 	return
-		// }
-
 		// 字符串转换数字
 		limitDays, err := strconv.Atoi(c.DefaultQuery("limit_days", "0"))
 		if err != nil {
@@ -96,6 +106,9 @@ func (uh *BaseUserHandler) GetRecordBp() gin.HandlerFunc {
 			response.JSON(c, errors.Wrap(err, code.BPRecordErr, "血压记录获取失败"), nil)
 			return
 		}
+
+		// 自定义排序这个血压记录
+		sort.Sort(SortBy(records))
 
 		// 返回这个结果
 		response.JSON(c, nil, records)

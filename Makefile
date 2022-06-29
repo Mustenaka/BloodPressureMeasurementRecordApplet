@@ -2,7 +2,7 @@ go_version = $(shell go version)
 commit_id = $(shell git rev-parse HEAD)
 branch_name = $(shell git name-rev --name-only HEAD)
 build_time = $(shell date -u '+%Y-%m-%d_%H:%M:%S')
-app_version =  v0.1.5
+app_version =  v0.1.6
 version_package = BloodPressureMeasurementRecordApplet/pkg/version
 app_name = BloodPressureMeasurementRecordApplet
 work_dir = target
@@ -28,6 +28,7 @@ target:
 package: build
 	@# 使用tar命令对${word_dir下面的文件打包}
 	cp -r config  ${work_dir}/
+	cp -r ssl/ ${work_dir}/
 	cp ./scripts/run.sh ${work_dir}/
 	cd ${work_dir}/ && tar -zcvf ${app_name}.tar.gz *
 

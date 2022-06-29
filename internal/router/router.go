@@ -32,6 +32,7 @@ func (r *router) Load(g *gin.Engine) {
 	g.Use(middleware.Secure())
 	g.Use(middleware.RequestId())
 	g.Use(middleware.Logger)
+	// g.Use(middleware.TlsHandler())
 
 	// 404
 	g.NoRoute(func(c *gin.Context) {
@@ -40,6 +41,7 @@ func (r *router) Load(g *gin.Engine) {
 
 	// ping server - 测试服务器通畅
 	g.GET("/ping", ping.Ping())
+	g.POST("/score", ping.GetImageScore())
 
 	// Copyright - 版权信息彩蛋
 	g.GET("/copyright", copyright.Copyright())
@@ -93,8 +95,8 @@ func (r *router) Load(g *gin.Engine) {
 		ug.GET("/mr24hoursecg", r.uh.GetMr24HoursEcg())
 		ug.POST("/mrecg", r.uh.AddMrEcg())
 		ug.GET("/mrsecg", r.uh.GetMrEcg())
-		ug.POST("/mrechocardiographys", r.uh.AddMreChocardiographys())
-		ug.GET("/mrechocardiographys", r.uh.GetMreChocardiographys())
+		ug.POST("/mrechocardiographys", r.uh.AddMrechocardiographys())
+		ug.GET("/mrechocardiographys", r.uh.GetMrechocardiographys())
 
 		// 用户上传照片 - 先抛弃，啥也不做
 		ug.POST("/upload", r.uh.DiscardUserUploadedPhotos())

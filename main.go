@@ -97,7 +97,7 @@ func RunProgram() {
 	})
 
 	// 启动服务
-	srv.Run(routers...)
+	srv.RunTLS(routers...)
 }
 
 func main() {

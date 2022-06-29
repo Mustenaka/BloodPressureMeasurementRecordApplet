@@ -299,7 +299,7 @@ func (uh *BaseUserHandler) GetMrEcg() gin.HandlerFunc {
 }
 
 // 添加我的体检报告 - 心超检测
-func (uh *BaseUserHandler) AddMreChocardiographys() gin.HandlerFunc {
+func (uh *BaseUserHandler) AddMrechocardiographys() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RecordParam struct {
@@ -348,7 +348,7 @@ func (uh *BaseUserHandler) AddMreChocardiographys() gin.HandlerFunc {
 }
 
 // 获取我的检验指标 - 心超检测
-func (uh *BaseUserHandler) GetMreChocardiographys() gin.HandlerFunc {
+func (uh *BaseUserHandler) GetMrechocardiographys() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 定义基本结构
 		type RecordParam struct {

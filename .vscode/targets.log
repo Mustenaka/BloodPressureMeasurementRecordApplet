@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sat Jun 11 18:35:00 2022
+# Make data base, printed on Fri Jun 24 17:24:43 2022
 
 # Variables
 
@@ -33,7 +34,7 @@ CURDIR := /root/gofiles/BloodPressureMeasurementRecordApplet
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"42e84e0914b17800d483f69e299e1b00.zh-cn","_translationsConfigFile":"/root/.vscode-server/data/clp/42e84e0914b17800d483f69e299e1b00.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/42e84e0914b17800d483f69e299e1b00.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/42e84e0914b17800d483f69e299e1b00.zh-cn/4af164ea3a06f701fe3e89a2bcbb421d2026b68f","_corruptedFile":"/root/.vscode-server/data/clp/42e84e0914b17800d483f69e299e1b00.zh-cn/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"bbca1a7059cee8a1b93da8947fee1c4f.zh-cn","_translationsConfigFile":"/root/.vscode-server/data/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn/30d9c6cd9483b2cc586687151bcbcd635f373630","_corruptedFile":"/root/.vscode-server/data/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 1)
@@ -51,13 +52,13 @@ VSCODE_CWD = /root
 # environment
 GOPROXY = https://goproxy.cn,direct
 # makefile (from `Makefile', line 5)
-app_version = v0.1.4
+app_version = v0.1.6
 # makefile (from `Makefile', line 4)
 build_time = $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 # environment
-SSH_CONNECTION = 163.125.208.211 26560 172.17.0.8 22
+SSH_CONNECTION = 163.125.208.52 23637 172.17.0.8 22
 # environment
-PATH = /root/.vscode-server/bin/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+PATH = /root/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 # environment
 XDG_RUNTIME_DIR = /run/user/0
 # environment
@@ -75,7 +76,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /root/gofiles/BloodPressureMeasurementRecordApplet
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-f0569070-a012-49d9-9f0c-2c1aad0f8464.sock
+VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-3e3cc1e6-1f8c-484f-8682-bb280a3bc1aa.sock
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -107,7 +108,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 5
 # environment
-XDG_SESSION_ID = 192256
+XDG_SESSION_ID = 219118
 # environment
 USER = root
 # makefile
@@ -125,13 +126,13 @@ MAKEFLAGS = Rrqp
 # environment
 MFLAGS = -Rrqp
 # environment
-SSH_CLIENT = 163.125.208.211 26560 22
+SSH_CLIENT = 163.125.208.52 23637 22
 # environment
 MAIL = /var/spool/mail/root
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
-BROWSER = /root/.vscode-server/bin/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/helpers/browser.sh
+BROWSER = /root/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/helpers/browser.sh
 # environment
 VSCODE_HANDLES_SIGPIPE = true
 # default
@@ -163,7 +164,7 @@ VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # makefile (from `Makefile', line 8)
 work_dir = target
 # variable set hash-table stats:
-# Load=76/1024=7%, Rehash=0, Collisions=12/102=12%
+# Load=76/1024=7%, Rehash=0, Collisions=13/120=11%
 
 # Pattern-specific Variable Values
 
@@ -171,9 +172,9 @@ work_dir = target
 
 # Directories
 
-# . (device 64769, inode 921672): 21 files, no impossibilities.
+# . (device 64769, inode 921672): 23 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 23 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -194,7 +195,7 @@ all: package
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/22=0%
 
 .PHONY: version clean build package all
 #  Implicit rule search has not been done.
@@ -210,18 +211,35 @@ all: package
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-11 18:34:29.382493594
+#  Last modified 2022-06-23 16:40:26.822573464
 #  File has been updated.
 #  Successfully updated.
 
 build: target
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
+# automatic
+# @ := build
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := target
+# automatic
+# | := 
+# automatic
+# < := target
+# automatic
+# ^ := target
+# automatic
+# ? := target
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
+# Load=8/32=25%, Rehash=0, Collisions=1/30=3%
 #  recipe to execute (from `Makefile', line 12):
 	@go build -ldflags \
 	"-X ${version_package}.CommitId=${commit_id} \
@@ -252,10 +270,11 @@ package: build
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/22=0%
 #  recipe to execute (from `Makefile', line 29):
 	@# 使用tar命令对${word_dir下面的文件打包}
 	cp -r config  ${work_dir}/
+	cp -r ssl/ ${work_dir}/
 	cp ./scripts/run.sh ${work_dir}/
 	cd ${work_dir}/ && tar -zcvf ${app_name}.tar.gz *
 
@@ -266,32 +285,13 @@ clean:
 #  File has not been updated.
 #  recipe to execute (from `Makefile', line 23):
 	@rm -rf target
+ 
 
 target:
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: `'
-#  File does not exist.
+#  Last modified 2022-06-23 16:41:27.244547093
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := target
-# automatic
-# % := 
-# automatic
- 
-# * := 
-# automatic
-# + := 
-# automatic
-# | := 
-# automatic
-# < := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/12=8%
+#  Successfully updated.
 #  recipe to execute (from `Makefile', line 25):
 	@mkdir ${work_dir}
 
@@ -303,13 +303,13 @@ target:
 
 # No general (`VPATH' variable) search path.
 
-# # of strings in strcache: 0 / lookups = 55 / hits = 55
+# # of strings in strcache: 0 / lookups = 57 / hits = 57
 # # of strcache buffers: 1 (* 8176 B/buffer = 8176 B)
-# strcache used: total = 0 (264) / max = 0 / min = 8176 / avg = 0
-# strcache free: total = 0 (7912) / max = 0 / min = 8176 / avg = 0
+# strcache used: total = 0 (263) / max = 0 / min = 8176 / avg = 0
+# strcache free: total = 0 (7913) / max = 0 / min = 8176 / avg = 0
 
 # strcache hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=1/55=2%
-# Finished Make data base on Sat Jun 11 18:35:00 2022
+# Load=34/8192=0%, Rehash=0, Collisions=1/57=2%
+# Finished Make data base on Fri Jun 24 17:24:43 2022
 
  
