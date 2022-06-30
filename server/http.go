@@ -167,7 +167,7 @@ func (s HttpServer) RunTLS(rs ...Router) {
 	}()
 
 	// 监听服务 https
-	err := srv.ListenAndServeTLS("ssl/www.lyhxxcx.cn_public.crt", "ssl/www.lyhxxcx.cn.key")
+	err := srv.ListenAndServeTLS("ssl/www.lyhxxcx.cn.pem", "ssl/www.lyhxxcx.cn.key")
 	// err := srv.ListenAndServe()
 	if err != nil {
 		if err != http.ErrServerClosed {
