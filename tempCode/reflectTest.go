@@ -18,7 +18,7 @@ type Another_struct struct {
 	Name    *string
 }
 
-func main() {
+func Rmain() {
 
 	a := &My_struct{}
 
