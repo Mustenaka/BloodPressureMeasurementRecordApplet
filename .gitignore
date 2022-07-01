@@ -23,3 +23,5 @@ target/
 
 # vscode config files.
 .vscode/
+.vscode/dryrun.log
+.vscode/targets.log

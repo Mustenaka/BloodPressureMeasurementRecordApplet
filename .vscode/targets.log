@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Thu Jun 30 18:22:01 2022
+# Make data base, printed on Fri Jul  1 09:15:06 2022
 
 # Variables
 
@@ -56,7 +56,7 @@ app_version = v0.1.6
 # makefile (from `Makefile', line 4)
 build_time = $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 # environment
-SSH_CONNECTION = 163.125.208.151 52649 172.17.0.8 22
+SSH_CONNECTION = 163.125.208.151 52961 172.17.0.8 22
 # environment
 PATH = /root/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 # environment
@@ -76,7 +76,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /root/gofiles/BloodPressureMeasurementRecordApplet
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-1f1688e0-b1cb-41ff-9324-b8b69edd037a.sock
+VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-21b7d17c-a778-4194-a746-5cc223d9f2f8.sock
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -108,7 +108,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 5
 # environment
-XDG_SESSION_ID = 232258
+XDG_SESSION_ID = 233553
 # environment
 USER = root
 # makefile
@@ -126,7 +126,7 @@ MAKEFLAGS = Rrqp
 # environment
 MFLAGS = -Rrqp
 # environment
-SSH_CLIENT = 163.125.208.151 52649 22
+SSH_CLIENT = 163.125.208.151 52961 22
 # environment
 MAIL = /var/spool/mail/root
 # automatic
@@ -310,6 +310,6 @@ target:
 
 # strcache hash-table stats:
 # Load=33/8192=0%, Rehash=0, Collisions=1/56=2%
-# Finished Make data base on Thu Jun 30 18:22:01 2022
+# Finished Make data base on Fri Jul  1 09:15:06 2022
 
  
