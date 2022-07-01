@@ -94,7 +94,8 @@ srv.Run(routers...)
 - 项目分层结构参考： https://github.com/xmgtony/apiserver-gin
 （一个基于gin的go生产及服务端）
 
-- 项目布局参考： https://github.com/golang-standards/project-layout/blob/master/README_zh.md（非官方，但是已是行业主流）
+- 项目布局参考： https://github.com/golang-standards/project-layout/blob/master/README_zh.md
+（非官方，但是已是行业主流）
 
 - 清洁架构：https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
