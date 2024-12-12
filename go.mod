@@ -6,7 +6,6 @@ require (
 	github.com/go-playground/validator/v10 v10.10.1 // indirect
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/golang-jwt/jwt/v4 v4.4.0
-	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/spf13/viper v1.10.1
@@ -18,8 +17,7 @@ require (
 	github.com/unrolled/secure v1.10.0
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.uber.org/zap v1.21.0
-	golang.org/x/crypto v0.0.0-20220314234724-5d542ad81a58
-	golang.org/x/sys v0.0.0-20220310020820-b874c991c1a5 // indirect
+	golang.org/x/crypto v0.31.0
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
