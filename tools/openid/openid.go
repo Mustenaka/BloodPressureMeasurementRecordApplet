@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	code2sessionURL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code"
+	code2sessionURL = ""
 	// appID最好不要直接暴露，这里以后一定要改 - 2022.5.25日留
-	appID     = "wxa2164c390f287f1c"
-	appSecret = "8493e5f7166702c75143553ea1eaf502"
+	appID     = ""
+	appSecret = ""
 )
 
 // GetOpenID 通过用户code获取openid
