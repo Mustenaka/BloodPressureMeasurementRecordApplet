@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
@@ -35,28 +36,38 @@ func GetImageScore() gin.HandlerFunc {
 			return
 		}
 
+		// 从环境变量读取敏感的 API 密钥
+		secretId := os.Getenv("TENCENTCLOUD_SECRET_ID")
+		secretKey := os.Getenv("TENCENTCLOUD_SECRET_KEY")
+		if secretId == "" || secretKey == "" {
+			// 不返回明文错误
+			response.JSON(c, eerrors.Wrap(fmt.Errorf("missing tencent cloud credentials"), code.InternalServerErr, "internal error"), nil)
+			return
+		}
+
 		credential := common.NewCredential(
-			"AKIDJcnocF1nQxJXZO0NOGwTt7D9uUt54vZz",
-			"GnBRVSL3f9TfhbbOyUYS8c7axFRZcaUK",
+			secretId,
+			secretKey,
 		)
 		cpf := profile.NewClientProfile()
 		cpf.HttpProfile.Endpoint = "tiia.tencentcloudapi.com"
 		client, _ := tiia.NewClient(credential, "ap-guangzhou", cpf)
 
 		request := tiia.NewAssessQualityRequest()
-
 		request.ImageBase64 = common.StringPtr(param.Base64Image)
 
-		response, err := client.AssessQuality(request)
+		resp, err := client.AssessQuality(request)
 		if _, ok := err.(*errors.TencentCloudSDKError); ok {
-			fmt.Printf("An API error has returned: %s", err)
+			// 不打印敏感错误内容到日志
+			response.JSON(c, eerrors.Wrap(fmt.Errorf("tencent cloud sdk error"), code.ExternalServiceErr, "external service error"), nil)
 			return
 		}
 		if err != nil {
-			panic(err)
+			// 封装并隐藏详细错误
+			response.JSON(c, eerrors.Wrap(fmt.Errorf("service error"), code.ExternalServiceErr, "external service error"), nil)
+			return
 		}
-		fmt.Printf("%s", response.ToJsonString())
-		c.String(http.StatusOK, response.ToJsonString())
+		c.String(http.StatusOK, resp.ToJsonString())
 	}
 }
 
